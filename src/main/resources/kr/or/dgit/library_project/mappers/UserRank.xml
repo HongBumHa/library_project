@@ -5,5 +5,7 @@
 		<result property="rankCode" column="rank_code"/>
 		<result property="rankName" column="rank_name"/>
 	</resultMap>
-	<sql id=""></sql>
+	<sql id="userrankSql">
+		select * from userrank
+	</sql>
 </mapper>
