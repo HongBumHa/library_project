@@ -33,7 +33,7 @@ dependencies {
 	compile group: 'org.mybatis', name: 'mybatis', version: '3.4.5'
 	
 	//Use 룩앤필
-    compile files('libs/liquidlnf.jar')
+    compile files('libs_src/liquidlnf.jar')
     
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
