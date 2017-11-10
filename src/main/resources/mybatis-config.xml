@@ -26,7 +26,7 @@
 	<mappers>
 		<mapper resource="kr/or/dgit/library_project/mappers/UserRankMapper.xml" />
 		<mapper resource="kr/or/dgit/library_project/mappers/PublisherMapper.xml"/>
-
+		<mapper resource="kr/or/dgit/library_project/mappers/UsersMapper.xml"/>
 	</mappers>
 
 </configuration>
