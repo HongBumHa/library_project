@@ -4,7 +4,26 @@
 	<sql id="selectSql">
 		select * from publisher
 	</sql>
+	
+	<sql id="whereSql">
+		<where>
+			<if test="publicCode != null">
+				public_code=#{publicCode}
+			</if>
+			<if test="publicName != null">
+				public_name=#{publicName}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- selectPublisherByAll -->
 	<select id="selectPublisherByAll" parameterType="Publisher" resultType="Publisher">
 		<include refid="selectSql"/>
+	</select>
+	
+	<!-- selectPublisherByCode&Name -->
+	<select id="selectPublisherByCodeName" parameterType="Publisher" resultType="Publisher">
+		<include refid="selectSql"/>
+		<include refid="whereSql"/>
 	</select>
 </mapper>

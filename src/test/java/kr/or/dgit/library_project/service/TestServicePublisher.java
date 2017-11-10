@@ -1,4 +1,4 @@
-package kr.or.dgit.libray_project.service;
+package kr.or.dgit.library_project.service;
 
 import java.util.List;
 
@@ -25,9 +25,18 @@ public class TestServicePublisher {
 	}
 
 	@Test
-	public void testSelectPubliserByAll() {
+	public void testSelectPublisherByAll() {
 		List<Publisher> lists=publisherService.selectPublisherByAll();
 		Assert.assertNotNull(lists);
+	}
+	
+	@Test
+	public void testSelectPublisherByCodeName() {
+		Publisher publisher=new Publisher();
+		publisher.setPublicName("교학사");
+		
+		Publisher findPublisher=publisherService.selectPublisherByCodeName(publisher);
+		Assert.assertNotNull( findPublisher.getPublicCode());
 	}
 
 }

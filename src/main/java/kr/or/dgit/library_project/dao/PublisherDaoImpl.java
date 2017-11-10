@@ -28,4 +28,11 @@ public class PublisherDaoImpl implements PublisherDao {
 		return sqlSession.selectList(namespace+"selectPublisherByAll");
 	}
 
+
+	@Override
+	public Publisher selectPublisherByCodeName(Publisher publisher) {
+		log.debug("selectPublisherByCodeName()");
+		return sqlSession.selectOne(namespace+"selectPublisherByCodeName", publisher);
+	}
+
 }
