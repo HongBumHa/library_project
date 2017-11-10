@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="kr.or.dgit.library_project.dao.PublisherDao">
+	<sql id="selectSql">
+		select * from publisher
+	</sql>
+	<select id="selectPublisherByAll" parameterType="Publisher" resultType="Publisher">
+		<include refid="selectSql"/>
+	</select>
+</mapper>
