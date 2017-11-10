@@ -7,7 +7,7 @@
 	</sql>
 	
 	<sql id="selectMiddleGroup">
-		select middle_group 
+		select middle_group, book_middle_group_name 
 		from book_middle_group 
 	</sql>
 	
@@ -25,5 +25,6 @@
 	
 	<select id="selectAllMiddleGroup" parameterType="BookGroup" resultType="BookGroup">
 		<include refid="selectMiddleGroup"/>
+		<include refid="whereMiddleGroup"/>
 	</select>
 </mapper>

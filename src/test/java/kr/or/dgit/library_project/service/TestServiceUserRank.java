@@ -24,10 +24,10 @@ public class TestServiceUserRank {
 		service = null;
 	}
 	
-	@Test
+	/*@Test
 	public void testFindUserRankByAll() {
 		List<UserRank> lists = service.findUserRankByAll();
 		System.out.println(lists);
 		Assert.assertNotNull(lists);
-	}
+	}*/
 }

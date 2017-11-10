@@ -29,5 +29,14 @@ public class BookGroupTest {
 		List<BookGroup> lists = bookGroupService.findAllBookBigGroup();
 		Assert.assertNotNull(lists);
 	}
+	
+	@Test
+	public void test1_2FindAllBookMiddelGroup() {
+		BookGroup bookGroup = new BookGroup();
+		bookGroup.setBigGroup("A0");
+		
+		List<BookGroup> lists = bookGroupService.findAllMiddleGroup(bookGroup);
+		Assert.assertNotNull(lists);
+	}
 
 }
