@@ -25,6 +25,7 @@
 
 	<mappers>
 		<mapper resource="kr/or/dgit/library_project/mappers/bookGroupMapper.xml"/>
+		<mapper resource="kr/or/dgit/library_project/mappers/PublisherMapper.xml"/>
 	</mappers>
 
 </configuration>
