@@ -33,10 +33,10 @@ public class TestServicePublisher {
 	@Test
 	public void testSelectPublisherByCodeName() {
 		Publisher publisher=new Publisher();
-		publisher.setPublicCode("0001");
+		publisher.setPublicName("교학사");
 		
 		Publisher findPublisher=publisherService.selectPublisherByCodeName(publisher);
-		Assert.assertEquals(publisher.getPublicCode(), findPublisher.getPublicCode());
+		Assert.assertNotNull( findPublisher.getPublicCode());
 	}
 
 }
