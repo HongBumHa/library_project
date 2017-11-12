@@ -30,5 +30,17 @@ public class BookGroupDaoImpl implements  BookGroupDao{
 		log.debug("selectAllMiddleGroup()");
 		return sqlSession.getMapper(BookGroupDao.class).selectAllMiddleGroup(bookGroup);
 	}
+
+	@Override
+	public BookGroup selectByNoBigGroup(BookGroup bookGroup) {
+		log.debug("selectByNoBookBigGroup()");
+		return sqlSession.selectOne(namespace+".selectByNoBigGroup", bookGroup);
+	}
+
+	@Override
+	public BookGroup selectByNoMiddleGroup(BookGroup bookGroup) {
+		log.debug("selectByNoMiddleGroup()");
+		return sqlSession.selectOne(namespace+".selectByNoMiddleGroup", bookGroup);
+	}
 	
 }

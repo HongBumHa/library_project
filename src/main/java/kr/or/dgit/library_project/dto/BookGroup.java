@@ -3,7 +3,7 @@ package kr.or.dgit.library_project.dto;
 public class BookGroup {
 	private String bigGroup;
 	private String bookBigGroupName;
-	private int middleGroup;
+	private String middleGroup;
 	private String bookMiddleGroupName;
 
 	public String getBigGroup() {
@@ -22,11 +22,11 @@ public class BookGroup {
 		this.bookBigGroupName = bookBigGroupName;
 	}
 
-	public int getMiddleGroup() {
+	public String getMiddleGroup() {
 		return middleGroup;
 	}
 
-	public void setMiddleGroup(int middleGroup) {
+	public void setMiddleGroup(String middleGroup) {
 		this.middleGroup = middleGroup;
 	}
 
@@ -54,7 +54,7 @@ public class BookGroup {
 		this.bigGroup = bigGroup;
 	}
 
-	public BookGroup(String bigGroup, int middleGroup) {
+	public BookGroup(String bigGroup, String middleGroup) {
 		super();
 		this.bigGroup = bigGroup;
 		this.middleGroup = middleGroup;

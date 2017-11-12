@@ -23,4 +23,18 @@ public class BookGroupService {
 			return dao.selectAllMiddleGroup(bookGroup);
 		}
 	}
+	
+	public BookGroup findByNoBigGroup(BookGroup bookGroup){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
+			return dao.selectByNoBigGroup(bookGroup);
+		}
+	}
+	
+	public BookGroup findByNoMiddleGroup(BookGroup bookGroup){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
+			return dao.selectByNoMiddleGroup(bookGroup);
+		}
+	}
 }

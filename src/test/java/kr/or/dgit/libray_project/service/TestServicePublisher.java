@@ -24,10 +24,10 @@ public class TestServicePublisher {
 		publisherService=null;
 	}
 
-	@Test
+	/*@Test
 	public void testSelectPubliserByAll() {
 		List<Publisher> lists=publisherService.selectPublisherByAll();
 		Assert.assertNotNull(lists);
-	}
+	}*/
 
 }

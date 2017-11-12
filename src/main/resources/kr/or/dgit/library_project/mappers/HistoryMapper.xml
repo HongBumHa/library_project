@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.library_project.dao.HistoryViewDao">
+	<sql id="allHistoryView">
+		select * from history_total
+	</sql>
+	
+	<sql id="whereHistoryData">
+		<where>
+			<if test="bookCode != null">
+				and book_code = #{bookCode}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="userName != null">
+				and user_name = #{userName}
+			</if>
+			<if test="author != null">
+				and author = #{author}
+			</if>
+			<if test="rentalDay != null">
+				and rentalDay = #{rentalDay}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAllHistoryView" resultType="RentalView">
+		<include refid="allHistoryView"/>
+	</select>
+	
+	<select id="selectByWhereHistoryView" parameterType="RentalView" resultType="RentalView">
+		<include refid="allHistoryView"/>
+		<include refid="whereHistoryData"/>
+	</select>
+</mapper>
