@@ -5,15 +5,35 @@
 		select * from publisher
 	</sql>
 	
-	<sql id="whereSql">
+	<sql id="whereSqlCode">
+		<where>
+			<if test="publicCode != null">
+				public_code=#{publicCode}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereSqlCodeName">
 		<where>
 			<if test="publicCode != null">
 				public_code=#{publicCode}
 			</if>
 			<if test="publicName != null">
-				public_name=#{publicName}
+				and public_name=#{publicName}
 			</if>
 		</where>
+	</sql>
+	
+	<sql id="insertSql">
+		insert into publisher values(#{publicCode}, #{publicName})
+	</sql>
+	
+	<sql id="updateSql">
+		update publisher set public_name=#{publicName}
+	</sql>
+	
+	<sql id="deleteSql">
+		delete from publisher
 	</sql>
 	
 	<!-- selectPublisherByAll -->
@@ -24,6 +44,23 @@
 	<!-- selectPublisherByCode&Name -->
 	<select id="selectPublisherByCodeName" parameterType="Publisher" resultType="Publisher">
 		<include refid="selectSql"/>
-		<include refid="whereSql"/>
+		<include refid="whereSqlCodeName"/>
 	</select>
+	
+	<!-- insertPublisher -->
+	<insert id="insertPublisher" parameterType="Publisher">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<!-- updatePublisher -->
+	<update id="updatePublisher" parameterType="Publisher">
+		<include refid="updateSql"/>
+		<include refid="whereSqlCode"/>
+	</update>
+	
+	<!-- deletePublisher -->
+	<delete id="deletePublisher">
+		<include refid="deleteSql"/>
+		<include refid="whereSqlCodeName"/>
+	</delete>
 </mapper>
