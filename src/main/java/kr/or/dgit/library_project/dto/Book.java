@@ -22,6 +22,17 @@ public class Book {
 		this.amount = amount;
 		this.allRentalCount = allRentalCount;
 	}
+	
+	
+
+	public Book(String bookCode, String bookName, String author, String publicName, int price, int amount) {
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.author = author;
+		this.publicName = publicName;
+		this.price = price;
+		this.amount = amount;
+	}
 
 	public String getBookCode() {
 		return bookCode;
