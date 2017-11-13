@@ -25,4 +25,32 @@ public class UsersDaoImpl implements UsersDao{
 	}
 
 
+	@Override
+	public int insertUser(Users users) {
+		log.debug("insertUser()");
+		return sqlSession.getMapper(UsersDao.class).insertUser(users);
+	}
+
+
+	@Override
+	public int deleteUsers(String id) {
+		log.debug("deleteSql()");
+		return sqlSession.getMapper(UsersDao.class).deleteUsers(id);
+	}
+
+
+	@Override
+	public Users selectUsersByNo(Users users) {
+		log.debug("selectUsersByNo()");
+		return sqlSession.getMapper(UsersDao.class).selectUsersByNo(users);
+	}
+
+
+	@Override
+	public int updateUser(Users users) {
+		log.debug("updateUser()");
+		return sqlSession.getMapper(UsersDao.class).updateUser(users);
+	}
+
+
 }
