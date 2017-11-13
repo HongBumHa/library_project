@@ -35,4 +35,28 @@ public class PublisherDaoImpl implements PublisherDao {
 		return sqlSession.selectOne(namespace+"selectPublisherByCodeName", publisher);
 	}
 
+
+
+	@Override
+	public int insertPublisher(Publisher publisher) {
+		log.debug("insertPublisher()");
+		return sqlSession.insert(namespace+"insertPublisher", publisher);
+	}
+
+
+
+	@Override
+	public int updatePublisher(Publisher publisher) {
+		log.debug("updatePublisher()");
+		return sqlSession.update(namespace+"updatePublisher", publisher);
+	}
+
+
+
+	@Override
+	public int deletePublisher(Publisher publisher) {
+		log.debug("deletePublisher()");
+		return sqlSession.delete(namespace+"deletePublisher", publisher);
+	}
+
 }

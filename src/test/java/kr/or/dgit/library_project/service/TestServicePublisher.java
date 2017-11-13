@@ -33,10 +33,34 @@ public class TestServicePublisher {
 	@Test
 	public void testSelectPublisherByCodeName() {
 		Publisher publisher=new Publisher();
-		publisher.setPublicName("교학사");
+		publisher.setPublicName("한빛미디어");
 		
 		Publisher findPublisher=publisherService.selectPublisherByCodeName(publisher);
 		Assert.assertNotNull( findPublisher.getPublicCode());
+	}
+	
+	/*@Test
+	public void testInsertPublisher() {
+		Publisher publisher=new Publisher("0006", "재진사");
+		int res=publisherService.insertPublisher(publisher);
+	}
+	
+	@Test
+	public void testUpdatePublisher() {
+		Publisher publisher=new Publisher();
+		publisher.setPublicCode("0006");
+		publisher.setPublicName("DGIT");
+		
+		int result=publisherService.updatePublisher(publisher);
+		
+	}*/
+	
+	@Test
+	public void testDeletePublisher() {
+		Publisher publisher=new Publisher();
+		publisher.setPublicName("0006");
+		
+		int deletePublisher=publisherService.deletePublisher(publisher);
 	}
 
 }

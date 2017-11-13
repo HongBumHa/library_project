@@ -24,4 +24,47 @@ public class PublisherService{
 			return dao.selectPublisherByCodeName(publisher);
 		}
 	}
+	
+	public int insertPublisher(Publisher publisher) {
+		int res=-1;
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			PublisherDao dao=new PublisherDaoImpl(sqlSession);
+			res=dao.insertPublisher(publisher);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	
+	public int updatePublisher(Publisher publisher) {
+		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			PublisherDao dao=new PublisherDaoImpl(sqlSession);
+			int res=dao.updatePublisher(publisher);
+			sqlSession.commit();
+			return res;
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	public int deletePublisher(Publisher publisher) {
+		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			PublisherDao dao=new PublisherDaoImpl(sqlSession);
+			int res= dao.deletePublisher(publisher);
+			sqlSession.commit();
+			return res;
+		} catch (Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
 }
