@@ -28,13 +28,13 @@ public class HistoryViewTest {
 		historyViewService = null;
 	}
 
-	@Test
+	/*@Test
 	public void test1_1FindAllHistoryViewData() {
 		List<HistoryView> lists = historyViewService.findAllHistoryViewData();
 		Assert.assertNotNull(lists);
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void test1_2FindWhereHistoryViewData() {
 		HistoryView historyView = new HistoryView();
 		historyView.setUserId("test");
@@ -78,5 +78,5 @@ public class HistoryViewTest {
 		
 		List<HistoryView> lists = historyViewService.findWhereHistoryViewData(historyView);
 		Assert.assertNotNull(lists);
-	}
+	}*/
 }

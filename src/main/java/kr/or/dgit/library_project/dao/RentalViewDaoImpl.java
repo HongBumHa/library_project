@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -27,8 +28,13 @@ public class RentalViewDaoImpl implements RentalViewDao {
 	}
 
 	@Override
-	public List<RentalView> selectByWhereRentalView(RentalView rentalview) {
+	public Vector<RentalView> selectByWhereRentalView(RentalView rentalview) {
 		log.debug("selectByWhereRentalView()");
-		return sqlSession.selectList(namespace + ".selectByWhereRentalView", rentalview);
+		Vector<RentalView> vv = new Vector<>();
+		List<RentalView> lists =  sqlSession.selectList(namespace + ".selectByWhereRentalView", rentalview);
+		for(RentalView rv : lists) {
+			vv.add(rv);
+		}
+		return vv;
 	}
 }

@@ -2,6 +2,7 @@ package kr.or.dgit.library_project.test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -70,18 +71,21 @@ public class BookGroupTest {
 	public void test1_5FindAllRentalView() {
 		List<RentalView> lists = rentalViewService.findAllRentalView();
 		Assert.assertNotNull(lists);
-	}
+	}*/
 	
 	@Test
 	public void test1_6FindByWhereRentalView() {
 		RentalView rentalView = new RentalView();
 		rentalView.setUserId("test");
 		
-		List<RentalView> lists = rentalViewService.findByWhereRentalView(rentalView);
-		Assert.assertNotNull(lists);
+//		List<RentalView> lists = rentalViewService.findByWhereRentalView(rentalView);
+		
+		Vector<RentalView> vec = rentalViewService.findByWhereRentalView(rentalView);
+		
+		Assert.assertNotNull(vec);
 	}
 	
-	@Test
+	/*@Test
 	public void test1_7FindByWhereRentalView() {
 		RentalView rentalView = new RentalView();
 		Date insertDate = rentalView.parseDate("2017-11-12");
