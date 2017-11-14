@@ -43,8 +43,7 @@ public class TestingMaimUi {
 		
 		RentalBookPanel panel = new RentalBookPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		
-		
+	
 		
 	}
 
