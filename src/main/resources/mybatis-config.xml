@@ -8,9 +8,9 @@
 	</settings>
 
 	<typeAliases>
-		<package name="kr.or.dgit.library_project.dto"/>
+		<package name="kr.or.dgit.library_project.dto" />
 	</typeAliases>
-	
+
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -25,13 +25,14 @@
 
 	<mappers>
 		<mapper resource="kr/or/dgit/library_project/mappers/UserRankMapper.xml" />
-		<mapper resource="kr/or/dgit/library_project/mappers/PublisherMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/RentalViewMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/HistoryMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/RentalBookMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/UsersMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/RentalMapper.xml"/>
-		<mapper resource="kr/or/dgit/library_project/mappers/HistoryMapper.xml"/>
+		<mapper resource="kr/or/dgit/library_project/mappers/PublisherMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/RentalViewMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/HistoryMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/RentalBookMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/UsersMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/BookGroupMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/BookMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/PostMapper.xml" />
 	</mappers>
 
 </configuration>

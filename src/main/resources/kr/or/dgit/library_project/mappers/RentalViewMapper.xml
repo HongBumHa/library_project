@@ -25,11 +25,11 @@
 		</where>
 	</sql>
 	
-	<select id="selectAllRentalView" resultType="HistoryView">
+	<select id="selectAllRentalView" resultType="RentalView">
 		<include refid="allRentalView"/>
 	</select>
 	
-	<select id="selectByWhereRentalView" parameterType="HistoryView" resultType="HistoryView">
+	<select id="selectByWhereRentalView" parameterType="RentalView" resultType="RentalView">
 		<include refid="allRentalView"/>
 		<include refid="whereRentalData"/>
 	</select>

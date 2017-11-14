@@ -22,7 +22,7 @@ public class TestServiceBook {
 		bookService=null;
 	}
 
-	@Test
+	/*@Test
 	public void testSelectBookByAll() {
 		List<Book> lists=bookService.selectBookByAll();
 		Assert.assertNotNull(lists);
@@ -35,7 +35,7 @@ public class TestServiceBook {
 		
 		Book findBook=bookService.selectBookBySomething(book);
 		
-	}
+	}*/
 	
 	/*@Test
 	public void testInsertBook() {
@@ -56,12 +56,12 @@ public class TestServiceBook {
 		int result=bookService.updateBook(book);
 	}*/
 	
-	@Test
+	/*@Test
 	public void testDeleteBook() {
 		Book book=new Book();
 		book.setAuthor("배재진");
 		int deleteBook=bookService.deleteBook(book);
-	}
+	}*/
 
 
 }
