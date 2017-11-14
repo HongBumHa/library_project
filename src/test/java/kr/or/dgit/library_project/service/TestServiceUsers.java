@@ -17,7 +17,7 @@ public class TestServiceUsers {
 	private static UsersService service;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		service = new UsersService();
+		service =  UsersService.getInstance();
 	}
 
 	@AfterClass

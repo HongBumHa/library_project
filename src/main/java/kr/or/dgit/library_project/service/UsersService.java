@@ -10,6 +10,11 @@ import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class UsersService {
+	private static final UsersService instance = new UsersService();
+	private UsersService() {}
+	public static  UsersService getInstance() {
+		return instance;
+	}
 	public List<Users> findUsersByAll(){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			UsersDao dao = new UsersDaoImpl(sqlSession);
@@ -52,6 +57,5 @@ public class UsersService {
 		}
 		return res;
 	}
-	
-	
+
 }
