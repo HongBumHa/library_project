@@ -5,6 +5,18 @@
 		select * from publisher
 	</sql>
 	
+	<sql id="insertSql">
+		insert into publisher values(#{publicCode}, #{publicName})
+	</sql>
+	
+	<sql id="updateSql">
+		update publisher set public_name=#{publicName}
+	</sql>
+	
+	<sql id="deleteSql">
+		delete from publisher
+	</sql>
+	
 	<sql id="whereSqlCode">
 		<where>
 			<if test="publicCode != null">
@@ -24,17 +36,7 @@
 		</where>
 	</sql>
 	
-	<sql id="insertSql">
-		insert into publisher values(#{publicCode}, #{publicName})
-	</sql>
 	
-	<sql id="updateSql">
-		update publisher set public_name=#{publicName}
-	</sql>
-	
-	<sql id="deleteSql">
-		delete from publisher
-	</sql>
 	
 	<!-- selectPublisherByAll -->
 	<select id="selectPublisherByAll" parameterType="Publisher" resultType="Publisher">
