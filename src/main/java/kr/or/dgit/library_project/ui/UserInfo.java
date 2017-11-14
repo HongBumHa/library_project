@@ -3,6 +3,7 @@ package kr.or.dgit.library_project.ui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.DefaultComboBoxModel;
@@ -19,11 +20,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.UsersService;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
 
 public class UserInfo extends JFrame {
-
+	private UsersService service = UsersService.getInstance();
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -41,13 +46,13 @@ public class UserInfo extends JFrame {
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JTextField textField_10;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
-	private JTextField textField_17;
-	private JTextField textField_18;
-	private JTextField textField_19;
-	private JTable table_2;
+	private JTextField tfBookCode;
+	private JTextField tfBookName;
+	private JTextField tfAuthor;
+	private JTextField tfPublisher;
+	private JTextField tfPrice;
+	private JTextField tfDelayDay;
+	private JTable RentalDataTable;
 	private JTextField textField_20;
 	private JTextField textField_21;
 	private JTextField textField_22;
@@ -56,21 +61,9 @@ public class UserInfo extends JFrame {
 	private JTextField textField_25;
 	private JTextField textField_26;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserInfo frame = new UserInfo();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-
-	public UserInfo() {
+	public UserInfo(Users users) {
+		System.out.println(users);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 1008, 582);
 		contentPane = new JPanel();
@@ -156,17 +149,18 @@ public class UserInfo extends JFrame {
 		panel.add(panel_3);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel label = new JLabel("xxx회원님의 대여 현황");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label);
+		JLabel lblUserId = new JLabel(users.getUserName()+"회원님의 대여 현황");
+		lblUserId.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserId);
 		
-		JLabel label_1 = new JLabel("대여: 5권");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_1);
+		//책 테이블 완성후 설정하기
+		JLabel lblUserRental = new JLabel("총대여: 권");
+		lblUserRental.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserRental);
 		
-		JLabel label_2 = new JLabel("미반납: 1권");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_2);
+		JLabel lblUserReturnbook = new JLabel("미반납: 1권");
+		lblUserReturnbook.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserReturnbook);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(0, 85, 195, 363);
@@ -260,17 +254,6 @@ public class UserInfo extends JFrame {
 		panel_19.add(panel_21);
 		panel_21.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel label_21 = new JLabel("xxx회원님의 대여 현황");
-		label_21.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_21);
-		
-		JLabel label_22 = new JLabel("대여: 5권");
-		label_22.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_22);
-		
-		JLabel label_23 = new JLabel("미반납: 1권");
-		label_23.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_23);
 		
 		JPanel panel_22 = new JPanel();
 		panel_22.setBounds(0, 85, 195, 363);
@@ -330,108 +313,126 @@ public class UserInfo extends JFrame {
 		JButton button_7 = new JButton("취소");
 		panel_23.add(button_7);
 		
-		JPanel panel_15 = new JPanel();
-		tabbedPane.addTab("반 납", null, panel_15, null);
-		panel_15.setLayout(null);
+		JPanel returnTab = new JPanel();
+		tabbedPane.addTab("반 납", null, returnTab, null);
+		returnTab.setLayout(null);
 		
-		JPanel panel_16 = new JPanel();
-		panel_16.setBounds(218, 0, 455, 257);
-		panel_16.setLayout(null);
-		panel_15.add(panel_16);
+		JPanel returnTabInfo = new JPanel();
+		returnTabInfo.setBounds(218, 0, 455, 257);
+		returnTabInfo.setLayout(null);
+		returnTab.add(returnTabInfo);
 		
-		JPanel panel_17 = new JPanel();
-		panel_17.setLayout(null);
-		panel_17.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_17.setBounds(12, 39, 424, 167);
-		panel_16.add(panel_17);
+		JPanel returnTabTextField = new JPanel();
+		returnTabTextField.setLayout(null);
+		returnTabTextField.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		returnTabTextField.setBounds(12, 39, 424, 167);
+		returnTabInfo.add(returnTabTextField);
 		
-		JLabel label_11 = new JLabel("도서코드");
-		label_11.setHorizontalAlignment(SwingConstants.CENTER);
-		label_11.setBounds(0, 2, 128, 27);
-		panel_17.add(label_11);
+		JLabel lbBookCode = new JLabel("도서코드");
+		lbBookCode.setHorizontalAlignment(SwingConstants.CENTER);
+		lbBookCode.setBounds(0, 2, 128, 27);
+		returnTabTextField.add(lbBookCode);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(131, 2, 290, 27);
-		panel_17.add(textField_14);
+		tfBookCode = new JTextField();
+		tfBookCode.setEnabled(false);
+		tfBookCode.setEditable(false);
+		tfBookCode.setHorizontalAlignment(SwingConstants.LEFT);
+		tfBookCode.setColumns(10);
+		tfBookCode.setBounds(131, 2, 290, 27);
+		returnTabTextField.add(tfBookCode);
 		
-		JLabel label_15 = new JLabel("도서명");
-		label_15.setHorizontalAlignment(SwingConstants.CENTER);
-		label_15.setBounds(0, 29, 128, 27);
-		panel_17.add(label_15);
+		JLabel lbBookName = new JLabel("도서명");
+		lbBookName.setHorizontalAlignment(SwingConstants.CENTER);
+		lbBookName.setBounds(0, 29, 128, 27);
+		returnTabTextField.add(lbBookName);
 		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(131, 29, 290, 27);
-		panel_17.add(textField_15);
+		tfBookName = new JTextField();
+		tfBookName.setEnabled(false);
+		tfBookName.setEditable(false);
+		tfBookName.setHorizontalAlignment(SwingConstants.LEFT);
+		tfBookName.setColumns(10);
+		tfBookName.setBounds(131, 29, 290, 27);
+		returnTabTextField.add(tfBookName);
 		
-		JLabel label_16 = new JLabel("저 자");
-		label_16.setHorizontalAlignment(SwingConstants.CENTER);
-		label_16.setBounds(0, 56, 128, 27);
-		panel_17.add(label_16);
+		JLabel lbBookAuthor = new JLabel("저 자");
+		lbBookAuthor.setHorizontalAlignment(SwingConstants.CENTER);
+		lbBookAuthor.setBounds(0, 56, 128, 27);
+		returnTabTextField.add(lbBookAuthor);
 		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(131, 56, 290, 27);
-		panel_17.add(textField_16);
+		tfAuthor = new JTextField();
+		tfAuthor.setEnabled(false);
+		tfAuthor.setEditable(false);
+		tfAuthor.setHorizontalAlignment(SwingConstants.LEFT);
+		tfAuthor.setColumns(10);
+		tfAuthor.setBounds(131, 56, 290, 27);
+		returnTabTextField.add(tfAuthor);
 		
-		JLabel label_17 = new JLabel("출판사");
-		label_17.setHorizontalAlignment(SwingConstants.CENTER);
-		label_17.setBounds(0, 83, 128, 27);
-		panel_17.add(label_17);
+		JLabel lbPublisher = new JLabel("출판사");
+		lbPublisher.setHorizontalAlignment(SwingConstants.CENTER);
+		lbPublisher.setBounds(0, 83, 128, 27);
+		returnTabTextField.add(lbPublisher);
 		
-		textField_17 = new JTextField();
-		textField_17.setColumns(10);
-		textField_17.setBounds(131, 83, 290, 27);
-		panel_17.add(textField_17);
+		tfPublisher = new JTextField();
+		tfPublisher.setEnabled(false);
+		tfPublisher.setEditable(false);
+		tfPublisher.setHorizontalAlignment(SwingConstants.LEFT);
+		tfPublisher.setColumns(10);
+		tfPublisher.setBounds(131, 83, 290, 27);
+		returnTabTextField.add(tfPublisher);
 		
-		JLabel label_18 = new JLabel("가격");
-		label_18.setHorizontalAlignment(SwingConstants.CENTER);
-		label_18.setBounds(0, 110, 128, 27);
-		panel_17.add(label_18);
+		JLabel lbPrice = new JLabel("가격");
+		lbPrice.setHorizontalAlignment(SwingConstants.CENTER);
+		lbPrice.setBounds(0, 110, 128, 27);
+		returnTabTextField.add(lbPrice);
 		
-		textField_18 = new JTextField();
-		textField_18.setColumns(10);
-		textField_18.setBounds(131, 110, 290, 27);
-		panel_17.add(textField_18);
+		tfPrice = new JTextField();
+		tfPrice.setEnabled(false);
+		tfPrice.setEditable(false);
+		tfPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		tfPrice.setColumns(10);
+		tfPrice.setBounds(131, 110, 290, 27);
+		returnTabTextField.add(tfPrice);
 		
-		JLabel label_19 = new JLabel("연체 일수");
-		label_19.setHorizontalAlignment(SwingConstants.CENTER);
-		label_19.setBounds(0, 137, 128, 27);
-		panel_17.add(label_19);
+		JLabel lbDelayDay = new JLabel("연체 일수");
+		lbDelayDay.setHorizontalAlignment(SwingConstants.CENTER);
+		lbDelayDay.setBounds(0, 137, 128, 27);
+		returnTabTextField.add(lbDelayDay);
 		
-		textField_19 = new JTextField();
-		textField_19.setColumns(10);
-		textField_19.setBounds(131, 137, 290, 27);
-		panel_17.add(textField_19);
+		tfDelayDay = new JTextField();
+		tfDelayDay.setEnabled(false);
+		tfDelayDay.setEditable(false);
+		tfDelayDay.setHorizontalAlignment(SwingConstants.LEFT);
+		tfDelayDay.setColumns(10);
+		tfDelayDay.setBounds(131, 137, 290, 27);
+		returnTabTextField.add(tfDelayDay);
 		
-		JPanel panel_18 = new JPanel();
-		panel_18.setLayout(null);
-		panel_18.setBounds(12, 206, 424, 41);
-		panel_16.add(panel_18);
+		JPanel returnTabButton = new JPanel();
+		returnTabButton.setLayout(null);
+		returnTabButton.setBounds(12, 206, 424, 41);
+		returnTabInfo.add(returnTabButton);
 		
-		JButton button_3 = new JButton("반 납");
-		button_3.setFont(new Font("굴림", Font.BOLD, 13));
-		button_3.setBounds(127, 5, 82, 36);
-		panel_18.add(button_3);
+		JButton btReturn = new JButton("반 납");
+		btReturn.setFont(new Font("굴림", Font.BOLD, 13));
+		btReturn.setBounds(127, 5, 82, 36);
+		returnTabButton.add(btReturn);
 		
-		JButton button_4 = new JButton("취 소");
-		button_4.setFont(new Font("굴림", Font.BOLD, 13));
-		button_4.setBounds(214, 5, 82, 36);
-		panel_18.add(button_4);
+		JButton btCancel = new JButton("취 소");
+		btCancel.setFont(new Font("굴림", Font.BOLD, 13));
+		btCancel.setBounds(214, 5, 82, 36);
+		returnTabButton.add(btCancel);
 		
-		JLabel label_20 = new JLabel("도서 정보");
-		label_20.setHorizontalAlignment(SwingConstants.CENTER);
-		label_20.setFont(new Font("굴림", Font.BOLD, 15));
-		label_20.setBounds(22, 5, 105, 28);
-		panel_16.add(label_20);
+		JLabel lbTitle = new JLabel("도서 정보");
+		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitle.setFont(new Font("굴림", Font.BOLD, 15));
+		lbTitle.setBounds(22, 5, 105, 28);
+		returnTabInfo.add(lbTitle);
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(0, 261, 975, 232);
-		panel_15.add(scrollPane_2);
+		JScrollPane RentalTableField = new JScrollPane();
+		RentalTableField.setBounds(0, 261, 975, 232);
+		returnTab.add(RentalTableField);
 		
-		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
+		RentalDataTable = new JTable();
+		RentalDataTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
 				{null, null, null, null, null, null},
@@ -451,7 +452,7 @@ public class UserInfo extends JFrame {
 				"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
 			}
 		));
-		scrollPane_2.setViewportView(table_2);
+		RentalTableField.setViewportView(RentalDataTable);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("회원정보", null, panel_1, null);
@@ -474,6 +475,7 @@ public class UserInfo extends JFrame {
 		panel_8.add(lblNewLabel);
 		
 		textField_7 = new JTextField();
+		textField_7.setEnabled(false);
 		textField_7.setBounds(86, 5, 116, 21);
 		panel_8.add(textField_7);
 		textField_7.setColumns(10);
@@ -578,28 +580,23 @@ public class UserInfo extends JFrame {
 		textField_13.setColumns(10);
 		panel_14.add(textField_13);
 		
-		JButton btnNewButton_3 = new JButton("확 인");
-		btnNewButton_3.setBounds(190, 174, 97, 23);
+		JButton btnNewButton_3 = new JButton("수 정");
+		btnNewButton_3.setBounds(36, 174, 97, 23);
 		panel_6.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("취 소");
-		btnNewButton_4.setBounds(293, 174, 97, 23);
+		btnNewButton_4.setBounds(145, 174, 97, 23);
 		panel_6.add(btnNewButton_4);
+		
+		JButton btnNewButton_1 = new JButton("회원탈퇴");
+		btnNewButton_1.setBounds(490, 174, 81, 23);
+		panel_6.add(btnNewButton_1);
 		
 		JPanel panel_7 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setVgap(15);
 		panel_7.setBounds(96, 46, 148, 137);
 		panel_1.add(panel_7);
-		
-		JButton btnNewButton = new JButton("수 정");
-		panel_7.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("회원탈퇴");
-		panel_7.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("대여/반납 내역");
-		panel_7.add(btnNewButton_2);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(79, 250, 861, 243);
@@ -644,5 +641,9 @@ public class UserInfo extends JFrame {
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
+		
+		JButton btnNewButton_2 = new JButton("대여/반납 내역");
+		btnNewButton_2.setBounds(79, 217, 115, 23);
+		panel_1.add(btnNewButton_2);
 	}
 }

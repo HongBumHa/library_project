@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.library_project.dao.BookGroupDao">
+	<sql id="selectAllBigGroup">
+		select big_group, book_big_group_name
+		from book_big_group
+	</sql>
+	
+	
+	<sql id="selectAllMiddleGroup">
+		select middle_group, book_middle_group_name 
+		from book_middle_group 
+	</sql>
+	
+	<sql id="whereBigGroupNo">
+		<where>
+			<if test="bigGroup != null">
+				big_group = #{bigGroup}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereMiddleGroupNo">
+		<where>
+			<if test="bigGroup != null">
+				and big_group = #{bigGroup}
+			</if>
+			<if test = "middleGroup != null">
+				and middle_group = #{middleGroup}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAllBookBigGroup" resultType="BookGroup">
+		<include refid="selectAllBigGroup"/>
+	</select>
+	
+	<select id="selectAllMiddleGroup" parameterType="BookGroup" resultType="BookGroup">
+		<include refid="selectAllMiddleGroup"/>
+		<include refid="whereBigGroupNo"/>
+	</select>
+	
+	<select id = "selectByNoBigGroup" parameterType="BookGroup" resultType="BookGroup">
+		<include refid="selectAllBigGroup"/>
+		<include refid="whereBigGroupNo"/>
+	</select>
+	
+	<select id="selectByNoMiddleGroup" parameterType="BookGroup" resultType="BookGroup">
+		<include refid="selectAllMiddleGroup"/>
+		<include refid="whereMiddleGroupNo"/>
+	</select>
+</mapper>

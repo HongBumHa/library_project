@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.library_project.dao.RentalBookDao">
+	<sql id = "insertSql">
+		insert into rentalbook(rentalday, book_code, user_id, returnday)
+		values(#{rentalDay}, #{bookCode}, #{userId}, #{returnDay})
+	</sql>
+	
+	<insert id="insertData" parameterType="RentalBook">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<sql id = "deleteSql">
+		delete from rentalbook
+	</sql>
+	
+	<sql id = "deleteWhereSql">
+		<where>
+			<if test="bookCode != null">
+				and book_code = #{bookCode}
+			</if>
+			<if test="userId != null">
+				 and user_id = #{userId}
+			</if>
+		</where>
+	</sql>
+	
+	<delete id="deleteByWhereRentalBook" parameterType="RentalBook">
+		<include refid="deleteSql"/>
+		<include refid="deleteWhereSql"/>
+	</delete>
+	
+</mapper>
