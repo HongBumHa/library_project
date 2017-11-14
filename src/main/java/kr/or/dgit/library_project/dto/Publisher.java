@@ -7,6 +7,13 @@ public class Publisher {
 	public Publisher() {
 	}
 
+
+	public Publisher(String publicCode, String publicName) {
+		this.publicCode = publicCode;
+		this.publicName = publicName;
+	}
+
+
 	public String getPublicCode() {
 		return publicCode;
 	}

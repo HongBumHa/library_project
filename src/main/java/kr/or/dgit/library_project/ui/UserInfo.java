@@ -21,8 +21,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class UserInfo extends JFrame {
+import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.UsersService;
 
+import java.awt.Font;
+import javax.swing.ImageIcon;
+
+public class UserInfo extends JFrame {
+	private UsersService service = UsersService.getInstance();
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -55,21 +61,9 @@ public class UserInfo extends JFrame {
 	private JTextField textField_25;
 	private JTextField textField_26;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserInfo frame = new UserInfo();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-
-	public UserInfo() {
+	public UserInfo(Users users) {
+		System.out.println(users);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 1008, 582);
 		contentPane = new JPanel();
@@ -155,17 +149,18 @@ public class UserInfo extends JFrame {
 		panel.add(panel_3);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel label = new JLabel("xxx회원님의 대여 현황");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label);
+		JLabel lblUserId = new JLabel(users.getUserName()+"회원님의 대여 현황");
+		lblUserId.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserId);
 		
-		JLabel label_1 = new JLabel("대여: 5권");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_1);
+		//책 테이블 완성후 설정하기
+		JLabel lblUserRental = new JLabel("총대여: 권");
+		lblUserRental.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserRental);
 		
-		JLabel label_2 = new JLabel("미반납: 1권");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_2);
+		JLabel lblUserReturnbook = new JLabel("미반납: 1권");
+		lblUserReturnbook.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblUserReturnbook);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(0, 85, 195, 363);
@@ -259,17 +254,6 @@ public class UserInfo extends JFrame {
 		panel_19.add(panel_21);
 		panel_21.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel label_21 = new JLabel("xxx회원님의 대여 현황");
-		label_21.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_21);
-		
-		JLabel label_22 = new JLabel("대여: 5권");
-		label_22.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_22);
-		
-		JLabel label_23 = new JLabel("미반납: 1권");
-		label_23.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_21.add(label_23);
 		
 		JPanel panel_22 = new JPanel();
 		panel_22.setBounds(0, 85, 195, 363);
@@ -491,6 +475,7 @@ public class UserInfo extends JFrame {
 		panel_8.add(lblNewLabel);
 		
 		textField_7 = new JTextField();
+		textField_7.setEnabled(false);
 		textField_7.setBounds(86, 5, 116, 21);
 		panel_8.add(textField_7);
 		textField_7.setColumns(10);
@@ -595,28 +580,23 @@ public class UserInfo extends JFrame {
 		textField_13.setColumns(10);
 		panel_14.add(textField_13);
 		
-		JButton btnNewButton_3 = new JButton("확 인");
-		btnNewButton_3.setBounds(190, 174, 97, 23);
+		JButton btnNewButton_3 = new JButton("수 정");
+		btnNewButton_3.setBounds(36, 174, 97, 23);
 		panel_6.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("취 소");
-		btnNewButton_4.setBounds(293, 174, 97, 23);
+		btnNewButton_4.setBounds(145, 174, 97, 23);
 		panel_6.add(btnNewButton_4);
+		
+		JButton btnNewButton_1 = new JButton("회원탈퇴");
+		btnNewButton_1.setBounds(490, 174, 81, 23);
+		panel_6.add(btnNewButton_1);
 		
 		JPanel panel_7 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
 		flowLayout.setVgap(15);
 		panel_7.setBounds(96, 46, 148, 137);
 		panel_1.add(panel_7);
-		
-		JButton btnNewButton = new JButton("수 정");
-		panel_7.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("회원탈퇴");
-		panel_7.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("대여/반납 내역");
-		panel_7.add(btnNewButton_2);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(79, 250, 861, 243);
@@ -661,5 +641,9 @@ public class UserInfo extends JFrame {
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
+		
+		JButton btnNewButton_2 = new JButton("대여/반납 내역");
+		btnNewButton_2.setBounds(79, 217, 115, 23);
+		panel_1.add(btnNewButton_2);
 	}
 }
