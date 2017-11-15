@@ -11,22 +11,28 @@ public class RentalBookDaoImpl implements RentalBookDao {
 	private SqlSession sqlSession;
 	private static final Log log = LogFactory.getLog(RentalBookDao.class);
 	private String namespace = "kr.or.dgit.library_project.dao.RentalBookDao";
-	
-	public RentalBookDaoImpl() {}
 
+	public RentalBookDaoImpl() {
+	}
 
 	public RentalBookDaoImpl(SqlSession sqlSession) {
 		super();
 		this.sqlSession = sqlSession;
 	}
 
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
 
 	@Override
 	public int insertData(RentalBook rentalBook) {
 		log.debug("insertData()");
 		return sqlSession.insert(namespace + ".insertData", rentalBook);
 	}
-
 
 	@Override
 	public int deleteByWhereRentalBook(RentalBook rentalBook) {

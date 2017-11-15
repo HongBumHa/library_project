@@ -152,9 +152,10 @@ public class MainUi extends JFrame {
 	}
 	public boolean userId() {
 		String id=panel.getTextField().getText();
+		UserInfo uinfo = new UserInfo();
+		uinfo.setUserId(id);
 		String pw=passwordField.getText();
 		JOptionPane.showMessageDialog(null, id+"님 환영합니다.");
-		UserInfo uinfo = new UserInfo();
 		uinfo.setVisible(true);
 		return true;
 	}

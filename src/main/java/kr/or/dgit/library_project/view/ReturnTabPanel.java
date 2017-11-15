@@ -2,6 +2,10 @@ package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -14,6 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.dao.RentalBookDaoImpl;
+import kr.or.dgit.library_project.dao.RentalViewDaoImpl;
+import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.service.RentalViewService;
 
@@ -25,6 +32,11 @@ public class ReturnTabPanel extends JPanel {
 	private JTextField tfPrice;
 	private JTextField tfDelayDay;
 	private JTable RentalDataTable;
+	private String userId;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * Create the panel.
@@ -129,7 +141,7 @@ public class ReturnTabPanel extends JPanel {
 		JButton btReturn = new JButton("반 납");
 		btReturn.setFont(new Font("굴림", Font.BOLD, 13));
 		btReturn.setBounds(127, 5, 82, 36);
-		returnTabButton.add(btReturn);
+		
 		
 		JButton btCancel = new JButton("취 소");
 		btCancel.setFont(new Font("굴림", Font.BOLD, 13));
@@ -191,6 +203,36 @@ public class ReturnTabPanel extends JPanel {
 		}
 		
 		RentalDataTable.setModel(new DefaultTableModel(datas, st));
+		JTextField[] tfFields = {tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay};
+		RentalDataTable.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				System.out.println(RentalDataTable.getSelectedRow());
+				int i =0;
+				for(i= 0; i < st.length; i++) {
+					tfFields[i].setText(RentalDataTable.getValueAt(RentalDataTable.getSelectedRow(), i).toString());
+				}
+				/*for(int n = i ; n < st.length ; n++) {
+					Object numData = RentalDataTable.getValueAt(RentalDataTable.getSelectedRow(), n);
+					tfFields[n].setText(numData.toString());
+				}*/
+			}		
+		});
+		
+		btReturn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RentalBookDaoImpl rtBookDao = new RentalBookDaoImpl();
+				RentalBook rtBook = new RentalBook();
+				rtBook.setBookCode(tfBookCode.getText());
+				rtBook.setUserId(userId);
+				rtBookDao.deleteByWhereRentalBook(rtBook);
+			}
+		});
+		returnTabButton.add(btReturn);
 		
 		scrollPane.setBounds(33, 339, 743, 232);
 		add(scrollPane);
