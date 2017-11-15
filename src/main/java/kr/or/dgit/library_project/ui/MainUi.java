@@ -6,8 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,25 +15,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.dgit.library_project.common.JTextFieldBlockComponent;
+import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.UsersService;
 
-import java.awt.SystemColor;
-
+@SuppressWarnings("serial")
 public class MainUi extends JFrame {
 
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextFieldBlockComponent panel;
-	private ImageIcon img=null;
+	private UsersService service = UsersService.getInstance();
+	private static Users users;
 
-
-	
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
@@ -41,8 +40,7 @@ public class MainUi extends JFrame {
 				| UnsupportedLookAndFeelException e1) {
 			e1.printStackTrace();
 		}
-		
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -63,24 +61,6 @@ public class MainUi extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
-		JRadioButton userRadio = new JRadioButton("회 원");
-		userRadio.setHorizontalAlignment(SwingConstants.CENTER);
-		userRadio.setSelected(true);
-		userRadio.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-		userRadio.setBounds(93, 113, 66, 23);
-		contentPane.add(userRadio);
-
-		JRadioButton managerRadio = new JRadioButton("관리자");
-		managerRadio.setHorizontalAlignment(SwingConstants.CENTER);
-		managerRadio.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-		managerRadio.setBounds(163, 113, 73, 23);
-		contentPane.add(managerRadio);
-
-		ButtonGroup radioGroup = new ButtonGroup();
-		radioGroup.add(userRadio);
-		radioGroup.add(managerRadio);
 
 		JLabel lblNewLabel = new JLabel("DGIT Library");
 		lblNewLabel.setForeground(new Color(255, 99, 71));
@@ -109,15 +89,10 @@ public class MainUi extends JFrame {
 		btnNewButton.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (userRadio.isSelected() == true) {
-					userId();
-				}
-				if (managerRadio.isSelected() == true) {
-					managerId();
-				}
+				checkId();
 			}
 		});
-		
+
 		btnNewButton.setBounds(86, 261, 79, 23);
 		contentPane.add(btnNewButton);
 
@@ -130,32 +105,61 @@ public class MainUi extends JFrame {
 		btnNewButton_2.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
 		btnNewButton_2.setBounds(116, 295, 97, 23);
 		contentPane.add(btnNewButton_2);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\DGIT3-16\\Desktop\\2.jpg"));
 		lblNewLabel_1.setBounds(0, 0, 686, 446);
 		contentPane.add(lblNewLabel_1);
 	}
 
-	public boolean managerId() {
-		String id=panel.getTextField().getText();
-		String pw=passwordField.getText();
-		if (id.equals("manager01") && pw.equals("1q2w3e4r")) {
-			JOptionPane.showMessageDialog(null, id+"님 환영합니다.");
-			Manager managerUi = new Manager();
-			managerUi.setVisible(true);
-			return true;
+	private void checkId() {
+		String id = panel.getTextField().getText();
+		String pw = passwordField.getText();
+		int rank = 0;
+		String resId = null;
+		String resPw = null;
+		List<Users> lists = service.findUsersByAll();
+		for (Users u : lists) {
+
+			if (id.equals(u.getUserId())) {
+
+				resId = u.getUserId();
+				if (pw.equals(u.getUserPw())) {
+
+					resPw = u.getUserPw();
+					rank = u.getRankCode();
+					break;
+				}
+			}
+		}
+
+		if (resId == null) {
+			JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 다시 확인해주세요");
+
+		} else if (resPw == null) {
+			JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요");
 		} else {
-			JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 다시 확인하세요.");
-			return false;
+			users = service.findUsersByNo(new Users(id));
+			switch (rank) {
+			case 1:
+				JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
+				Manager managerUi = new Manager();
+				managerUi.setVisible(true);
+				break;
+			case 2:
+				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
+				UserInfo uinfo = new UserInfo();
+				uinfo.setVisible(true);
+				break;
+			case 3:
+				JOptionPane.showMessageDialog(null, "블랙리스트입니다");
+				break;
+			}
+
 		}
 	}
-	public boolean userId() {
-		String id=panel.getTextField().getText();
-		String pw=passwordField.getText();
-		JOptionPane.showMessageDialog(null, id+"님 환영합니다.");
-		UserInfo uinfo = new UserInfo();
-		uinfo.setVisible(true);
-		return true;
+
+	public static Users getUsers() {
+		return users;
 	}
 }
