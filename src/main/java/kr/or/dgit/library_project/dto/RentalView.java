@@ -14,6 +14,13 @@ public class RentalView {
 	private int price;
 	private Date rentalDay;
 	private Date returnDay;
+	
+public Object[] toArrayReturn() {
+		
+		return new Object[]{bookCode, bookName,author, 
+						publicName, price, null};
+	}
+	
 	public String getBookCode() {
 		return bookCode;
 	}
@@ -86,4 +93,6 @@ public class RentalView {
 	         return null;
 	     }
 	  }
+	
+	
 }

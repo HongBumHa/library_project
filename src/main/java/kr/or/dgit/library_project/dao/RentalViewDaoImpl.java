@@ -28,13 +28,14 @@ public class RentalViewDaoImpl implements RentalViewDao {
 	}
 
 	@Override
-	public Vector<RentalView> selectByWhereRentalView(RentalView rentalview) {
+	public List<RentalView> selectByWhereRentalView(RentalView rentalview) {
 		log.debug("selectByWhereRentalView()");
-		Vector<RentalView> vv = new Vector<>();
-		List<RentalView> lists =  sqlSession.selectList(namespace + ".selectByWhereRentalView", rentalview);
+//		Vector<RentalView> vv = new Vector<>();
+		/*List<RentalView> lists =  sqlSession.selectList(namespace + ".selectByWhereRentalView", rentalview);
 		for(RentalView rv : lists) {
 			vv.add(rv);
 		}
-		return vv;
+		return vv;*/
+		return sqlSession.selectList(namespace+".selectByWhereRentalView", rentalview);
 	}
 }

@@ -24,7 +24,7 @@ public class TestServicePublisher {
 		publisherService=null;
 	}
 
-	@Test
+	/*@Test
 	public void testSelectPublisherByAll() {
 		List<Publisher> lists=publisherService.selectPublisherByAll();
 		Assert.assertNotNull(lists);
@@ -37,7 +37,7 @@ public class TestServicePublisher {
 		
 		Publisher findPublisher=publisherService.selectPublisherByCodeName(publisher);
 		Assert.assertNotNull( findPublisher.getPublicCode());
-	}
+	}*/
 	
 	/*@Test
 	public void testInsertPublisher() {
@@ -55,12 +55,12 @@ public class TestServicePublisher {
 		
 	}*/
 	
-	@Test
+	/*@Test
 	public void testDeletePublisher() {
 		Publisher publisher=new Publisher();
 		publisher.setPublicName("0006");
 		
 		int deletePublisher=publisherService.deletePublisher(publisher);
-	}
+	}*/
 
 }

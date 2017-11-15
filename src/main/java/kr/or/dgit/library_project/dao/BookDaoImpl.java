@@ -25,9 +25,9 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public Book selectBookBySomething(Book book) {
+	public List<Book> selectBookBySomething(Book book) {
 		log.debug("selectBookBySomething()");
-		return sqlSession.selectOne(namespace+"selectBookBySomething", book);
+		return sqlSession.selectList(namespace+"selectBookBySomething", book);
 	}
 
 	@Override

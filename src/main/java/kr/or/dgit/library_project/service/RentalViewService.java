@@ -18,7 +18,7 @@ public class RentalViewService {
 		}
 	}
 	
-	public Vector<RentalView> findByWhereRentalView(RentalView rentalView){
+	public List<RentalView> findByWhereRentalView(RentalView rentalView){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			RentalViewDao dao = new RentalViewDaoImpl(sqlSession);
 			return dao.selectByWhereRentalView(rentalView);

@@ -73,7 +73,7 @@ public class BookGroupTest {
 		Assert.assertNotNull(lists);
 	}*/
 	
-	@Test
+	/*@Test
 	public void test1_6FindByWhereRentalView() {
 		RentalView rentalView = new RentalView();
 		rentalView.setUserId("test");
@@ -84,7 +84,7 @@ public class BookGroupTest {
 		
 		Assert.assertNotNull(vec);
 	}
-	
+	*/
 	/*@Test
 	public void test1_7FindByWhereRentalView() {
 		RentalView rentalView = new RentalView();

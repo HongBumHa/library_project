@@ -43,13 +43,13 @@ public class TestServiceUsers {
 		Assert.assertEquals(1, res);
 	}*/
 	
-	@Test
+	/*@Test
 	public void testDFindselectByNo() {
 		Users users = new Users("test1");
 		Users users1 = service.findUsersByNo(users);
 		
 		Assert.assertNotNull(users1);
-	}
+	}*/
 	
 /*	@Test
 	public void test2FinddeleteById() {
