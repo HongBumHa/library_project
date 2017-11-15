@@ -10,6 +10,16 @@ import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class BookService {
+	private static final BookService instance = new BookService();
+	
+	public static BookService getInstance() {
+		return instance;
+	}
+
+	public BookService() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<Book> selectBookByAll(){
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			BookDao dao=new BookDaoImpl(sqlSession);
@@ -17,7 +27,7 @@ public class BookService {
 		}
 	}
 	
-	public Book selectBookBySomething(Book book) {
+	public List<Book> selectBookBySomething(Book book) {
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			BookDao dao=new BookDaoImpl(sqlSession);
 			return dao.selectBookBySomething(book);
