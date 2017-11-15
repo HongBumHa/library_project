@@ -5,6 +5,10 @@
 		select * from book
 	</sql>
 	
+	<sql id="selectSqlAll">
+		select book_code, book_name, author, p.public_name, price, amount, all_rentel_count from book b, publisher p
+	</sql>
+	
 	<sql id="insertSql">
 		insert into book (book_code, book_name, author, public_name, price, amount) 
 			values(#{bookCode}, #{bookName}, #{author}, #{publicName}, #{price}, #{amount})
@@ -29,28 +33,28 @@
 	<sql id="whereSqlAll">
 		<where>
 			<if test="bookCode != null">
-				book_code=#{bookCode}
+				b.public_name=p.public_code and book_code=#{bookCode}
 			</if>
 			<if test="bookName != null">
-				and book_name=#{bookName}
+				and b.public_name=p.public_code and book_name=#{bookName}
 			</if>
 			<if test="author != null">
-				and author=#{author}
+				and b.public_name=p.public_code and author=#{author}
 			</if>
 			<if test="publicName != null">
-				and public_name=#{publicName}
+				and b.public_name=p.public_code and p.public_name=#{publicName}
 			</if>
 		</where>
 	</sql>
 	
 	<!-- selectBookByAll -->
 	<select id="selectBookByAll" parameterType="Book" resultType="Book">
-		<include refid="selectSql"/>
+		<include refid="selectSqlAll"/>
 	</select>
 	
 	<!-- selectBookBySomething -->
 	<select id="selectBookBySomething" parameterType="Book" resultType="Book">
-		<include refid="selectSql"/>
+		<include refid="selectSqlAll"/>
 		<include refid="whereSqlAll"/>
 	</select>
 

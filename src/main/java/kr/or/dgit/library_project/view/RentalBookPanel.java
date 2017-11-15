@@ -21,6 +21,11 @@ import javax.swing.table.DefaultTableModel;
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.service.BookService;
 import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class RentalBookPanel extends JPanel {
 
@@ -40,7 +45,7 @@ public class RentalBookPanel extends JPanel {
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(228, 10, 767, 54);
+		pSearch.setBounds(219, 10, 767, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
@@ -72,10 +77,12 @@ public class RentalBookPanel extends JPanel {
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(225, 85, 770, 418);
+		scrollPane.setBounds(219, 74, 770, 418);
 		add(scrollPane);
 
 		table = new JTable();
+		addPopupMenu();
+		
 		loadDataAll();
 		scrollPane.setViewportView(table);
 
@@ -98,7 +105,7 @@ public class RentalBookPanel extends JPanel {
 		pUserRentInfo.add(lblReturn);
 
 		JPanel pBookInfo = new JPanel();
-		pBookInfo.setBounds(12, 99, 195, 363);
+		pBookInfo.setBounds(12, 75, 195, 363);
 		add(pBookInfo);
 		pBookInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -137,7 +144,7 @@ public class RentalBookPanel extends JPanel {
 		tfPrice.setColumns(10);
 		pBookInfo.add(tfPrice);
 
-		JLabel lblRentCount = new JLabel(" 총대여횟수");
+		JLabel lblRentCount = new JLabel(" 수량");
 		pBookInfo.add(lblRentCount);
 
 		tfRentCount = new JTextField();
@@ -145,7 +152,7 @@ public class RentalBookPanel extends JPanel {
 		pBookInfo.add(tfRentCount);
 
 		JPanel pBtn = new JPanel();
-		pBtn.setBounds(24, 472, 171, 31);
+		pBtn.setBounds(22, 448, 171, 31);
 		add(pBtn);
 		pBtn.setLayout(new GridLayout(0, 2, 0, 0));
 
@@ -154,6 +161,41 @@ public class RentalBookPanel extends JPanel {
 
 		JButton btnCancel = new JButton("취소");
 		pBtn.add(btnCancel);
+	}
+
+	private void addPopupMenu() {
+		JPopupMenu popupMenu=new JPopupMenu();
+		JMenuItem menuItem=new JMenuItem("추가하기");
+		popupMenu.add(menuItem);
+		table.setComponentPopupMenu(popupMenu);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addBookInfo();
+				
+			}
+		});
+	}
+	
+	private void addBookInfo() {
+		cleanTf();
+		int selectedIndex=table.getSelectedRow();
+		String bCode=(String) table.getValueAt(selectedIndex, 0);
+		String bName=(String) table.getValueAt(selectedIndex, 1);
+		String bAuthor=(String) table.getValueAt(selectedIndex, 2);
+		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
+		int bPrice=(int) table.getValueAt(selectedIndex, 4);
+		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
+		
+		tfBookCode.setText(bCode);
+		tfBookName.setText(bName);
+		tfAuthor.setText(bAuthor);
+		tfPublisher.setText(bPublisher);
+		tfPrice.setText(String.valueOf(bPrice));
+		tfRentCount.setText(String.valueOf(bRentalCount));
+		
+		
 	}
 
 	public void loadDataAll() {
@@ -217,5 +259,31 @@ public class RentalBookPanel extends JPanel {
 			return lists;
 		}
 		return lists;
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+	
+	private void cleanTf() {
+		tfBookCode.setText("");
+		tfBookName.setText("");
+		tfAuthor.setText("");
+		tfPublisher.setText("");
+		tfPrice.setText("");
+		tfRentCount.setText("");
 	}
 }

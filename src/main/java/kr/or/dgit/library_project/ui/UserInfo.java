@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.view.RentalBookPanel;
 import kr.or.dgit.library_project.view.ReturnTabPanel;
+import kr.or.dgit.library_project.view.UserInfoView;
 
 public class UserInfo extends JFrame {
 	
@@ -35,14 +36,14 @@ public class UserInfo extends JFrame {
 
 	public UserInfo() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1008, 582);
+		setBounds(100, 100, 1009, 575);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(5, 5, 980, 532);
+		tabbedPane.setBounds(5, 5, 980, 534);
 		contentPane.add(tabbedPane);
 
 		RentalBookPanel rentalBookTab = new RentalBookPanel();
