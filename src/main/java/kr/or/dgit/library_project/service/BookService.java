@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,10 +28,10 @@ public class BookService {
 		}
 	}
 	
-	public List<Book> selectBookBySomething(Book book) {
+	public List<Book> selectBookBySomething(Map<String, Object> map) {
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			BookDao dao=new BookDaoImpl(sqlSession);
-			return dao.selectBookBySomething(book);
+			return dao.selectBookBySomething(map);
 		}
 	}
 	

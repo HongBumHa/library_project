@@ -78,9 +78,15 @@ public Object[] toArrayReturn() {
 	@Override
 	public String toString() {
 		return String.format(
-				"RentalView [bookCode=%s, bookName=%s, userId=%s, userName=%s, author=%s, publicName=%s, price=%s, rentalDay=%s, returnDay=%s]",
+				"%s, %s, %s, %s, %s, %s, %s, %s, %s",
 				bookCode, bookName, userId, userName, author, publicName, price, rentalDay, returnDay);
 	}
+	
+	public Object[] toArray() {
+		SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
+		return new Object[] {bookCode, bookName, userId, userName, author, publicName, price, ss.format(rentalDay),ss.format(returnDay)};
+	}
+	
 	public RentalView() {
 		super();
 		// TODO Auto-generated constructor stub

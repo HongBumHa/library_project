@@ -1,16 +1,24 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -20,12 +28,6 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.service.BookService;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 public class RentalBookPanel extends JPanel {
 
@@ -155,26 +157,27 @@ public class RentalBookPanel extends JPanel {
 		String searchBy =(String) comboBox.getSelectedItem();
 		String item = tfSearch.getText();
 		List<Book> lists = null;
-		Book book = new Book();
+		Map<String, Object> map=new HashMap<String, Object>();
 		
-		if (searchBy == "도서코드") {
-			book.setBookCode(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
+		if (searchBy.equals("도서코드")) {
+			map.put("bookCode", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
-		if (searchBy == "도서명") {
-			book.setBookName(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
+		if (searchBy.equals("도서명")) {
+			map.put("bookName", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
-		if (searchBy == "저 자") {
-			book.setAuthor(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
+		if (searchBy.equals("저 자")) {
+			map.put("author", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
-		if (searchBy == "출판사") {
-			book.setPublicName(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
+		if (searchBy.equals("출판사")) {
+
+			map.put("publicName", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
 		return lists;

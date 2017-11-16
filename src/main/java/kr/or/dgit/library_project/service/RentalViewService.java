@@ -11,6 +11,17 @@ import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class RentalViewService {
+	
+private static final RentalViewService instance = new RentalViewService();
+	
+	public static RentalViewService getInstance() {
+		return instance;
+	}
+
+	public RentalViewService() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public List<RentalView> findAllRentalView(){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			RentalViewDao dao = new RentalViewDaoImpl(sqlSession);

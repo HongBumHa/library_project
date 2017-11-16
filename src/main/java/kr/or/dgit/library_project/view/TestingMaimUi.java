@@ -41,7 +41,7 @@ public class TestingMaimUi {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		RentalBookPanel panel = new RentalBookPanel();
+		ManagerRentalBook panel = new ManagerRentalBook();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 	
 		
