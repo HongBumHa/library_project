@@ -31,13 +31,7 @@ public class RentalBookPanel extends JPanel {
 
 	private JPanel contentPane;
 	private JTextField tfSearch;
-	private JTextField tfBookCode;
-	private JTextField tfBookName;
-	private JTextField tfAuthor;
-	private JTextField tfPublisher;
-	private JTextField tfPrice;
-	private JTextField tfRentCount;
-	private JTable table;
+	public static JTable table;
 	private JComboBox comboBox;
 
 	public RentalBookPanel() {
@@ -45,7 +39,7 @@ public class RentalBookPanel extends JPanel {
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(219, 10, 767, 54);
+		pSearch.setBounds(219, 10, 586, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
@@ -57,13 +51,13 @@ public class RentalBookPanel extends JPanel {
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"전체보기", "도서코드", "도서명", "저 자", "출판사"}));
-		comboBox.setBounds(33, 10, 93, 25);
+		comboBox.setBounds(12, 10, 93, 25);
 		pSearch.add(comboBox);
 
 		tfSearch = new JTextField();
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
-		tfSearch.setBounds(158, 10, 421, 25);
+		tfSearch.setBounds(117, 10, 356, 25);
 		pSearch.add(tfSearch);
 
 		JButton btnSearch = new JButton("search");
@@ -73,11 +67,11 @@ public class RentalBookPanel extends JPanel {
 
 			}
 		});
-		btnSearch.setBounds(627, 11, 93, 23);
+		btnSearch.setBounds(485, 11, 93, 23);
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(219, 74, 770, 418);
+		scrollPane.setBounds(12, 74, 793, 418);
 		add(scrollPane);
 
 		table = new JTable();
@@ -92,7 +86,7 @@ public class RentalBookPanel extends JPanel {
 		add(pUserRentInfo);
 		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblUserName = new JLabel("xxx회원님의 대여 현황");
+		JLabel lblUserName = new JLabel("xxx님의 대여 현황");
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblUserName);
 
@@ -103,100 +97,25 @@ public class RentalBookPanel extends JPanel {
 		JLabel lblReturn = new JLabel("미반납: 1권");
 		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblReturn);
-
-		JPanel pBookInfo = new JPanel();
-		pBookInfo.setBounds(12, 75, 195, 363);
-		add(pBookInfo);
-		pBookInfo.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JLabel lblBookCode = new JLabel(" 도서코드");
-		pBookInfo.add(lblBookCode);
-
-		tfBookCode = new JTextField();
-		tfBookCode.setColumns(10);
-		pBookInfo.add(tfBookCode);
-
-		JLabel lblBookName = new JLabel(" 도서명");
-		pBookInfo.add(lblBookName);
-
-		tfBookName = new JTextField();
-		tfBookName.setColumns(10);
-		pBookInfo.add(tfBookName);
-
-		JLabel lblAuthor = new JLabel(" 저 자");
-		pBookInfo.add(lblAuthor);
-
-		tfAuthor = new JTextField();
-		tfAuthor.setColumns(10);
-		pBookInfo.add(tfAuthor);
-
-		JLabel lblPublisher = new JLabel(" 출판사");
-		pBookInfo.add(lblPublisher);
-
-		tfPublisher = new JTextField();
-		tfPublisher.setColumns(10);
-		pBookInfo.add(tfPublisher);
-
-		JLabel lblPrice = new JLabel(" 가격");
-		pBookInfo.add(lblPrice);
-
-		tfPrice = new JTextField();
-		tfPrice.setColumns(10);
-		pBookInfo.add(tfPrice);
-
-		JLabel lblRentCount = new JLabel(" 수량");
-		pBookInfo.add(lblRentCount);
-
-		tfRentCount = new JTextField();
-		tfRentCount.setColumns(10);
-		pBookInfo.add(tfRentCount);
-
-		JPanel pBtn = new JPanel();
-		pBtn.setBounds(22, 448, 171, 31);
-		add(pBtn);
-		pBtn.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JButton btnOk = new JButton("확인");
-		pBtn.add(btnOk);
-
-		JButton btnCancel = new JButton("취소");
-		pBtn.add(btnCancel);
 	}
 
 	private void addPopupMenu() {
 		JPopupMenu popupMenu=new JPopupMenu();
-		JMenuItem menuItem=new JMenuItem("추가하기");
+		JMenuItem menuItem=new JMenuItem("대여하기");
 		popupMenu.add(menuItem);
 		table.setComponentPopupMenu(popupMenu);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addBookInfo();
+				RentBookInfoView rbiv=new RentBookInfoView();
+				rbiv.setVisible(true);
 				
 			}
 		});
 	}
 	
-	private void addBookInfo() {
-		cleanTf();
-		int selectedIndex=table.getSelectedRow();
-		String bCode=(String) table.getValueAt(selectedIndex, 0);
-		String bName=(String) table.getValueAt(selectedIndex, 1);
-		String bAuthor=(String) table.getValueAt(selectedIndex, 2);
-		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
-		int bPrice=(int) table.getValueAt(selectedIndex, 4);
-		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
-		
-		tfBookCode.setText(bCode);
-		tfBookName.setText(bName);
-		tfAuthor.setText(bAuthor);
-		tfPublisher.setText(bPublisher);
-		tfPrice.setText(String.valueOf(bPrice));
-		tfRentCount.setText(String.valueOf(bRentalCount));
-		
-		
-	}
+	
 
 	public void loadDataAll() {
 		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames());
@@ -278,12 +197,13 @@ public class RentalBookPanel extends JPanel {
 		});
 	}
 	
-	private void cleanTf() {
-		tfBookCode.setText("");
-		tfBookName.setText("");
-		tfAuthor.setText("");
-		tfPublisher.setText("");
-		tfPrice.setText("");
-		tfRentCount.setText("");
+	public void selectedBook() {
+		int selectedIndex=table.getSelectedRow();
+		String bCode=(String) table.getValueAt(selectedIndex, 0);
+		String bName=(String) table.getValueAt(selectedIndex, 1);
+		String bAuthor=(String) table.getValueAt(selectedIndex, 2);
+		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
+		int bPrice=(int) table.getValueAt(selectedIndex, 4);
+		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
 	}
 }
