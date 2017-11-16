@@ -31,6 +31,7 @@ public class MainUi extends JFrame {
 	private JPasswordField passwordField;
 	private JTextFieldBlockComponent panel;
 	private ImageIcon img=null;
+	public static String id;
 
 
 	
@@ -138,7 +139,7 @@ public class MainUi extends JFrame {
 	}
 
 	public boolean managerId() {
-		String id=panel.getTextField().getText();
+		id=panel.getTextField().getText();
 		String pw=passwordField.getText();
 		if (id.equals("manager01") && pw.equals("1q2w3e4r")) {
 			JOptionPane.showMessageDialog(null, id+"님 환영합니다.");
@@ -151,7 +152,8 @@ public class MainUi extends JFrame {
 		}
 	}
 	public boolean userId() {
-		String id=panel.getTextField().getText();
+		id=panel.getTextField().getText();
+		System.out.println("main :" + id);
 		UserInfo uinfo = new UserInfo();
 		uinfo.setUserId(id);
 		String pw=passwordField.getText();
