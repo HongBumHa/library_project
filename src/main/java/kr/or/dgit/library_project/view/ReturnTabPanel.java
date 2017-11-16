@@ -17,11 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import kr.or.dgit.library_project.dao.RentalBookDaoImpl;
 import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.RentalBookService;
 import kr.or.dgit.library_project.service.RentalViewService;
 import kr.or.dgit.library_project.ui.MainUi;
 
@@ -34,11 +35,14 @@ public class ReturnTabPanel extends JPanel {
 	private JTextField tfDelayDay;
 	private JTable RentalDataTable;
 	private Users userId;
+	private Object[] sts = new String[] {
+			"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
+		};
 
 
 	public ReturnTabPanel() {
 		setLayout(null);
-		this.userId = MainUi.getUsers();
+		userId = MainUi.getUsers();
 		
 		JPanel returnTabInfo = new JPanel();
 		returnTabInfo.setLayout(null);
@@ -140,9 +144,10 @@ public class ReturnTabPanel extends JPanel {
 		
 		
 		JButton btCancel = new JButton("취 소");
+		
 		btCancel.setFont(new Font("굴림", Font.BOLD, 13));
 		btCancel.setBounds(214, 5, 82, 36);
-		returnTabButton.add(btCancel);
+
 		
 		JLabel lbTitle = new JLabel("도서 정보");
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,67 +157,22 @@ public class ReturnTabPanel extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		RentalDataTable = new JTable();
-		/*RentalDataTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
-			}
-		));*/
 		
-		RentalViewService rentalViewSr = new RentalViewService();
 		RentalView rentalView = new RentalView();
-		/*Vector<String> vc = new Vector<>();
-		String[] st = new String[] {
-				"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
-			};
+		rentalView.setUserId(userId.getUserId());
 		
-		for(String ss : st) {
-			vc.add(ss);
-		}
 		
-		RentalDataTable.setModel(new DefaultTableModel(vc, rentalViewSr.findByWhereRentalView(rentalview)));*/
-		
-		List<RentalView> list = rentalViewSr.findByWhereRentalView(rentalView);
-		Object[][] datas = new Object[list.size()][];
-		Object[] st = new String[] {
-				"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
-			};
-		
-		for(int i = 0; i<list.size(); i++) {
-			RentalView rentalObj = list.get(i);
-			datas[i] = rentalObj.toArrayReturn();
-		}
-		
-		RentalDataTable.setModel(new DefaultTableModel(datas, st));
+		RentalDataTable.setModel(createTableModel(rentalView));
 		JTextField[] tfFields = {tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay};
 		RentalDataTable.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				System.out.println(RentalDataTable.getSelectedRow());
 				int i =0;
-				for(i= 0; i < st.length; i++) {
+				for(i= 0; i < sts.length; i++) {
 					tfFields[i].setText(RentalDataTable.getValueAt(RentalDataTable.getSelectedRow(), i).toString());
 				}
-				/*for(int n = i ; n < st.length ; n++) {
-					Object numData = RentalDataTable.getValueAt(RentalDataTable.getSelectedRow(), n);
-					tfFields[n].setText(numData.toString());
-				}*/
 			}		
 		});
 		
@@ -220,16 +180,48 @@ public class ReturnTabPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RentalBookDaoImpl rtBookDao = new RentalBookDaoImpl();
+				
 				RentalBook rtBook = new RentalBook();
 				rtBook.setBookCode(tfBookCode.getText());
-				rtBookDao.deleteByWhereRentalBook(rtBook);
+				rtBook.setUserId(ReturnTabPanel.this.userId.getUserId());
+				
+				RentalBookService rtBookService = new RentalBookService();
+				rtBookService.deleteDataByWhereRentalBook(rtBook);
+				
+				RentalDataTable.setModel(createTableModel(rentalView));
+				RentalDataTable.setVisible(true);
+				scrollPane.setViewportView(RentalDataTable);
 			}
 		});
 		returnTabButton.add(btReturn);
 		
+		btCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i= 0; i < tfFields.length; i++) {
+					tfFields[i].setText("");
+				}
+			}
+		});
+		returnTabButton.add(btCancel);
+		
 		scrollPane.setBounds(33, 339, 743, 232);
 		add(scrollPane);
 		scrollPane.setViewportView(RentalDataTable);
+	}
+
+	private TableModel createTableModel(RentalView rentalView) {
+		RentalViewService rentalViewSr = new RentalViewService();
+		List<RentalView> list = rentalViewSr.findByWhereRentalView(rentalView);
+		Object[][] datas = new Object[list.size()][];
+		
+		for(int i = 0; i<list.size(); i++) {
+			RentalView rentalObj = list.get(i);
+			datas[i] = rentalObj.toArrayReturn();
+		}
+		
+		TableModel ttmodel = new DefaultTableModel(datas, sts);
+		return ttmodel;
 	}
 }
