@@ -5,12 +5,14 @@
 		<result property="sido" column="sido"/>
 		<result property="sigungu" column="sigungu"/>
 	</resultMap>
-	<sql id="selectBysigunguSql">
-		select DISTINCT sigungu from post where sido = #{sido}
+	<sql id="selectByDoroSql">
+		select * from post where sido = #{sido} and doro like #{doro}
 	</sql>
-	<select id="selectBysigunguList" parameterType="Post" resultMap="PostResult">
-		<include refid="selectBysigunguSql"/>
+	<select id="selectByDoroList" parameterType="Post" resultType="Post">
+		<include refid="selectByDoroSql"/>
 	</select>
+	
+	
 	<sql id="selectBysidoSql">
 		select DISTINCT sido from post
 	</sql>

@@ -26,10 +26,11 @@ public class TestServicePost {
 	}
 	
 	@Test
-	public void Test2sigungu() {
+	public void Test2doro() {
 		Post post = new Post();
 		post.setSido("대구광역시");
-		List<Post> lists = PostService.getInstance().findPostBySigungu(post);
+		post.setDoro("이%");
+		List<Post> lists = PostService.getInstance().findSelectByDoroList(post);
 		Assert.assertNotNull(lists);
 	}
 }

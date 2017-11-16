@@ -11,6 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,10 +25,10 @@ import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.PostService;
+import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.ui.MainUi;
 
 public class UserInfoView extends JPanel {
-
 	private JTable table;
 	private JTable historyTable;
 	private JTextField tfUserId;
@@ -36,14 +37,23 @@ public class UserInfoView extends JPanel {
 	private JTextField tfUserEamil;
 	private JTextField tfUserPw;
 	private JTextField tfUserPwCh;
-	private JTextField tfEctAddr;
+	private  JTextField tfDoro;
+	private JTextField tfAddr;
+	private DefaultComboBoxModel sidoModel;
+	private Users u;
+	public  JComboBox<String> cmbCity;
+	private static final UserInfoView instance = new UserInfoView();
 	
-	public UserInfoView() {
+	public static UserInfoView getInstance() {
+		return instance;
+	}
+
+	private UserInfoView() {
 		setLayout(null);
-		Users u = MainUi.getUsers();
+		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(228, 31, 594, 202);
+		pUserInfo.setBounds(228, 31, 594, 246);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 		
@@ -94,31 +104,35 @@ public class UserInfoView extends JPanel {
 		pUserTel.add(tfUserTel);
 		
 		JPanel pUserAddr = new JPanel();
-		pUserAddr.setBounds(36, 133, 548, 31);
+		pUserAddr.setBounds(36, 133, 548, 70);
 		pUserInfo.add(pUserAddr);
 		pUserAddr.setLayout(null);
 		
 		JLabel lblUserAddr = new JLabel("주 소");
 		lblUserAddr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserAddr.setBounds(12, 10, 44, 15);
+		lblUserAddr.setBounds(12, 41, 44, 15);
 		pUserAddr.add(lblUserAddr);
 		
-		DefaultComboBoxModel sidoModel = new DefaultComboBoxModel<String>(getDate());
-		JComboBox<String> cmbCity = new JComboBox<String>();
+		sidoModel = new DefaultComboBoxModel<String>(getDate());
+		cmbCity = new JComboBox<String>();
 		
 		cmbCity.setModel(sidoModel);
-		cmbCity.setBounds(68, 7, 87, 21);
+		cmbCity.setBounds(170, 11, 135, 21);
 		pUserAddr.add(cmbCity);
 		
+		tfDoro = new JTextField();
+		tfDoro.setBounds(317, 11, 110, 21);
+		pUserAddr.add(tfDoro);
+		tfDoro.setColumns(10);
 		
-		JComboBox<String> cmbState = new JComboBox<String>();
-		cmbState.setBounds(158, 7, 94, 21);
-		pUserAddr.add(cmbState);
+		JButton btnSearch = new JButton("검색");
+		btnSearch.setBounds(439, 10, 97, 23);
+		pUserAddr.add(btnSearch);
 		
-		tfEctAddr = new JTextField();
-		tfEctAddr.setBounds(281, 7, 255, 21);
-		pUserAddr.add(tfEctAddr);
-		tfEctAddr.setColumns(10);
+		tfAddr = new JTextField(u.getUserAddr());
+		tfAddr.setBounds(68, 38, 468, 21);
+		pUserAddr.add(tfAddr);
+		tfAddr.setColumns(10);
 		
 		JPanel pUserEamil = new JPanel();
 		pUserEamil.setBounds(276, 10, 308, 31);
@@ -168,17 +182,40 @@ public class UserInfoView extends JPanel {
 		JButton btnUpdate = new JButton("수 정");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(tfUserPw.getText().equals(tfUserPwCh.getText())) {
+					userUpdatae();
+					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+				}else {
+					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+				}
+				
 			}
 		});
-		btnUpdate.setBounds(190, 174, 97, 23);
+		btnUpdate.setBounds(191, 213, 97, 23);
 		pUserInfo.add(btnUpdate);
 		
 		JButton btnCancel = new JButton("취 소");
-		btnCancel.setBounds(293, 174, 97, 23);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearTf();
+			}
+		});
+		btnCancel.setBounds(294, 213, 97, 23);
 		pUserInfo.add(btnCancel);
 		
 		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.setBounds(490, 174, 81, 23);
+		btnLeave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				if(i == 0) {
+					u.setUserLeave("N");
+					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+					setVisible(false);
+				}
+			}
+		});
+		btnLeave.setBounds(503, 213, 81, 23);
 		pUserInfo.add(btnLeave);
 		
 		JPanel panel_7 = new JPanel();
@@ -188,7 +225,7 @@ public class UserInfoView extends JPanel {
 		add(panel_7);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(47, 267, 775, 243);
+		scrollPane_1.setBounds(48, 300, 775, 246);
 		add(scrollPane_1);
 		
 		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
@@ -197,22 +234,44 @@ public class UserInfoView extends JPanel {
 		scrollPane_1.setViewportView(historyTable);
 		
 		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(46, 234, 115, 23);
+		btnNewButton_2.setBounds(47, 267, 115, 23);
 		add(btnNewButton_2);
 		
-		cmbCity.addActionListener(new ActionListener() {
+		
+		
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Vector<String> vt = new Vector<>();
-				Post post = new Post();
-				post.setSido((String) sidoModel.getSelectedItem());
-				List<Post> lists = PostService.getInstance().findPostBySigungu(post);
-				for(Post p : lists) {
-					vt.add(p.getSigungu());
-				}
-				DefaultComboBoxModel sigunguModel = new DefaultComboBoxModel<String>(vt);
-				cmbState.setModel(sigunguModel);
+
+				PostView frame = new PostView();
+				frame.setVisible(true);
 			}
 		});
+		
+	}
+
+	public void clearTf() {
+		tfUserId.setText(u.getUserId());
+		tfUserName.setText(u.getUserName());
+		tfAddr.setText(u.getUserAddr());
+		tfUserTel.setText(u.getUserTel());
+		tfUserEamil.setText(u.getUserEmail());
+	}
+
+	public UserInfoView(String str) {
+		
+	}
+
+	public  JComboBox<String> getCmbCity() {
+		return cmbCity;
+	}
+
+
+	public JTextField getTfAddr() {
+		return tfAddr;
+	}
+
+	public void setTfAddr(JTextField tfAddr) {
+		this.tfAddr = tfAddr;
 	}
 
 	private Object[][] getData() {
@@ -220,9 +279,6 @@ public class UserInfoView extends JPanel {
 		users.setUserId(MainUi.getUsers().getUserId());
 		List<HistoryView> lists = HistoryViewService.getInstance().findUserHistoryVide(users);
 		Object[][] datas = new Object[lists.size()][];
-		for(HistoryView h : lists) {
-			System.out.println(h.toArray().toString());
-		}
 		for(int i =0; i < lists.size(); i++) {
 			
 			datas[i] = lists.get(i).toArray();
@@ -242,5 +298,31 @@ public class UserInfoView extends JPanel {
 			vt.add(p.getSido());
 		}
 		return vt;
+	}
+
+	public JTextField getTfDoro() {
+		return tfDoro;
+	}
+
+	public void setTfDoro(JTextField tfDoro) {
+		this.tfDoro = tfDoro;
+	}
+
+	public void setCmbCity(JComboBox<String> cmbCity) {
+		this.cmbCity = cmbCity;
+	}
+
+	public void userUpdatae() {
+		String userId = tfUserId.getText();
+		String userName = tfUserName.getText();
+		String userAddr = tfAddr.getText();
+		String userTel = tfUserTel.getText();
+		String userEmail = tfUserEamil.getText();
+		String userPw = tfUserPw.getText();
+		int delayDay = 0;
+		int rankCode = 2;
+		String userLeave = "Y";
+		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
+		UsersService.getInstance().findupdateUsers(user);
 	}
 }

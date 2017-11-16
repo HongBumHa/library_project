@@ -18,10 +18,10 @@ public class PostService {
 
 	private PostService() {}
 	
-	public List<Post> findPostBySigungu(Post post){
+	public List<Post> findSelectByDoroList(Post post){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			PostDao dao = new PostDaoImpl(sqlSession);
-			return dao.selectBysigunguList(post);
+			return dao.selectByDoroList(post);
 		}
 	}
 	
