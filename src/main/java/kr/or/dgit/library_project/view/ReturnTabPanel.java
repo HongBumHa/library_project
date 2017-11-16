@@ -19,10 +19,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dao.RentalBookDaoImpl;
-import kr.or.dgit.library_project.dao.RentalViewDaoImpl;
 import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.dto.RentalView;
+import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.RentalViewService;
+import kr.or.dgit.library_project.ui.MainUi;
 
 public class ReturnTabPanel extends JPanel {
 	private JTextField tfBookCode;
@@ -32,17 +33,12 @@ public class ReturnTabPanel extends JPanel {
 	private JTextField tfPrice;
 	private JTextField tfDelayDay;
 	private JTable RentalDataTable;
-	private String userId;
+	private Users userId;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
-	/**
-	 * Create the panel.
-	 */
 	public ReturnTabPanel() {
 		setLayout(null);
+		this.userId = MainUi.getUsers();
 		
 		JPanel returnTabInfo = new JPanel();
 		returnTabInfo.setLayout(null);
@@ -179,7 +175,6 @@ public class ReturnTabPanel extends JPanel {
 		
 		RentalViewService rentalViewSr = new RentalViewService();
 		RentalView rentalView = new RentalView();
-		rentalView.setUserId("test");
 		/*Vector<String> vc = new Vector<>();
 		String[] st = new String[] {
 				"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
@@ -228,7 +223,6 @@ public class ReturnTabPanel extends JPanel {
 				RentalBookDaoImpl rtBookDao = new RentalBookDaoImpl();
 				RentalBook rtBook = new RentalBook();
 				rtBook.setBookCode(tfBookCode.getText());
-				rtBook.setUserId(userId);
 				rtBookDao.deleteByWhereRentalBook(rtBook);
 			}
 		});

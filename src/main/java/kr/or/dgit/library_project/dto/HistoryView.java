@@ -1,5 +1,6 @@
 package kr.or.dgit.library_project.dto;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -105,5 +106,16 @@ public class HistoryView {
 		} catch (ParseException e) {
 			return null;
 		}
+	}
+	
+	public Date changeDate(Date date) {
+		return null;
+	}
+	
+	public Object[] toArray() {
+		SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.print(rentalDay);
+		System.out.println(" "+returnDay);
+		return new Object[] {bookCode,bookName,author,publicName,price,ss.format(rentalDay),ss.format(returnDay)};
 	}
 }

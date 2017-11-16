@@ -31,4 +31,10 @@ public class HistoryViewDaoImpl implements HistoryViewDao {
 		return sqlSession.getMapper(HistoryViewDao.class).selectByWhereHistoryView(historyView);
 	}
 
+	@Override
+	public List<HistoryView> selectByUserHistory(HistoryView users) {
+		log.debug("selectByUserHistory()");
+		return sqlSession.getMapper(HistoryViewDao.class).selectByUserHistory(users);
+	}
+
 }
