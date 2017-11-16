@@ -56,11 +56,8 @@ public class Post {
 		this.building2 = building2;
 	}
 
-	public Post() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	public Post() {}
+	
 	@Override
 	public String toString() {
 		return String.format("Post [zipCode=%s, sido=%s, sigungu=%s, doro=%s, building1=%s, building2=%s]", zipCode,

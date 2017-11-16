@@ -2,6 +2,10 @@ package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -15,15 +19,17 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.dto.HistoryView;
+import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.HistoryViewService;
+import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.ui.MainUi;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class UserInfoView extends JPanel {
 
 	private JTable table;
-	private JTable table_1;
+	private JTable historyTable;
 	private JTextField tfUserId;
 	private JTextField tfUserName;
 	private JTextField tfUserTel;
@@ -35,7 +41,6 @@ public class UserInfoView extends JPanel {
 	public UserInfoView() {
 		setLayout(null);
 		Users u = MainUi.getUsers();
-		
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pUserInfo.setBounds(228, 31, 594, 202);
@@ -54,7 +59,7 @@ public class UserInfoView extends JPanel {
 		
 		tfUserId = new JTextField(u.getUserId());
 		tfUserId.setEnabled(false);
-		tfUserId.setBounds(86, 5, 116, 21);
+		tfUserId.setBounds(83, 5, 116, 21);
 		pUserId.add(tfUserId);
 		tfUserId.setColumns(10);
 		
@@ -98,18 +103,20 @@ public class UserInfoView extends JPanel {
 		lblUserAddr.setBounds(12, 10, 44, 15);
 		pUserAddr.add(lblUserAddr);
 		
-		JComboBox cmbCity = new JComboBox();
-		cmbCity.setModel(new DefaultComboBoxModel(new String[] {"강원도", "경기도", "경상남도", "경상북도", "광주광역시", "대구광역시", "대전광역시", "부산광역시", "서울특별시", "세종특별자치시", "울산광역시", "인턴광역시", "전라남도", "전라북도", "제주특별자치도", "충청남도", "충정북도"}));
+		DefaultComboBoxModel sidoModel = new DefaultComboBoxModel<String>(getDate());
+		JComboBox<String> cmbCity = new JComboBox<String>();
+		
+		cmbCity.setModel(sidoModel);
 		cmbCity.setBounds(68, 7, 87, 21);
 		pUserAddr.add(cmbCity);
 		
-		JComboBox cmbState = new JComboBox();
-		cmbState.setModel(new DefaultComboBoxModel(new String[] {"남구", "동구", "북구", "달서구", "중구", "서구"}));
-		cmbState.setBounds(158, 7, 78, 21);
+		
+		JComboBox<String> cmbState = new JComboBox<String>();
+		cmbState.setBounds(158, 7, 94, 21);
 		pUserAddr.add(cmbState);
 		
 		tfEctAddr = new JTextField();
-		tfEctAddr.setBounds(241, 7, 295, 21);
+		tfEctAddr.setBounds(281, 7, 255, 21);
 		pUserAddr.add(tfEctAddr);
 		tfEctAddr.setColumns(10);
 		
@@ -184,49 +191,56 @@ public class UserInfoView extends JPanel {
 		scrollPane_1.setBounds(47, 267, 775, 243);
 		add(scrollPane_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"도서코드", "도서명", "저 자", "가 격", "대여일", "반납일", "연체여부", "필요한거"
-			}
-		));
-		scrollPane_1.setViewportView(table_1);
+		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
+		historyTable = new JTable();
+		historyTable.setModel(tableModel);
+		scrollPane_1.setViewportView(historyTable);
 		
-		JButton btnNewButton_2 = new JButton("대여/반납 내역");
+		JButton btnNewButton_2 = new JButton("히스토리");
 		btnNewButton_2.setBounds(46, 234, 115, 23);
 		add(btnNewButton_2);
+		
+		cmbCity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Vector<String> vt = new Vector<>();
+				Post post = new Post();
+				post.setSido((String) sidoModel.getSelectedItem());
+				List<Post> lists = PostService.getInstance().findPostBySigungu(post);
+				for(Post p : lists) {
+					vt.add(p.getSigungu());
+				}
+				DefaultComboBoxModel sigunguModel = new DefaultComboBoxModel<String>(vt);
+				cmbState.setModel(sigunguModel);
+			}
+		});
 	}
 
+	private Object[][] getData() {
+		HistoryView users = new HistoryView();
+		users.setUserId(MainUi.getUsers().getUserId());
+		List<HistoryView> lists = HistoryViewService.getInstance().findUserHistoryVide(users);
+		Object[][] datas = new Object[lists.size()][];
+		for(HistoryView h : lists) {
+			System.out.println(h.toArray().toString());
+		}
+		for(int i =0; i < lists.size(); i++) {
+			
+			datas[i] = lists.get(i).toArray();
+		
+		}
+		return datas;
+	}
+
+	private String[] getColumnNames() {
+		return new String[] {"도서코드","도서이름","저자","출판사","가격","대여일","반납일"};
+	}
+
+	private Vector<String> getDate() {
+		Vector<String> vt = new Vector<>();
+		List<Post> lists = PostService.getInstance().findPostBysido();
+		for(Post p : lists) {
+			vt.add(p.getSido());
+		}
+		return vt;
+	}
 }
