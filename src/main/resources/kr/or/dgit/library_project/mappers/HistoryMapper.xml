@@ -5,12 +5,6 @@
 		select * from history_total
 	</sql>
 
-	<select id="selectByWhereHistoryView" parameterType="RentalView"
-		resultType="RentalView">
-		<include refid="allHistoryView" />
-		<include refid="whereHistoryData" />
-	</select>
-
 	<sql id="whereHistoryData">
 		<where>
 			<if test="bookCode != null">
@@ -57,6 +51,7 @@
 		realreturnday from history_total h,publisher p where h.public_name =
 		p.public_code and user_id = #{userId}
 	</sql>
+	
 	<resultMap type="HistoryView" id="UserHistoryResult">
 		<result property="bookCode" column="book_code" />
 		<result property="bookName" column="book_name" />

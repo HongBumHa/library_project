@@ -34,17 +34,19 @@ public class UserInfo extends JFrame {
 		contentPane.add(tabbedPane);
 
 		RentalBookPanel rentalBookTab = new RentalBookPanel();
-		tabbedPane.addTab("대 여", null, rentalBookTab, null);
 		rentalBookTab.setLayout(null);
+		tabbedPane.addTab("대 여", null, rentalBookTab, null);
+
 
 		ReturnTabPanel returnTab = new ReturnTabPanel();
-		tabbedPane.addTab("반 납", null, returnTab, null);
-		
 		returnTab.setLayout(null);
+		tabbedPane.addTab("반 납", null, returnTab, null);
+
 		returnTab.setLayout(new BorderLayout(0, 0));
 
 		UserInfoView testing = UserInfoView.getInstance();
-		tabbedPane.addTab("회원정보", null, testing, null);
 		testing.setLayout(null);
+		tabbedPane.addTab("회원정보", null, testing, null);
+
 	}	
 }
