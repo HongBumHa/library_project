@@ -37,7 +37,8 @@ public class UserInfo extends JFrame {
 		tabbedPane.addTab("반 납", null, returnTab, null);
 
 		returnTab.setLayout(new BorderLayout(0, 0));
-		UserInfoView testing = new UserInfoView();
+
+		UserInfoView testing = UserInfoView.getInstance();
 		tabbedPane.addTab("회원정보", null, testing, null);
 		testing.setLayout(null);
 	}

@@ -114,8 +114,6 @@ public class HistoryView {
 	
 	public Object[] toArray() {
 		SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.print(rentalDay);
-		System.out.println(" "+returnDay);
 		return new Object[] {bookCode,bookName,author,publicName,price,ss.format(rentalDay),ss.format(returnDay)};
 	}
 }
