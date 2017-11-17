@@ -43,6 +43,7 @@ public class UserInfoView extends JPanel {
 	private Users u;
 	public  JComboBox<String> cmbCity;
 	private static final UserInfoView instance = new UserInfoView();
+	private JScrollPane scrollPane_1;
 	
 	public static UserInfoView getInstance() {
 		return instance;
@@ -188,7 +189,6 @@ public class UserInfoView extends JPanel {
 				}else {
 					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
 				}
-				
 			}
 		});
 		btnUpdate.setBounds(191, 213, 97, 23);
@@ -224,21 +224,18 @@ public class UserInfoView extends JPanel {
 		panel_7.setBounds(47, 45, 148, 137);
 		add(panel_7);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(48, 300, 775, 246);
 		add(scrollPane_1);
 		
-		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
 		historyTable = new JTable();
-		historyTable.setModel(tableModel);
-		scrollPane_1.setViewportView(historyTable);
+		
+		settingTableView();
 		
 		JButton btnNewButton_2 = new JButton("히스토리");
 		btnNewButton_2.setBounds(47, 267, 115, 23);
 		add(btnNewButton_2);
-		
-		
-		
+
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -246,7 +243,21 @@ public class UserInfoView extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		
+	}
+	
+	public JScrollPane getScrollPane_1() {
+		return scrollPane_1;
+	}
+
+	public void settingTableView() {
+		historyTable.setModel(makeTableModel());
+		historyTable.setVisible(true);
+		scrollPane_1.setViewportView(historyTable);
+		scrollPane_1.setVisible(true);
+	}
+
+	private DefaultTableModel makeTableModel() {
+		return new DefaultTableModel(getData(),getColumnNames());
 	}
 
 	public void clearTf() {
@@ -277,6 +288,7 @@ public class UserInfoView extends JPanel {
 	private Object[][] getData() {
 		HistoryView users = new HistoryView();
 		users.setUserId(MainUi.getUsers().getUserId());
+		
 		List<HistoryView> lists = HistoryViewService.getInstance().findUserHistoryVide(users);
 		Object[][] datas = new Object[lists.size()][];
 		for(int i =0; i < lists.size(); i++) {
