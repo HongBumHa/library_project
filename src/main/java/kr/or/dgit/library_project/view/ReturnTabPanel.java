@@ -38,6 +38,7 @@ public class ReturnTabPanel extends JPanel {
 	private Object[] sts = new String[] {
 			"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
 		};
+	private JTextField[] tfFields;
 
 
 	public ReturnTabPanel() {
@@ -60,7 +61,7 @@ public class ReturnTabPanel extends JPanel {
 		lbBookCode.setBounds(0, 2, 128, 27);
 		returnTabTextField.add(lbBookCode);
 		
-		tfBookCode = new JTextField();
+		tfBookCode = new JTextField() ;
 		tfBookCode.setEnabled(false);
 		tfBookCode.setEditable(false);
 		tfBookCode.setHorizontalAlignment(SwingConstants.LEFT);
@@ -161,9 +162,9 @@ public class ReturnTabPanel extends JPanel {
 		RentalView rentalView = new RentalView();
 		rentalView.setUserId(userId.getUserId());
 		
+		tfFields = new JTextField[] {tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay};
 		
 		RentalDataTable.setModel(createTableModel(rentalView));
-		JTextField[] tfFields = {tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay};
 		RentalDataTable.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -190,6 +191,9 @@ public class ReturnTabPanel extends JPanel {
 				
 				RentalDataTable.setModel(createTableModel(rentalView));
 				RentalDataTable.setVisible(true);
+				refreshTextField();
+				
+				UserInfoView.getInstance().settingTableView();
 				scrollPane.setViewportView(RentalDataTable);
 			}
 		});
@@ -199,11 +203,10 @@ public class ReturnTabPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(int i= 0; i < tfFields.length; i++) {
-					tfFields[i].setText("");
-				}
+				refreshTextField();
 			}
 		});
+		
 		returnTabButton.add(btCancel);
 		
 		scrollPane.setBounds(33, 339, 743, 232);
@@ -223,5 +226,10 @@ public class ReturnTabPanel extends JPanel {
 		
 		TableModel ttmodel = new DefaultTableModel(datas, sts);
 		return ttmodel;
+	}
+	public void refreshTextField() {
+		for(int i= 0; i < tfFields.length; i++) {
+			tfFields[i].setText("");
+		}
 	}
 }
