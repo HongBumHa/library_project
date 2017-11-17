@@ -24,6 +24,9 @@
          </if>
       </where>
    </sql>
+   
+   
+   
    <resultMap type="HistoryView" id="ManagerHistoryResult">
       <result property="bookCode" column="book_code"/>
       <result property="bookName" column="book_name"/>
@@ -35,11 +38,43 @@
       <result property="rentalDay" column="rentalDay"/>
       <result property="returnDay" column="realreturnday"/>
    </resultMap>
-   <select id="selectAllHistoryView" resultMap="ManagerHistoryResult">
-      <include refid="allHistoryView"/>
+   
+   <sql id="allHistoryViewMap">
+		select book_code, book_name, user_id, user_name, author, p.public_name, price, rentalDay, realreturnday from history_total h, publisher p
+	</sql>
+	
+	<sql id="whereRentalDataMap">
+		<where>
+			<if test="bookCode != null">
+				and h.public_name=p.public_code and book_code like #{bookCode}
+			</if>
+			<if test="bookName != null">
+				and h.public_name=p.public_code and book_name like #{bookName}
+			</if>
+			<if test="userId != null">
+				and h.public_name=p.public_code and user_id like #{userId}
+			</if>
+			<if test="userName != null">
+				and h.public_name=p.public_code and user_name like #{userName}
+			</if>
+			<if test="rentalDay != null">
+				and h.public_name=p.public_code and rentalDay like #{rentalDay}
+			</if>
+			<if test="returnDay != null">
+				and h.public_name=p.public_code and realreturnday like #{returnDay}
+			</if>
+		</where>
+	</sql>
+	
+   <select id="selectAllHistoryViewMap" resultType="HistoryView">
+      <include refid="allHistoryViewMap"/>
+      where h.public_name = p.public_code
    </select>
    
-   <select id="selectByWhereHistoryView" parameterType="RentalView" resultType="RentalView">
+   
+   <!--  -->
+   
+   <select id="selectByWhereHistoryView" parameterType="HistoryView" resultType="HistoryView">
       <include refid="allHistoryView"/>
       <include refid="whereHistoryData"/>
    </select>

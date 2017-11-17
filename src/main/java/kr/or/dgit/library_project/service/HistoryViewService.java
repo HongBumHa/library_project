@@ -37,4 +37,13 @@ public class HistoryViewService {
 	         return dao.selectByUserHistory(users);
 	      }
 	   }
+	   
+	   public List<HistoryView> findAllHistoryViewDataMap(){
+		   try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+		         HistoryViewDao dao = new HistoryViewDaoImpl(sqlSession);
+		         return dao.selectAllHistoryViewMap();
+		      }
+	   }
+	   
+	   
 }

@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.apache.ibatis.logging.Log;
@@ -38,4 +39,18 @@ public class RentalViewDaoImpl implements RentalViewDao {
 		return vv;*/
 		return sqlSession.selectList(namespace+".selectByWhereRentalView", rentalview);
 	}
+
+	@Override
+	public List<RentalView> selectAllRentalViewMap() {
+		log.debug("selectAllRentalViewMap()");
+		return sqlSession.selectList(namespace+".selectAllRentalViewMap");
+	}
+	
+	@Override
+	public List<RentalView> selectByWhereRentalViewMap(Map<String, Object> map) {
+		log.debug("selectByWhereRentalViewMap");
+		return sqlSession.selectList(namespace+".selectByWhereRentalViewMap", map);
+	}
+
+	
 }

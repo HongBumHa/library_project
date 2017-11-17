@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -12,7 +13,7 @@ public class HistoryViewDaoImpl implements HistoryViewDao {
 
 	private SqlSession sqlSession;
 	   private static final Log log = LogFactory.getLog(HistoryViewDao.class);
-	   private String namespace = "kr.or.dgit.library_project.dao.HistoryDao";
+	   private String namespace = "kr.or.dgit.library_project.dao.HistoryViewDao";
 	   
 	   public HistoryViewDaoImpl(SqlSession sqlSession) {
 	      super();
@@ -36,4 +37,16 @@ public class HistoryViewDaoImpl implements HistoryViewDao {
 	      log.debug("selectByUserHistory()");
 	      return sqlSession.getMapper(HistoryViewDao.class).selectByUserHistory(users);
 	   }
+
+	@Override
+	public List<HistoryView> selectAllHistoryViewMap() {
+		log.debug("selectAllHistoryViewMap()");
+		return sqlSession.selectList(namespace+".selectAllHistoryViewMap");
+	}
+
+	@Override
+	public List<HistoryView> selectByWhereHistoryViewMap(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -3,7 +3,7 @@
 <mapper namespace="kr.or.dgit.library_project.dao.BookDao">
 	
 	<resultMap type="Book" id="BookResult">
-		<id property="bookCode" column="book_code"/>
+		<id property="bookCode" column="book_Code"/>
 		<result property="bookName" column="book_name"/>
 		<result property="author" column="author"/>
 		<result property="publicName" column="public_name"/>
