@@ -11,6 +11,9 @@ public class Users {
 	private int rankCode;
 	private String userLeave;
 
+	public Users() {
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -121,5 +124,8 @@ public class Users {
 	public Users(int delayDay) {
 		this.delayDay = delayDay;
 	}
-
+	
+	public Object[] toArray() {
+		return new Object[] {userId,userName,userTel,userAddr,userEmail,userLeave};
+	}
 }

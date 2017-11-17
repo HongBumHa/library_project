@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -50,6 +51,13 @@ public class UsersDaoImpl implements UsersDao{
 	public int updateUser(Users users) {
 		log.debug("updateUser()");
 		return sqlSession.getMapper(UsersDao.class).updateUser(users);
+	}
+
+
+	@Override
+	public List<Users> selectByUserList(Map<String,Object> map) {
+		log.debug("selectByUserList()");
+		return sqlSession.getMapper(UsersDao.class).selectByUserList(map);
 	}
 
 

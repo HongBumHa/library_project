@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
+import kr.or.dgit.library_project.view.ManagerUserinfo;
 
 public class Manager extends JFrame {
 
@@ -72,9 +73,6 @@ public class Manager extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 787, 618);
 		contentPane.add(tabbedPane);
-		
-		JPanel panel_18 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_18, null);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -521,5 +519,6 @@ public class Manager extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		panel_8.add(lblNewLabel);
+	
 	}
 }

@@ -19,7 +19,7 @@ public class TestServicePost {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Test
+	/*@Test
 	public void Test1sido() {
 		List<Post> lists = PostService.getInstance().findPostBysido();
 		Assert.assertNotNull(lists);
@@ -32,5 +32,5 @@ public class TestServicePost {
 		post.setDoro("이%");
 		List<Post> lists = PostService.getInstance().findSelectByDoroList(post);
 		Assert.assertNotNull(lists);
-	}
+	}*/
 }

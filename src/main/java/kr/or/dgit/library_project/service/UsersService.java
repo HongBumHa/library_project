@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -56,6 +57,13 @@ public class UsersService {
 			sqlSession.commit();
 		}
 		return res;
+	}
+	
+	public List<Users> findSelectByUserList(Map<String,Object> map){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			UsersDao dao = new UsersDaoImpl(sqlSession);
+			return dao.selectByUserList(map);
+		}
 	}
 
 }
