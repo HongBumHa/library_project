@@ -4,7 +4,13 @@
 	<sql id="allHistoryView">
 		select * from history_total
 	</sql>
-	
+
+	<select id="selectByWhereHistoryView" parameterType="RentalView"
+		resultType="RentalView">
+		<include refid="allHistoryView" />
+		<include refid="whereHistoryData" />
+	</select>
+
 	<sql id="whereHistoryData">
 		<where>
 			<if test="bookCode != null">
@@ -24,30 +30,45 @@
 			</if>
 		</where>
 	</sql>
-	
-	<select id="selectAllHistoryView" resultType="RentalView">
-		<include refid="allHistoryView"/>
+	<resultMap type="HistoryView" id="ManagerHistoryResult">
+		<result property="bookCode" column="book_code" />
+		<result property="bookName" column="book_name" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="author" column="author" />
+		<result property="publicName" column="public_name" />
+		<result property="price" column="price" />
+		<result property="rentalDay" column="rentalDay" />
+		<result property="returnDay" column="realreturnday" />
+	</resultMap>
+
+	<select id="selectAllHistoryView" resultMap="ManagerHistoryResult">
+		<include refid="allHistoryView" />
 	</select>
-	
-	<select id="selectByWhereHistoryView" parameterType="RentalView" resultType="RentalView">
-		<include refid="allHistoryView"/>
-		<include refid="whereHistoryData"/>
+
+	<select id="selectByWhereHistoryView" parameterType="RentalView"
+		resultType="RentalView">
+		<include refid="allHistoryView" />
+		<include refid="whereHistoryData" />
 	</select>
-	
+
 	<sql id="selectByUser">
-		select book_code, book_name, author, p.public_name,price, rentalDay, realreturnday from history_total h,publisher p where h.public_name = p.public_code and user_id = #{userId}
+		select book_code, book_name, author, p.public_name,price, rentalDay,
+		realreturnday from history_total h,publisher p where h.public_name =
+		p.public_code and user_id = #{userId}
 	</sql>
 	<resultMap type="HistoryView" id="UserHistoryResult">
-		<result property="bookCode" column="book_code"/>
-		<result property="bookName" column="book_name"/>
-		<result property="author" column="author"/>
-		<result property="publicName" column="public_name"/>
-		<result property="price" column="price"/>
-		<result property="rentalDay" column="rentalDay"/>
-		<result property="returnDay" column="realreturnday"/>
+		<result property="bookCode" column="book_code" />
+		<result property="bookName" column="book_name" />
+		<result property="author" column="author" />
+		<result property="publicName" column="public_name" />
+		<result property="price" column="price" />
+		<result property="rentalDay" column="rentalDay" />
+		<result property="returnDay" column="realreturnday" />
 	</resultMap>
-	
-	<select id="selectByUserHistory" resultMap="UserHistoryResult" parameterType="HistoryView">
-		<include refid="selectByUser"/>
+
+	<select id="selectByUserHistory" resultMap="UserHistoryResult"
+		parameterType="HistoryView">
+		<include refid="selectByUser" />
 	</select>
 </mapper>

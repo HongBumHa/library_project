@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -25,9 +26,9 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public Book selectBookBySomething(Book book) {
+	public List<Book> selectBookBySomething(Map<String, Object> map) {
 		log.debug("selectBookBySomething()");
-		return sqlSession.selectOne(namespace+"selectBookBySomething", book);
+		return sqlSession.selectList(namespace+"selectBookBySomething", map);
 	}
 
 	@Override

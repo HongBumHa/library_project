@@ -9,5 +9,5 @@ public interface HistoryViewDao {
 	public List<HistoryView> selectByWhereHistoryView(HistoryView historyView);
 	
 //	유저 히스토리
-	List<HistoryView> selectByUserHistory(HistoryView users);
+	List<HistoryView> selectByUserHistory(HistoryView users);   
 }

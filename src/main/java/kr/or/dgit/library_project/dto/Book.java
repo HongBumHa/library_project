@@ -139,5 +139,8 @@ public class Book {
 				"Book [bookCode=%s, bookName=%s, author=%s, publicName=%s, price=%s, amount=%s, allRentalCount=%s]",
 				bookCode, bookName, author, publicName, price, amount, allRentalCount);
 	}
-
+	
+	public Object[] toArray() {
+		return new Object[] {bookCode, bookName, author, publicName, price, amount, allRentalCount};
+	}
 }

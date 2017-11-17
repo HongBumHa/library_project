@@ -73,6 +73,9 @@ public class Manager extends JFrame {
 		tabbedPane.setBounds(0, 0, 787, 618);
 		contentPane.add(tabbedPane);
 		
+		JPanel panel_18 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_18, null);
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		tabbedPane.addTab("대여/반납 관리", null, panel, null);

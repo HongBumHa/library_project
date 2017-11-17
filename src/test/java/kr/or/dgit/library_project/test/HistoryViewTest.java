@@ -29,11 +29,11 @@ public class HistoryViewTest {
 		historyViewService = null;
 	}
 
-	/*@Test
+	@Test
 	public void test1_1FindAllHistoryViewData() {
 		List<HistoryView> lists = historyViewService.findAllHistoryViewData();
 		Assert.assertNotNull(lists);
-	}*/
+	}
 	
 	/*@Test
 	public void test1_2FindWhereHistoryViewData() {

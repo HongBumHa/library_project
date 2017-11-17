@@ -21,7 +21,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/net.harawata.mybatipse.MapperValidationBuilder (1).launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/net.harawata.mybatipse.MapperValidationBuilder.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>

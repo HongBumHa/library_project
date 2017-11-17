@@ -1,13 +1,24 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -15,142 +26,187 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.dto.Book;
+import kr.or.dgit.library_project.service.BookService;
+
 public class RentalBookPanel extends JPanel {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTable table;
+	private JTextField tfSearch;
+	public static JTable table;
+	private JComboBox comboBox;
 
 	public RentalBookPanel() {
 		setLayout(null);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBounds(228, 10, 767, 54);
-		add(panel_2);
+		JPanel pSearch = new JPanel();
+		pSearch.setLayout(null);
+		pSearch.setBounds(219, 10, 586, 54);
+		add(pSearch);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "도서코드", "도서명", "저 자", "출판사", "가 격" }));
-		comboBox.setBounds(33, 10, 93, 25);
-		panel_2.add(comboBox);
+		comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedItem()=="전체보기") {
+					loadDataAll();
+				}
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"전체보기", "도서코드", "도서명", "저 자", "출판사"}));
+		comboBox.setBounds(12, 10, 93, 25);
+		pSearch.add(comboBox);
 
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setColumns(10);
-		textField.setBounds(158, 10, 421, 25);
-		panel_2.add(textField);
+		tfSearch = new JTextField();
+		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		tfSearch.setColumns(10);
+		tfSearch.setBounds(117, 10, 356, 25);
+		pSearch.add(tfSearch);
 
-		JButton button = new JButton("search");
-		button.setBounds(627, 11, 93, 23);
-		panel_2.add(button);
+		JButton btnSearch = new JButton("search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loadDataEach();
+
+			}
+		});
+		btnSearch.setBounds(485, 11, 93, 23);
+		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(225, 85, 770, 418);
+		scrollPane.setBounds(12, 74, 793, 418);
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, },
-				new String[] { "도서코드", "도서명", "저 자", "출판사", "가 격", "총 대여 횟수", "대여 가능 여부" }));
+		addPopupMenu();
+		
+		loadDataAll();
 		scrollPane.setViewportView(table);
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_3.setBounds(12, 10, 195, 54);
-		add(panel_3);
-		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel pUserRentInfo = new JPanel();
+		pUserRentInfo.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pUserRentInfo.setBounds(12, 10, 195, 54);
+		add(pUserRentInfo);
+		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel label = new JLabel("xxx회원님의 대여 현황");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label);
+		JLabel lblUserName = new JLabel("xxx님의 대여 현황");
+		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
+		pUserRentInfo.add(lblUserName);
 
-		JLabel label_1 = new JLabel("대여: 5권");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_1);
+		JLabel lblRent = new JLabel("대여: 5권");
+		lblRent.setHorizontalAlignment(SwingConstants.CENTER);
+		pUserRentInfo.add(lblRent);
 
-		JLabel label_2 = new JLabel("미반납: 1권");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(label_2);
-
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(12, 99, 195, 363);
-		add(panel_4);
-		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JLabel label_3 = new JLabel(" 도서코드");
-		panel_4.add(label_3);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_4.add(textField_1);
-
-		JLabel label_4 = new JLabel(" 도서명");
-		panel_4.add(label_4);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		panel_4.add(textField_2);
-
-		JLabel label_5 = new JLabel(" 저 자");
-		panel_4.add(label_5);
-
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		panel_4.add(textField_3);
-
-		JLabel label_6 = new JLabel(" 출판사");
-		panel_4.add(label_6);
-
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_4.add(textField_4);
-
-		JLabel label_7 = new JLabel(" 가격");
-		panel_4.add(label_7);
-
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		panel_4.add(textField_5);
-
-		JLabel label_8 = new JLabel(" 총대여횟수");
-		panel_4.add(label_8);
-
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		panel_4.add(textField_6);
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(24, 472, 171, 31);
-		add(panel_5);
-		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JButton button_1 = new JButton("확인");
-		panel_5.add(button_1);
-
-		JButton button_2 = new JButton("취소");
-		panel_5.add(button_2);
-
+		JLabel lblReturn = new JLabel("미반납: 1권");
+		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
+		pUserRentInfo.add(lblReturn);
 	}
 
+	private void addPopupMenu() {
+		JPopupMenu popupMenu=new JPopupMenu();
+		JMenuItem menuItem=new JMenuItem("대여하기");
+		popupMenu.add(menuItem);
+		table.setComponentPopupMenu(popupMenu);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RentBookInfoView rbiv=new RentBookInfoView();
+				rbiv.setVisible(true);
+				
+			}
+		});
+	}
+	
+	
+
+	public void loadDataAll() {
+		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames());
+		table.setModel(model);
+	}
+
+	public String[] getColumnNames() {
+		return new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
+	}
+
+	public Object[][] getDataAll() {
+		List<Book> lists = BookService.getInstance().selectBookByAll();
+
+		Object[][] data = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			data[i] = lists.get(i).toArray();
+		}
+		return data;
+	}
+
+	public void loadDataEach() {
+		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames());
+		table.setModel(model);
+	}
+
+	public Object[][] getDataEach() {
+		List<Book> lists = searchItem();
+
+		Object[][] data = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			data[i] = lists.get(i).toArray();
+		}
+		return data;
+	}
+
+	public List<Book> searchItem() {
+		String searchBy =(String) comboBox.getSelectedItem();
+		String item = tfSearch.getText();
+		List<Book> lists = null;
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+		if (searchBy.equals("도서코드")) {
+			map.put("bookCode", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
+			return lists;
+		}
+		if (searchBy.equals("도서명")) {
+			map.put("bookName", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
+			return lists;
+		}
+		if (searchBy.equals("저 자")) {
+			map.put("author", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
+			return lists;
+		}
+		if (searchBy.equals("출판사")) {
+
+			map.put("publicName", "%"+item+"%");
+			lists = BookService.getInstance().selectBookBySomething(map);
+			return lists;
+		}
+		return lists;
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+	
+	public void selectedBook() {
+		int selectedIndex=table.getSelectedRow();
+		String bCode=(String) table.getValueAt(selectedIndex, 0);
+		String bName=(String) table.getValueAt(selectedIndex, 1);
+		String bAuthor=(String) table.getValueAt(selectedIndex, 2);
+		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
+		int bPrice=(int) table.getValueAt(selectedIndex, 4);
+		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
+	}
 }
