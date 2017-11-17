@@ -46,7 +46,7 @@ public class HistoryViewDaoImpl implements HistoryViewDao {
 
 	@Override
 	public List<HistoryView> selectByWhereHistoryViewMap(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		log.debug("selectWhereHistoryViewMap()");
+		return sqlSession.selectList(namespace+".selectByWhereHistoryViewMap");
 	}
 }

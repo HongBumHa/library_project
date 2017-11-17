@@ -53,7 +53,12 @@ public class ManagerRentalBook extends JPanel {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedItem().equals("전체보기")) {
-					loadDataRent();
+					if(radioRent.isSelected()==true) {
+						loadDataRent();
+					}
+					if(radioReturn.isSelected()==true) {
+						loadDataReturn();
+					}
 				}
 			}
 		});
@@ -102,7 +107,6 @@ public class ManagerRentalBook extends JPanel {
 		radioReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadDataReturn();
-				JOptionPane.showMessageDialog(null, "test");
 			}
 		});
 		radioReturn.setFont(new Font("굴림", Font.BOLD, 15));
@@ -142,9 +146,7 @@ public class ManagerRentalBook extends JPanel {
 
 	public Object[][] getDataReturn() {
 		List<HistoryView> lists = HistoryViewService.getInstance().findAllHistoryViewDataMap();
-		for(HistoryView hv:lists) {
-			System.out.println(hv);
-		}
+
 		Object[][] data = new Object[lists.size()][];
 		for (int i = 0; i < lists.size(); i++) {
 			data[i] = lists.get(i).toArray2();
@@ -159,8 +161,8 @@ public class ManagerRentalBook extends JPanel {
 			table.setModel(model);
 		}
 		if(radioReturn.isSelected()==true) {
-			/*DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getColumnNames());
-			table.setModel(model);*/
+			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getColumnNames());
+			table.setModel(model);
 		}
 	}
 
@@ -208,6 +210,55 @@ public class ManagerRentalBook extends JPanel {
 		if(selectedCombo.equals("반납예정일")) {
 			map.put("returnDay", "%"+item+"%");
 			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
+			return lists;
+		}
+		return lists;
+	}
+	
+	private Object[][] getDataReturnEach() {
+		List<HistoryView> lists=searchReturnEach();
+		
+		Object[][] data = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			data[i] = lists.get(i).toArray();
+		}
+		return data;
+	}
+
+	private List<HistoryView> searchReturnEach() {
+		String selectedCombo=(String) comboBox.getSelectedItem();
+		String item=tfSearch.getText();
+		List<HistoryView> lists=null;
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+		if(selectedCombo.equals("도서코드")) {
+			map.put("bookCode", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
+			return lists;
+		}
+		if(selectedCombo.equals("도서명")) {
+			map.put("bookName", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
+			return lists;
+		}
+		if(selectedCombo.equals("회원ID")) {
+			map.put("userId", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
+			return lists;
+		}
+		if(selectedCombo.equals("회원명")) {
+			map.put("userName", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
+			return lists;
+		}
+		if(selectedCombo.equals("대여일")) {
+			map.put("rentalDay", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
+			return lists;
+		}
+		if(selectedCombo.equals("반납예정일")) {
+			map.put("returnDay", "%"+item+"%");
+			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
 			return lists;
 		}
 		return lists;

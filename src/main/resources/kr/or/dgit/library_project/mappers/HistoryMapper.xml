@@ -43,7 +43,7 @@
 		select book_code, book_name, user_id, user_name, author, p.public_name, price, rentalDay, realreturnday from history_total h, publisher p
 	</sql>
 	
-	<sql id="whereRentalDataMap">
+	<sql id="whereHistoryDataMap">
 		<where>
 			<if test="bookCode != null">
 				and h.public_name=p.public_code and book_code like #{bookCode}
@@ -66,12 +66,15 @@
 		</where>
 	</sql>
 	
-   <select id="selectAllHistoryViewMap" resultType="HistoryView">
+   <select id="selectAllHistoryViewMap" resultMap="ManagerHistoryResult">
       <include refid="allHistoryViewMap"/>
       where h.public_name = p.public_code
    </select>
    
-   
+   <select id="selectByWhereHistoryViewMap" parameterType="map" resultMap="ManagerHistoryResult">
+      <include refid="allHistoryViewMap"/>
+      <include refid="whereHistoryDataMap"/>
+   </select>
    <!--  -->
    
    <select id="selectByWhereHistoryView" parameterType="HistoryView" resultType="HistoryView">
