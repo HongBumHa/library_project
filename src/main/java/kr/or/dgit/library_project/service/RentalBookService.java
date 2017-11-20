@@ -8,6 +8,18 @@ import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class RentalBookService {
+	private static final RentalBookService instance=new RentalBookService();
+	
+	public static RentalBookService getInstance() {
+		return instance;
+	}
+	
+
+	public RentalBookService() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int insertDataRentalBook(RentalBook rentalBook){
 		int res = -1;
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){

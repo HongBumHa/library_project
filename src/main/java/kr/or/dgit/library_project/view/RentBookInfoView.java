@@ -8,11 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import kr.or.dgit.library_project.dto.RentalBook;
+import kr.or.dgit.library_project.service.RentalBookService;
+import kr.or.dgit.library_project.ui.MainUi;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 import java.awt.event.ActionEvent;
 
 public class RentBookInfoView extends JFrame {
@@ -24,6 +31,7 @@ public class RentBookInfoView extends JFrame {
 	private JTextField tfPublisher;
 	private JTextField tfPrice;
 	private JTextField tfAmount;
+	private String bCode;
 
 	public RentBookInfoView() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -98,16 +106,22 @@ public class RentBookInfoView extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JButton button = new JButton("대여");
-		panel_1.add(button);
+		JButton btnRent = new JButton("대여");
+		btnRent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rentBook();
+				setVisible(false);
+			}
+		});
+		panel_1.add(btnRent);
 		
-		JButton button_1 = new JButton("취소");
-		button_1.addActionListener(new ActionListener() {
+		JButton btnCancel = new JButton("취소");
+		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-		panel_1.add(button_1);
+		panel_1.add(btnCancel);
 		
 		addBookInfo();
 	}
@@ -116,7 +130,7 @@ public class RentBookInfoView extends JFrame {
 		cleanTf();
 		
 		int selectedIndex=RentalBookPanel.table.getSelectedRow();
-		String bCode=(String) RentalBookPanel.table.getValueAt(selectedIndex, 0);
+		bCode=(String) RentalBookPanel.table.getValueAt(selectedIndex, 0);
 		String bName=(String) RentalBookPanel.table.getValueAt(selectedIndex, 1);
 		String bAuthor=(String) RentalBookPanel.table.getValueAt(selectedIndex, 2);
 		String bPublisher=(String) RentalBookPanel.table.getValueAt(selectedIndex, 3);
@@ -139,5 +153,18 @@ public class RentBookInfoView extends JFrame {
 		tfPublisher.setText("");
 		tfPrice.setText("");
 		tfAmount.setText("");
+	}
+	
+	private void rentBook() {
+		RentalBook rb=new RentalBook(bCode, MainUi.getUsers().getUserId());
+		try {
+			int rent=RentalBookService.getInstance().insertDataRentalBook(rb);
+			if(rent < 0) {
+				throw new Exception("대여불가능 도서 입니다.");
+			}else
+			JOptionPane.showMessageDialog(null, bCode+" 도서를 대여완료하였습니다.");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 }
