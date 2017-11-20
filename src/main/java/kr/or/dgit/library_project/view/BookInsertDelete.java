@@ -40,10 +40,10 @@ public class BookInsertDelete extends JPanel {
 	private List<BookGroup> middleLists;
 	private String[] comboDatas;
 	private BookGroup book = new BookGroup();
-
-	/**
-	 * Create the panel.
-	 */
+	private BookGroupService bgSer = new BookGroupService();
+	private List<BookGroup> bigGroupLists;
+	
+	
 	public BookInsertDelete() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -111,13 +111,13 @@ public class BookInsertDelete extends JPanel {
 		
 		comboBigGroup = new JComboBox();
 		comboBigGroup.setBounds(435, 39, 65, 21);
-		comboBigGroup.setModel(bigGroupModel);
-		ComboSetting(book);
+//		comboBigGroup.setModel(bigGroupModel);
+//		comboBigGroup.setModel(createComboModel());
 		BookDelInsertPanel.add(comboBigGroup);
 		
 		comboMiddleGroup = new JComboBox();
 		comboMiddleGroup.setBounds(435, 67, 65, 21);
-		ComboSetting(bigLists.get(comboBigGroup.getSelectedIndex()));
+//		ComboSetting(bigLists.get(comboBigGroup.getSelectedIndex()));
 		BookDelInsertPanel.add(comboMiddleGroup);
 		
 		tfAuthor = new JTextField();
@@ -152,7 +152,7 @@ public class BookInsertDelete extends JPanel {
 	}
 	
 	
-	public void ComboSetting(BookGroup bookGroup) {
+	/*public void ComboSetting(BookGroup bookGroup) {
 		BookGroupService bgsv = new BookGroupService();
 		BookGroup setBookGroup = new BookGroup();
 		
@@ -165,6 +165,10 @@ public class BookInsertDelete extends JPanel {
 				listsObj[i] = bigLists.get(i);
 				comboData[i] = listsObj[i].getBookBigGroupName();
 			}
+			bigGroupModel = new DefaultComboBoxModel<>(comboDatas);
+			comboBigGroup.setModel(bigGroupModel);
+			comboMiddleGroup.setVisible(true);
+			setVisible(true);
 		}
 		else {
 			middleLists = bgsv.findAllMiddleGroup(bookGroup);
@@ -175,12 +179,32 @@ public class BookInsertDelete extends JPanel {
 				listsObj[i] = middleLists.get(i);
 				comboDatas[i] = listsObj[i].getBookMiddleGroupName();
 			}
+			middleComboModel = new DefaultComboBoxModel<>(comboDatas);
+			comboMiddleGroup.setModel(middleComboModel);
+			comboMiddleGroup.setVisible(true);
+			setVisible(true);
 		}
 //		bookGroup.setBigGroup((String)comboBigGroup.getSelectedItem());
 		
-		middleComboModel = new DefaultComboBoxModel<>(comboDatas);
-		comboMiddleGroup.setModel(middleComboModel);
-		comboMiddleGroup.setVisible(true);
-		setVisible(true);
+		
+	}*/
+	
+	public DefaultComboBoxModel createComboModel(BookGroup bookgroup) {
+		bigGroupLists = bgSer.findAllBookBigGroup();
+		
+		if(bookgroup.getBookBigGroupName().isEmpty()) {
+			String[] comboLists = new String[bigGroupLists.size()];
+			
+			for(int i = 0; i < bigGroupLists.size(); i++) {
+				comboLists[i] = bigGroupLists.get(i).getBookBigGroupName();
+			}
+			
+			bigGroupModel = new DefaultComboBoxModel<>(comboLists);
+			return bigGroupModel;
+		}
+		
+		List<BookGroup> middleLists = bgSer.findAllMiddleGroup(bookgroup);
+		String[] middleComboLists = new String[middleLists.size()];
+		return bigGroupModel;
 	}
 }

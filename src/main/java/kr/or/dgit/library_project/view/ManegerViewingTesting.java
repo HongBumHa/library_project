@@ -1,4 +1,4 @@
-package kr.or.dgit.library_project.test;
+package kr.or.dgit.library_project.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,9 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.dgit.library_project.view.BookInsertDelete;
-
-public class TestingUi extends JFrame {
+public class ManegerViewingTesting extends JFrame {
 
 	private JPanel contentPane;
 
@@ -20,7 +18,7 @@ public class TestingUi extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestingUi frame = new TestingUi();
+					ManegerViewingTesting frame = new ManegerViewingTesting();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,21 +30,16 @@ public class TestingUi extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	/**
-	 * 
-	 */
-	public TestingUi() {
+	public ManegerViewingTesting() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 702, 485);
+		setBounds(100, 100, 680, 356);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
-		
-		BookInsertDelete bookInDe = new BookInsertDelete();
-		bookInDe.setBounds(5, 5, 676, 437);
-		contentPane.add(bookInDe);
-		
+
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		ManegerTesting panel = new ManegerTesting();
+		contentPane.add(panel, BorderLayout.CENTER);
 	}
-	
 }
