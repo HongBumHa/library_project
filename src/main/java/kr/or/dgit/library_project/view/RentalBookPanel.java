@@ -200,7 +200,7 @@ public class RentalBookPanel extends JPanel {
 		});
 	}
 	
-	public void selectedBook() {
+	/*public void selectedBook() {
 		int selectedIndex=table.getSelectedRow();
 		String bCode=(String) table.getValueAt(selectedIndex, 0);
 		String bName=(String) table.getValueAt(selectedIndex, 1);
@@ -208,5 +208,5 @@ public class RentalBookPanel extends JPanel {
 		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
 		int bPrice=(int) table.getValueAt(selectedIndex, 4);
 		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
-	}
+	}*/
 }

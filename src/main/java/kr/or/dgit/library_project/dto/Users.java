@@ -122,4 +122,7 @@ public class Users {
 		this.delayDay = delayDay;
 	}
 
+	public Users() {
+	}
+
 }

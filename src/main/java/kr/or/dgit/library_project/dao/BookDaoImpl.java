@@ -26,6 +26,12 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
+	public Book selectBookByCode(Book book) {
+		log.debug("selectBookByCode()");
+		return sqlSession.selectOne(namespace+"selectBookByCode", book);
+	}
+	
+	@Override
 	public List<Book> selectBookBySomething(Map<String, Object> map) {
 		log.debug("selectBookBySomething()");
 		return sqlSession.selectList(namespace+"selectBookBySomething", map);
@@ -48,5 +54,7 @@ public class BookDaoImpl implements BookDao {
 		log.debug("deleteBook()");
 		return sqlSession.delete(namespace+"deleteBook", book);
 	}
+
+	
 
 }

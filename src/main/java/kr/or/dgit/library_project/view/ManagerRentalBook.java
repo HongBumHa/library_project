@@ -11,8 +11,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,14 +29,12 @@ import kr.or.dgit.library_project.service.RentalViewService;
 import javax.swing.DefaultComboBoxModel;
 
 public class ManagerRentalBook extends JPanel {
-	private JTable table;
+	public static JTable table;
 	private JTextField tfSearch;
 	private JRadioButton radioRent;
 	private JRadioButton radioReturn;
 	private JComboBox comboBox;
-	/**
-	 * Create the panel.
-	 */
+
 	public ManagerRentalBook() {
 		setLayout(null);
 		
@@ -90,6 +90,7 @@ public class ManagerRentalBook extends JPanel {
 		panel_6.add(scrollPane);
 		
 		table = new JTable();
+		addPopupMenu();
 		scrollPane.setViewportView(table);
 		
 		radioRent = new JRadioButton("대여현황");
@@ -118,6 +119,22 @@ public class ManagerRentalBook extends JPanel {
 		group.add(radioReturn);
 
 		loadDataRent();
+	}
+	
+	private void addPopupMenu() {
+		JPopupMenu popupMenu=new JPopupMenu();
+		JMenuItem menuItem=new JMenuItem("자세히보기");
+		popupMenu.add(menuItem);
+		table.setComponentPopupMenu(popupMenu);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerBookDetailInfo mbdi=new ManagerBookDetailInfo();
+				mbdi.setVisible(true);
+				
+			}
+		});
 	}
 	
 	public void loadDataRent() {
@@ -220,7 +237,7 @@ public class ManagerRentalBook extends JPanel {
 		
 		Object[][] data = new Object[lists.size()][];
 		for (int i = 0; i < lists.size(); i++) {
-			data[i] = lists.get(i).toArray();
+			data[i] = lists.get(i).toArray2();
 		}
 		return data;
 	}

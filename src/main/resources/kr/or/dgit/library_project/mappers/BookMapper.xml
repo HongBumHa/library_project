@@ -64,6 +64,11 @@
 		where b.public_name=p.public_code order by book_code
 	</select>
 	
+	<select id="selectBookByCode" parameterType="Book" resultType="Book">
+		<include refid="selectSqlAll"/>
+		where b.public_name=p.public_code and book_code=#{bookCode}
+	</select>
+	
 	<!-- selectBookBySomething -->
 	<select id="selectBookBySomething" parameterType="map" resultMap="BookResult">
 		<include refid="selectSqlAll"/>

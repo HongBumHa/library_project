@@ -28,6 +28,13 @@ public class BookService {
 		}
 	}
 	
+	public Book selectBookByCode(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookByCode(book);
+		}
+	}
+	
 	public List<Book> selectBookBySomething(Map<String, Object> map) {
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			BookDao dao=new BookDaoImpl(sqlSession);
