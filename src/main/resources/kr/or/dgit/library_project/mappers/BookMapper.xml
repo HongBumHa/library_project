@@ -59,12 +59,12 @@
 	</sql>
 	
 	<!-- selectBookByAll -->
-	<select id="selectBookByAll" parameterType="Book" resultType="Book">
+	<select id="selectBookByAll" parameterType="Book" resultMap="BookResult">
 		<include refid="selectSqlAll"/>
 		where b.public_name=p.public_code order by book_code
 	</select>
 	
-	<select id="selectBookByCode" parameterType="Book" resultType="Book">
+	<select id="selectBookByCode" parameterType="Book" resultMap="BookResult">
 		<include refid="selectSqlAll"/>
 		where b.public_name=p.public_code and book_code=#{bookCode}
 	</select>

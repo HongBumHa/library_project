@@ -59,6 +59,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pUserInfo.add(lblUserId);
 		
 		tfUserId = new JTextField();
+		tfUserId.setEditable(false);
 		tfUserId.setBounds(70, 35, 116, 21);
 		pUserInfo.add(tfUserId);
 		tfUserId.setColumns(10);
@@ -69,6 +70,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pUserInfo.add(lblUserName);
 		
 		tfUserName = new JTextField();
+		tfUserName.setEditable(false);
 		tfUserName.setColumns(10);
 		tfUserName.setBounds(271, 32, 116, 21);
 		pUserInfo.add(tfUserName);
@@ -79,6 +81,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pUserInfo.add(lblUserPhone);
 		
 		tfUserPhone = new JTextField();
+		tfUserPhone.setEditable(false);
 		tfUserPhone.setColumns(10);
 		tfUserPhone.setBounds(70, 63, 116, 21);
 		pUserInfo.add(tfUserPhone);
@@ -89,6 +92,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pUserInfo.add(lblUserEmail);
 		
 		tfUserEmail = new JTextField();
+		tfUserEmail.setEditable(false);
 		tfUserEmail.setColumns(10);
 		tfUserEmail.setBounds(271, 60, 116, 21);
 		pUserInfo.add(tfUserEmail);
@@ -99,6 +103,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pUserInfo.add(lblUserAddr);
 		
 		tfUserAddr = new JTextField();
+		tfUserAddr.setEditable(false);
 		tfUserAddr.setColumns(10);
 		tfUserAddr.setBounds(70, 94, 317, 21);
 		pUserInfo.add(tfUserAddr);
@@ -120,18 +125,20 @@ public class ManagerBookDetailInfo extends JFrame {
 		pBookInfo.add(lblBookCode);
 		
 		tfBookCode = new JTextField();
+		tfBookCode.setEditable(false);
 		tfBookCode.setColumns(10);
-		tfBookCode.setBounds(70, 38, 114, 21);
+		tfBookCode.setBounds(70, 38, 106, 21);
 		pBookInfo.add(tfBookCode);
 		
 		JLabel lblAuthor = new JLabel("저자");
 		lblAuthor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAuthor.setBounds(228, 41, 44, 15);
+		lblAuthor.setBounds(188, 41, 44, 15);
 		pBookInfo.add(lblAuthor);
 		
 		tfAuthor = new JTextField();
+		tfAuthor.setEditable(false);
 		tfAuthor.setColumns(10);
-		tfAuthor.setBounds(276, 38, 116, 21);
+		tfAuthor.setBounds(236, 38, 156, 21);
 		pBookInfo.add(tfAuthor);
 		
 		JLabel lblBookName = new JLabel("도서명");
@@ -140,6 +147,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pBookInfo.add(lblBookName);
 		
 		tfBookName = new JTextField();
+		tfBookName.setEditable(false);
 		tfBookName.setColumns(10);
 		tfBookName.setBounds(70, 69, 322, 21);
 		pBookInfo.add(tfBookName);
@@ -150,6 +158,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pBookInfo.add(lblPublisher);
 		
 		tfPublisher = new JTextField();
+		tfPublisher.setEditable(false);
 		tfPublisher.setColumns(10);
 		tfPublisher.setBounds(70, 97, 97, 21);
 		pBookInfo.add(tfPublisher);
@@ -160,6 +169,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pBookInfo.add(lblPrice);
 		
 		tfPrice = new JTextField();
+		tfPrice.setEditable(false);
 		tfPrice.setColumns(10);
 		tfPrice.setBounds(208, 97, 57, 21);
 		pBookInfo.add(tfPrice);
@@ -170,6 +180,7 @@ public class ManagerBookDetailInfo extends JFrame {
 		pBookInfo.add(lblRentCount);
 		
 		tfRentCount = new JTextField();
+		tfRentCount.setEditable(false);
 		tfRentCount.setBounds(337, 97, 55, 21);
 		pBookInfo.add(tfRentCount);
 		tfRentCount.setColumns(10);
@@ -218,18 +229,15 @@ public class ManagerBookDetailInfo extends JFrame {
 		tfPublisher.setText(item.getPublicName());
 		tfPrice.setText(String.valueOf(item.getPrice()));
 		tfRentCount.setText(String.valueOf(item.getAllRentalCount()));
-		
 	}
 
 	private Book searchBook() {
-		
 		int selectedIndex=ManagerRentalBook.table.getSelectedRow();
 		String bCode=(String) ManagerRentalBook.table.getValueAt(selectedIndex, 0);
 		Book book =new Book();
 
 		book.setBookCode(bCode);
 		Book findBook= BookService.getInstance().selectBookByCode(book);
-		
 		
 		return findBook;
 	}

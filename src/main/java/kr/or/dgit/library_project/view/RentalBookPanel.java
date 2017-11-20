@@ -69,7 +69,6 @@ public class RentalBookPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadDataEach();
-
 			}
 		});
 		btnSearch.setBounds(485, 11, 93, 23);
@@ -167,25 +166,17 @@ public class RentalBookPanel extends JPanel {
 		
 		if (searchBy.equals("도서코드")) {
 			map.put("bookCode", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("도서명")) {
 			map.put("bookName", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("저 자")) {
 			map.put("author", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("출판사")) {
-
 			map.put("publicName", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
+		lists = BookService.getInstance().selectBookBySomething(map);
 		return lists;
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {

@@ -132,18 +132,21 @@ public class ManagerRentalBook extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ManagerBookDetailInfo mbdi=new ManagerBookDetailInfo();
 				mbdi.setVisible(true);
-				
 			}
 		});
 	}
 	
 	public void loadDataRent() {
-		DefaultTableModel model = new DefaultTableModel(getDataRent(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataRent(), getRentColumnNames());
 		table.setModel(model);
 	}
 
-	public String[] getColumnNames() {
+	public String[] getRentColumnNames() {
 		return new String[] { "도서코드", "도서명", "회원ID", "회원명","저자","출판사","가격","대여일","반납예정일"};
+	}
+	
+	public String[] getReturnColumnNames() {
+		return new String[] { "도서코드", "도서명", "회원ID", "회원명","저자","출판사","가격","대여일","반납일"};
 	}
 
 	public Object[][] getDataRent() {
@@ -157,7 +160,7 @@ public class ManagerRentalBook extends JPanel {
 	}
 	
 	public void loadDataReturn() {
-		DefaultTableModel model = new DefaultTableModel(getDataReturn(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataReturn(), getReturnColumnNames());
 		table.setModel(model);
 	}
 
@@ -174,11 +177,11 @@ public class ManagerRentalBook extends JPanel {
 	//콤보박스 선택에 따른 검색(loadDataEach)
 	public void loadDataEach() {
 		if(radioRent.isSelected()==true) {
-			DefaultTableModel model = new DefaultTableModel(getDataRentEach(), getColumnNames());
+			DefaultTableModel model = new DefaultTableModel(getDataRentEach(), getRentColumnNames());
 			table.setModel(model);
 		}
 		if(radioReturn.isSelected()==true) {
-			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getColumnNames());
+			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getReturnColumnNames());
 			table.setModel(model);
 		}
 	}
@@ -201,34 +204,23 @@ public class ManagerRentalBook extends JPanel {
 		
 		if(selectedCombo.equals("도서코드")) {
 			map.put("bookCode", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("도서명")) {
 			map.put("bookName", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("회원ID")) {
 			map.put("userId", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("회원명")) {
 			map.put("userName", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("대여일")) {
 			map.put("rentalDay", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("반납예정일")) {
 			map.put("returnDay", "%"+item+"%");
-			lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
-			return lists;
 		}
+		lists=RentalViewService.getInstance().findByWhereRentalViewMap(map);
 		return lists;
 	}
 	
@@ -250,34 +242,23 @@ public class ManagerRentalBook extends JPanel {
 		
 		if(selectedCombo.equals("도서코드")) {
 			map.put("bookCode", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("도서명")) {
 			map.put("bookName", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("회원ID")) {
 			map.put("userId", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("회원명")) {
 			map.put("userName", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("대여일")) {
 			map.put("rentalDay", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
 		if(selectedCombo.equals("반납예정일")) {
 			map.put("returnDay", "%"+item+"%");
-			lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
-			return lists;
 		}
+		lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
 		return lists;
 	}
 }

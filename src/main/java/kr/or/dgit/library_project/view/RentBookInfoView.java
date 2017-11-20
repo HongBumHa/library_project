@@ -52,6 +52,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblBookCode);
 		
 		tfBookCode = new JTextField();
+		tfBookCode.setEditable(false);
 		tfBookCode.setBounds(12, 28, 116, 28);
 		tfBookCode.setColumns(10);
 		panel.add(tfBookCode);
@@ -61,6 +62,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblBookName);
 		
 		tfBookName = new JTextField();
+		tfBookName.setEditable(false);
 		tfBookName.setBounds(148, 28, 423, 28);
 		tfBookName.setColumns(10);
 		panel.add(tfBookName);
@@ -70,6 +72,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblAuthor);
 		
 		tfAuthor = new JTextField();
+		tfAuthor.setEditable(false);
 		tfAuthor.setBounds(12, 93, 155, 28);
 		tfAuthor.setColumns(10);
 		panel.add(tfAuthor);
@@ -79,6 +82,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblPublisher);
 		
 		tfPublisher = new JTextField();
+		tfPublisher.setEditable(false);
 		tfPublisher.setBounds(188, 93, 155, 28);
 		tfPublisher.setColumns(10);
 		panel.add(tfPublisher);
@@ -88,6 +92,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblPrice);
 		
 		tfPrice = new JTextField();
+		tfPrice.setEditable(false);
 		tfPrice.setBounds(365, 93, 89, 28);
 		tfPrice.setColumns(10);
 		panel.add(tfPrice);
@@ -97,6 +102,7 @@ public class RentBookInfoView extends JFrame {
 		panel.add(lblAmount);
 		
 		tfAmount = new JTextField();
+		tfAmount.setEditable(false);
 		tfAmount.setBounds(476, 93, 49, 28);
 		tfAmount.setColumns(10);
 		panel.add(tfAmount);
@@ -143,7 +149,6 @@ public class RentBookInfoView extends JFrame {
 		tfPublisher.setText(bPublisher);
 		tfPrice.setText(String.valueOf(bPrice));
 		tfAmount.setText(String.valueOf(bRentalCount));
-		
 		
 	}
 	private void cleanTf() {
