@@ -23,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.UsersService;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class ManagerUserinfo extends JPanel {
@@ -30,18 +32,15 @@ public class ManagerUserinfo extends JPanel {
 	private JPasswordField pfUserPw;
 	private JPasswordField pfUserPwCh;
 
-	public static ManagerUserinfo getInstance() {
-		return instance;
-	}
 
-	private ManagerUserinfo() {
+	public ManagerUserinfo() {
 		JPanel panel_8 = new JPanel();
-		panel_8.setLayout(null);
+		panel_8.setMaximumSize(new Dimension(20000, 20000));
+		panel_8.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
 		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_9.setBounds(12, 76, 594, 167);
 		panel_8.add(panel_9);
 
 		JPanel pUserId = new JPanel();
@@ -149,7 +148,6 @@ public class ManagerUserinfo extends JPanel {
 
 		JPanel psearchUser = new JPanel();
 		psearchUser.setLayout(null);
-		psearchUser.setBounds(259, 10, 491, 43);
 		panel_8.add(psearchUser);
 
 		JComboBox cmbseach = new JComboBox();
@@ -171,39 +169,34 @@ public class ManagerUserinfo extends JPanel {
 		tfSearch_1.setBounds(388, 11, 93, 23);
 		psearchUser.add(tfSearch_1);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 321, 758, 258);
-		panel_8.add(scrollPane);
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBounds(22, 331, 690, 167);
+//		panel_8.add(scrollPane);
 
 //		DefaultTableModel tableModel = new DefaultTableModel(getData(), getColumnNames());
-		JTable table = new JTable();
-		scrollPane.setViewportView(table);
+//		JTable table = new JTable();
+//		scrollPane.setViewportView(table);
 
 		JLabel lblNewLabel = new JLabel("회원리스트");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 291, 94, 30);
 		panel_8.add(lblNewLabel);
 
 		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(644, 156, 97, 23);
 		panel_8.add(btnUpdate);
 
 		JButton btnCencel = new JButton("취 소");
-		btnCencel.setBounds(644, 187, 97, 23);
 		panel_8.add(btnCencel);
 
 		JButton btnDel = new JButton("회원 탈퇴");
-		btnDel.setBounds(644, 220, 97, 23);
 		panel_8.add(btnDel);
 
 		JLabel lblTitle = new JLabel("회원정보");
 		lblTitle.setFont(new Font("맑은 고딕", Font.PLAIN, 24));
-		lblTitle.setBounds(12, 10, 117, 43);
 		panel_8.add(lblTitle);
 	}
 
-	/*private Object[][] getData() {
+	private Object[][] getData() {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("userLeave", "Y");
 		List<Users> lists = UsersService.getInstance().findSelectByUserList(map);
@@ -216,6 +209,6 @@ public class ManagerUserinfo extends JPanel {
 
 	private String[] getColumnNames() {
 		return new String[] { "ID", "이름", "주소", "전화번호", "이메일" };
-	}*/
+	}
 }
 
