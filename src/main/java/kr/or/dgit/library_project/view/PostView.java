@@ -3,6 +3,7 @@ package kr.or.dgit.library_project.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,10 +32,14 @@ public class PostView extends JFrame {
 	private JPanel panel;
 	private JButton btnAdd;
 	private JButton btnCencal;
-	private UserInfoView uiv = UserInfoView.getInstance();
-	
-	public PostView() {
-
+	private UserInfoView uiv;
+	private MemberApp mba;
+	public PostView(int ioi) {
+		if(ioi == 0) {
+			mba = MemberApp.getInstance();
+		}else if(ioi == 1) {
+			uiv = UserInfoView.getInstance();
+		}
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 687, 300);
 		contentPane = new JPanel();
@@ -44,7 +49,13 @@ public class PostView extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
+		DefaultTableModel tableModel = null;
+		if(ioi ==1) {
+			tableModel = new DefaultTableModel(getData(),getColumnNames());
+		}else if(ioi ==0) {
+			tableModel = new DefaultTableModel(getData2(),getColumnNames2());
+		}
+		
 		table = new JTable();
 		
 		table.setModel(tableModel);
@@ -64,8 +75,12 @@ public class PostView extends JFrame {
 						"주소 확인창", 
 						JOptionPane.YES_NO_OPTION, 
 						JOptionPane.QUESTION_MESSAGE);
-				 if(i == 0) {
+				 if(ioi ==1) {
+					 
 					 uiv.getTfAddr().setText(addr);
+					 setVisible(false);
+				 }else {
+					 mba.getTfUserAddr().setText(addr);
 					 setVisible(false);
 				 }
 				
@@ -81,6 +96,25 @@ public class PostView extends JFrame {
 		});
 		panel.add(btnCencal);
 		
+	}
+
+	private Object[][] getData2() {
+		String doro = mba.getTfDoro().getText() + "%";
+		String sido = (String) mba.getCmbUserAddr().getSelectedItem();
+		
+		Post post = new Post(sido,doro);
+		List<Post> lists = PostService.getInstance().findSelectByDoroList(post);
+		Object[][] datas = new Object[lists.size()][];
+		for(int i =0; i < lists.size(); i++) {
+			
+			datas[i] = lists.get(i).toArray();
+			
+		}
+		return datas;
+	}
+
+	private String[] getColumnNames2() {
+		return new String[] {"우편번호","시도","시군구","도로","건물명1","건물명2"};
 	}
 
 	protected String selectTable() {
@@ -101,7 +135,6 @@ public class PostView extends JFrame {
 
 	private  Object[][] getData() {	
 		String doro = uiv.getTfDoro().getText() + "%";
-;
 		String sido = (String) uiv.getCmbCity().getSelectedItem();
 		
 		Post post = new Post(sido,doro);

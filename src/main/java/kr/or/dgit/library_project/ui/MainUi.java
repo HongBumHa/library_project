@@ -105,7 +105,7 @@ public class MainUi extends JFrame {
 		JButton btnNewButton_2 = new JButton("회원가입");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberApp frame = new MemberApp();
+				MemberApp frame = MemberApp.getInstance();
 				frame.setVisible(true);
 			}
 		});
