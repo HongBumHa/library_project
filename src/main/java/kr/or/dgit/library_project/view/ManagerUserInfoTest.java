@@ -28,14 +28,13 @@ public class ManagerUserInfoTest extends JPanel {
 	private JTable table_1;
 	
 	public ManagerUserInfoTest() {
-		JPanel panel_one = new JPanel();
-		panel_one.setLayout(null);
+		setLayout(null);
 		
 		JPanel panel_first = new JPanel();
 		panel_first.setLayout(null);
 		panel_first.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		panel_first.setBounds(87, 63, 594, 202);
-		panel_one.add(panel_first);
+		add(panel_first);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setLayout(null);
@@ -161,7 +160,7 @@ public class ManagerUserInfoTest extends JPanel {
 		JPanel panel_17 = new JPanel();
 		panel_17.setLayout(null);
 		panel_17.setBounds(143, 10, 491, 43);
-		panel_one.add(panel_17);
+		add(panel_17);
 		
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"아이디", "이름", "전화번호", "이메일", "주소"}));
@@ -180,7 +179,7 @@ public class ManagerUserInfoTest extends JPanel {
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(12, 321, 758, 258);
-		panel_one.add(scrollPane_1);
+		add(scrollPane_1);
 		
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
@@ -246,7 +245,7 @@ public class ManagerUserInfoTest extends JPanel {
 		lbLast.setFont(new Font("굴림", Font.BOLD, 15));
 		lbLast.setHorizontalAlignment(SwingConstants.CENTER);
 		lbLast.setBounds(12, 281, 94, 30);
-		panel_one.add(lbLast);
+		add(lbLast);
 	}
 
 }

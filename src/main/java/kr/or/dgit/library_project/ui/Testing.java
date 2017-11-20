@@ -37,14 +37,13 @@ public class Testing extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
 		
-		ManagerUserInfoTest test = new ManagerUserInfoTest();
-		contentPane.add(test);
-		test.setLayout(null);
-		
-		setContentPane(contentPane);
-		
-	}
 
+		
+		ManagerUserInfoTest panel = new ManagerUserInfoTest();
+		panel.setBounds(100, 100, 450, 300);
+		panel.setVisible(true);
+		contentPane.add(panel);
+		setContentPane(contentPane);
+	}
 }
