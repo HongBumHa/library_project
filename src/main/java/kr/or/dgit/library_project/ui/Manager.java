@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 import kr.or.dgit.library_project.view.ManagerUserinfo;
+import kr.or.dgit.library_project.view.ManagerGraph;
 
 public class Manager extends JFrame {
 
@@ -285,5 +286,9 @@ public class Manager extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		panel_8.add(lblNewLabel);
+		
+		ManagerGraph panel = new ManagerGraph();
+		tabbedPane.addTab("New tab", null, panel, null);
+		panel.setLayout(null);
 	}
 }
