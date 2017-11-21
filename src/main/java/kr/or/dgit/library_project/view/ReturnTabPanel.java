@@ -215,8 +215,7 @@ public class ReturnTabPanel extends JPanel {
 	}
 
 	private TableModel createTableModel(RentalView rentalView) {
-		RentalViewService rentalViewSr = new RentalViewService();
-		List<RentalView> list = rentalViewSr.findByWhereRentalView(rentalView);
+		List<RentalView> list = RentalViewService.getInstance().findByWhereRentalView(rentalView);
 		Object[][] datas = new Object[list.size()][];
 		
 		for(int i = 0; i<list.size(); i++) {
