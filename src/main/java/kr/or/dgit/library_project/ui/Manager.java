@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 
 public class Manager extends JFrame {
@@ -246,6 +247,14 @@ public class Manager extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		panel_18.add(lblNewLabel);
+/**/		
+		BookInsertDelete insertDeletePanel = new BookInsertDelete();
+		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
+		insertDeletePanel.setLayout(null);
 		
+		/*ManagerGraph panel = new ManagerGraph();
+		tabbedPane.addTab("New tab", null, panel, null);
+		panel.setLayout(null);*/
+
 	}
 }
