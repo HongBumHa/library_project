@@ -8,12 +8,12 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -218,11 +218,22 @@ public class BookInsertDelete extends JPanel {
 					tfArrays[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
 //					private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
 				}
-				
+				btnClickEvent.setText("제거");
 				tfFieldNotUsing();
 			}
 		});
-		JPopupMenu popupMenu = new JPopupMenu("변경");	
+		JPopupMenu popupMenu = new JPopupMenu();
+		JMenuItem menuItem = new JMenuItem("변경");
+		popupMenu.add(menuItem);
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tfArrays[tfArrays.length-1].setEnabled(true);
+				btnClickEvent.setText("변경");
+				setVisible(true);
+			}
+		});
 		searchTable.setComponentPopupMenu(popupMenu);
 		searchTable.setModel(searchTableModel);
 		tableScroll.setViewportView(searchTable);
