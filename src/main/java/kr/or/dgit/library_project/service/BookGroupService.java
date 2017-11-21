@@ -10,30 +10,41 @@ import kr.or.dgit.library_project.dto.BookGroup;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class BookGroupService {
-	public List<BookGroup> findAllBookBigGroup(){
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+
+	private static final BookGroupService instance = new BookGroupService();
+
+	public static BookGroupService getInstance() {
+		return instance;
+	}
+
+	public BookGroupService() {
+		super();
+	}
+
+	public List<BookGroup> findAllBookBigGroup() {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();) {
 			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
 			return dao.selectAllBookBigGroup();
 		}
 	}
-	
-	public List<BookGroup> findAllMiddleGroup(BookGroup bookGroup){
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+
+	public List<BookGroup> findAllMiddleGroup(BookGroup bookGroup) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();) {
 			System.out.println("sqlSession " + sqlSession);
 			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
 			return dao.selectAllMiddleGroup(bookGroup);
 		}
 	}
-	
-	public BookGroup findByNoBigGroup(BookGroup bookGroup){
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+
+	public BookGroup findByNoBigGroup(BookGroup bookGroup) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();) {
 			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
 			return dao.selectByNoBigGroup(bookGroup);
 		}
 	}
-	
-	public BookGroup findByNoMiddleGroup(BookGroup bookGroup){
-		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+
+	public BookGroup findByNoMiddleGroup(BookGroup bookGroup) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();) {
 			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
 			return dao.selectByNoMiddleGroup(bookGroup);
 		}

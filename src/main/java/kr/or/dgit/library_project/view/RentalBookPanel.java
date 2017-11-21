@@ -66,7 +66,6 @@ public class RentalBookPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadDataEach();
-
 			}
 		});
 		btnSearch.setBounds(485, 11, 93, 23);
