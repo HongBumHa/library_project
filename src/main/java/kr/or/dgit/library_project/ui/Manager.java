@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import kr.or.dgit.library_project.view.ManagerGraph;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 
 public class Manager extends JFrame {
@@ -234,43 +233,6 @@ public class Manager extends JFrame {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"아이디", "이 름", "전화번호", "주 소", "이메일"
@@ -278,31 +240,12 @@ public class Manager extends JFrame {
 		));
 		scrollPane_1.setViewportView(table_1);
 		
-/*<<<<<<< HEAD
-		JLabel lbLast = new JLabel("회원정보");
-		lbLast.setFont(new Font("굴림", Font.BOLD, 15));
-		lbLast.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLast.setBounds(12, 281, 94, 30);
-		panel_one.add(lbLast);
-		
-		ManagerUserinfo panel_18 = new ManagerUserinfo();
-		JPanel jp = new JPanel(new BorderLayout());
-		jp.add(panel_18, BorderLayout.CENTER);
-		
-		JButton btnNewButton = new JButton("New button");
-		panel_18.add(btnNewButton);
-		tabbedPane.addTab("kkkk", null, jp, null);
 
-		
-=======*/
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		panel_18.add(lblNewLabel);
 		
-		ManagerGraph panel = new ManagerGraph();
-		tabbedPane.addTab("New tab", null, panel, null);
-		panel.setLayout(null);
 	}
 }
