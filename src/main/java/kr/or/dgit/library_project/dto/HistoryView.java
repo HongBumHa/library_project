@@ -100,25 +100,26 @@ public class HistoryView {
       this.returnDay = returnDay;
    }
 
-   public Date parseDate(String date) {
-      try {
-         return new SimpleDateFormat("yyyy-MM-dd").parse(date);
-      } catch (ParseException e) {
-         return null;
-      }
-   }
-   
-   public Date changeDate(Date date) {
-      return null;
-   }
-   
-   public Object[] toArray() {
-      SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
-      return new Object[] {bookCode,bookName,author,publicName,price,ss.format(rentalDay),ss.format(returnDay)};
-   }
-   
+	public Date parseDate(String date) {
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+	
+	public Date changeDate(Date date) {
+		return null;
+	}
+	
+	public Object[] toArray() {
+		SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
+		return new Object[] {bookCode,bookName,author,publicName,price,ss.format(rentalDay),ss.format(returnDay)};
+	}
+	
    public Object[] toArray2() {
 	   SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
 	      return new Object[] {bookCode, bookName, userId, userName, author, publicName, price, ss.format(rentalDay),ss.format(returnDay)};
 	   }
 }
+

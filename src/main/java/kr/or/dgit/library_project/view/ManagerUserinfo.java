@@ -1,6 +1,8 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,20 +16,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.UsersService;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class ManagerUserinfo extends JPanel {
+
    private static final ManagerUserinfo instance = new ManagerUserinfo();
    private JPasswordField pfUserPw;
    private JPasswordField pfUserPwCh;
@@ -211,3 +209,4 @@ public class ManagerUserinfo extends JPanel {
       return new String[] { "ID", "이름", "주소", "전화번호", "이메일" };
    }
 }
+

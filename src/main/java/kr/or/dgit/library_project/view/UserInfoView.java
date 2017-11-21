@@ -2,11 +2,16 @@ package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,30 +20,41 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.dto.HistoryView;
+import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
+import kr.or.dgit.library_project.service.HistoryViewService;
+import kr.or.dgit.library_project.service.PostService;
+import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.ui.MainUi;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class UserInfoView extends JPanel {
-
 	private JTable table;
-	private JTable table_1;
+	private JTable historyTable;
 	private JTextField tfUserId;
 	private JTextField tfUserName;
 	private JTextField tfUserTel;
 	private JTextField tfUserEamil;
 	private JTextField tfUserPw;
 	private JTextField tfUserPwCh;
-	private JTextField tfEctAddr;
+	private  JTextField tfDoro;
+	private JTextField tfAddr;
+	private DefaultComboBoxModel sidoModel;
+	private Users u;
+	public  JComboBox<String> cmbCity;
+	private static final UserInfoView instance = new UserInfoView();
+	private JScrollPane scrollPane_1;
 	
-	public UserInfoView() {
+	public static UserInfoView getInstance() {
+		return instance;
+	}
+
+	private UserInfoView() {
 		setLayout(null);
-		Users u = MainUi.getUsers();
-		
+		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(228, 31, 594, 202);
+		pUserInfo.setBounds(228, 31, 594, 246);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 		
@@ -54,7 +70,7 @@ public class UserInfoView extends JPanel {
 		
 		tfUserId = new JTextField(u.getUserId());
 		tfUserId.setEnabled(false);
-		tfUserId.setBounds(86, 5, 116, 21);
+		tfUserId.setBounds(83, 5, 116, 21);
 		pUserId.add(tfUserId);
 		tfUserId.setColumns(10);
 		
@@ -89,29 +105,35 @@ public class UserInfoView extends JPanel {
 		pUserTel.add(tfUserTel);
 		
 		JPanel pUserAddr = new JPanel();
-		pUserAddr.setBounds(36, 133, 548, 31);
+		pUserAddr.setBounds(36, 133, 548, 70);
 		pUserInfo.add(pUserAddr);
 		pUserAddr.setLayout(null);
 		
 		JLabel lblUserAddr = new JLabel("주 소");
 		lblUserAddr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserAddr.setBounds(12, 10, 44, 15);
+		lblUserAddr.setBounds(12, 41, 44, 15);
 		pUserAddr.add(lblUserAddr);
 		
-		JComboBox cmbCity = new JComboBox();
-		cmbCity.setModel(new DefaultComboBoxModel(new String[] {"강원도", "경기도", "경상남도", "경상북도", "광주광역시", "대구광역시", "대전광역시", "부산광역시", "서울특별시", "세종특별자치시", "울산광역시", "인턴광역시", "전라남도", "전라북도", "제주특별자치도", "충청남도", "충정북도"}));
-		cmbCity.setBounds(68, 7, 87, 21);
+		sidoModel = new DefaultComboBoxModel<String>(getDate());
+		cmbCity = new JComboBox<String>();
+		
+		cmbCity.setModel(sidoModel);
+		cmbCity.setBounds(170, 11, 135, 21);
 		pUserAddr.add(cmbCity);
 		
-		JComboBox cmbState = new JComboBox();
-		cmbState.setModel(new DefaultComboBoxModel(new String[] {"남구", "동구", "북구", "달서구", "중구", "서구"}));
-		cmbState.setBounds(158, 7, 78, 21);
-		pUserAddr.add(cmbState);
+		tfDoro = new JTextField();
+		tfDoro.setBounds(317, 11, 110, 21);
+		pUserAddr.add(tfDoro);
+		tfDoro.setColumns(10);
 		
-		tfEctAddr = new JTextField();
-		tfEctAddr.setBounds(241, 7, 295, 21);
-		pUserAddr.add(tfEctAddr);
-		tfEctAddr.setColumns(10);
+		JButton btnSearch = new JButton("검색");
+		btnSearch.setBounds(439, 10, 97, 23);
+		pUserAddr.add(btnSearch);
+		
+		tfAddr = new JTextField(u.getUserAddr());
+		tfAddr.setBounds(68, 38, 468, 21);
+		pUserAddr.add(tfAddr);
+		tfAddr.setColumns(10);
 		
 		JPanel pUserEamil = new JPanel();
 		pUserEamil.setBounds(276, 10, 308, 31);
@@ -161,17 +183,39 @@ public class UserInfoView extends JPanel {
 		JButton btnUpdate = new JButton("수 정");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(tfUserPw.getText().equals(tfUserPwCh.getText())) {
+					userUpdatae();
+					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+				}else {
+					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+				}
 			}
 		});
-		btnUpdate.setBounds(190, 174, 97, 23);
+		btnUpdate.setBounds(191, 213, 97, 23);
 		pUserInfo.add(btnUpdate);
 		
 		JButton btnCancel = new JButton("취 소");
-		btnCancel.setBounds(293, 174, 97, 23);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearTf();
+			}
+		});
+		btnCancel.setBounds(294, 213, 97, 23);
 		pUserInfo.add(btnCancel);
 		
 		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.setBounds(490, 174, 81, 23);
+		btnLeave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				if(i == 0) {
+					u.setUserLeave("N");
+					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+					setVisible(false);
+				}
+			}
+		});
+		btnLeave.setBounds(503, 213, 81, 23);
 		pUserInfo.add(btnLeave);
 		
 		JPanel panel_7 = new JPanel();
@@ -180,53 +224,117 @@ public class UserInfoView extends JPanel {
 		panel_7.setBounds(47, 45, 148, 137);
 		add(panel_7);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(47, 267, 775, 243);
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(48, 300, 775, 246);
 		add(scrollPane_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"도서코드", "도서명", "저 자", "가 격", "대여일", "반납일", "연체여부", "필요한거"
-			}
-		));
-		scrollPane_1.setViewportView(table_1);
+		historyTable = new JTable();
 		
-		JButton btnNewButton_2 = new JButton("대여/반납 내역");
-		btnNewButton_2.setBounds(46, 234, 115, 23);
+		settingTableView();
+		
+		JButton btnNewButton_2 = new JButton("히스토리");
+		btnNewButton_2.setBounds(47, 267, 115, 23);
 		add(btnNewButton_2);
+
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				PostView frame = new PostView(1);
+				frame.setVisible(true);
+			}
+		});
+	}
+	
+	public JScrollPane getScrollPane_1() {
+		return scrollPane_1;
 	}
 
+	public void settingTableView() {
+		historyTable.setModel(makeTableModel());
+		historyTable.setVisible(true);
+		scrollPane_1.setViewportView(historyTable);
+		scrollPane_1.setVisible(true);
+	}
+
+	private DefaultTableModel makeTableModel() {
+		return new DefaultTableModel(getData(),getColumnNames());
+	}
+
+	public void clearTf() {
+		tfUserId.setText(u.getUserId());
+		tfUserName.setText(u.getUserName());
+		tfAddr.setText(u.getUserAddr());
+		tfUserTel.setText(u.getUserTel());
+		tfUserEamil.setText(u.getUserEmail());
+	}
+
+	public UserInfoView(String str) {
+		
+	}
+
+	public  JComboBox<String> getCmbCity() {
+		return cmbCity;
+	}
+
+
+	public JTextField getTfAddr() {
+		return tfAddr;
+	}
+
+	public void setTfAddr(JTextField tfAddr) {
+		this.tfAddr = tfAddr;
+	}
+
+	private Object[][] getData() {
+		HistoryView users = new HistoryView();
+		users.setUserId(MainUi.getUsers().getUserId());
+		
+		List<HistoryView> lists = HistoryViewService.getInstance().findUserHistoryVide(users);
+		Object[][] datas = new Object[lists.size()][];
+		for(int i =0; i < lists.size(); i++) {
+			
+			datas[i] = lists.get(i).toArray();
+		
+		}
+		return datas;
+	}
+
+	private String[] getColumnNames() {
+		return new String[] {"도서코드","도서이름","저자","출판사","가격","대여일","반납일"};
+	}
+
+	private Vector<String> getDate() {
+		Vector<String> vt = new Vector<>();
+		List<Post> lists = PostService.getInstance().findPostBysido();
+		for(Post p : lists) {
+			vt.add(p.getSido());
+		}
+		return vt;
+	}
+
+	public JTextField getTfDoro() {
+		return tfDoro;
+	}
+
+	public void setTfDoro(JTextField tfDoro) {
+		this.tfDoro = tfDoro;
+	}
+
+	public void setCmbCity(JComboBox<String> cmbCity) {
+		this.cmbCity = cmbCity;
+	}
+
+	public void userUpdatae() {
+		String userId = tfUserId.getText();
+		String userName = tfUserName.getText();
+		String userAddr = tfAddr.getText();
+		String userTel = tfUserTel.getText();
+		String userEmail = tfUserEamil.getText();
+		String userPw = tfUserPw.getText();
+		int delayDay = 0;
+		int rankCode = 2;
+		String userLeave = "Y";
+		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
+		UsersService.getInstance().findupdateUsers(user);
+	}
 }

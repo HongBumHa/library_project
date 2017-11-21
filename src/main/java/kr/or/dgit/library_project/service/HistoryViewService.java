@@ -14,12 +14,11 @@ import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class HistoryViewService {
 	private static final HistoryViewService instance= new HistoryViewService();
-	   public HistoryViewService() {}
-	   
-	   public static HistoryViewService getInstance() {
-	      return instance;
-	   }
-
+	private HistoryViewService() {}
+	
+	public static HistoryViewService getInstance() {
+		return instance;
+	}
 	   public List<HistoryView> findAllHistoryViewData(){
 	      try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 	         HistoryViewDao dao = new HistoryViewDaoImpl(sqlSession);
@@ -54,5 +53,4 @@ public class HistoryViewService {
 				return dao.selectByWhereHistoryViewMap(map);
 			}
 	   }
-	   
 }

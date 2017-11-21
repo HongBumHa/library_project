@@ -9,7 +9,7 @@ public class RentalBook {
 	private String bookCode;
 	private String userId;
 	private Date returnDay;
-
+	
 	public Date getRentalDay() {
 		return rentalDay;
 	}

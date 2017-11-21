@@ -1,5 +1,6 @@
 package kr.or.dgit.library_project.test;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,26 +21,14 @@ public class HistoryViewTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		historyViewService = new HistoryViewService();
+		historyViewService =  HistoryViewService.getInstance();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		historyViewService = null;
 	}
-	
-	@Test
-	public void findAllHistoryViewDataMap() {
-		List<HistoryView> lists = historyViewService.findAllHistoryViewDataMap();
-		Assert.assertNotNull(lists);
-	}
-	
-	/*@Test
-	public void test1_1FindAllHistoryViewData() {
-		List<HistoryView> lists = historyViewService.findAllHistoryViewData();
-		Assert.assertNotNull(lists);
-	}*/
-	
+
 	/*@Test
 	public void test1_2FindWhereHistoryViewData() {
 		HistoryView historyView = new HistoryView();
@@ -84,5 +73,18 @@ public class HistoryViewTest {
 		
 		List<HistoryView> lists = historyViewService.findWhereHistoryViewData(historyView);
 		Assert.assertNotNull(lists);
+	}*/
+	
+	/*@Test
+	public void test1FineUserHistoryView() {
+		HistoryView users = new HistoryView();
+		users.setUserId("test3");
+		List<HistoryView> lists = historyViewService.findUserHistoryVide(users);
+		for(HistoryView h : lists) {
+			System.out.println(h);
+		}
+		SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dd.format(lists.get(0).getReturnDay());
+		Assert.assertEquals(date,"2017-11-15");
 	}*/
 }

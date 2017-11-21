@@ -19,6 +19,7 @@ public class BookGroupService {
 	
 	public List<BookGroup> findAllMiddleGroup(BookGroup bookGroup){
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			System.out.println("sqlSession " + sqlSession);
 			BookGroupDao dao = new BookGroupDaoImpl(sqlSession);
 			return dao.selectAllMiddleGroup(bookGroup);
 		}

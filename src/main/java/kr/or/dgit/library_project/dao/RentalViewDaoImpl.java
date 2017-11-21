@@ -16,10 +16,13 @@ public class RentalViewDaoImpl implements RentalViewDao {
 	private static final Log log = LogFactory.getLog(RentalViewDaoImpl.class);
 	private String namespace = "kr.or.dgit.library_project.dao.RentalViewDao";
 
-	public RentalViewDaoImpl() {}
+	private RentalViewDaoImpl() {}
 
 	public RentalViewDaoImpl(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+	public static Log getLog() {
+		return log;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import kr.or.dgit.library_project.common.JTextFieldBlockComponent;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.UsersService;
+import kr.or.dgit.library_project.view.MemberApp;
 
 @SuppressWarnings("serial")
 public class MainUi extends JFrame {
@@ -102,6 +103,12 @@ public class MainUi extends JFrame {
 		contentPane.add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("회원가입");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MemberApp frame = MemberApp.getInstance();
+				frame.setVisible(true);
+			}
+		});
 		btnNewButton_2.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
 		btnNewButton_2.setBounds(116, 295, 97, 23);
 		contentPane.add(btnNewButton_2);
@@ -158,7 +165,6 @@ public class MainUi extends JFrame {
 
 		}
 	}
-
 	public static Users getUsers() {
 		return users;
 	}

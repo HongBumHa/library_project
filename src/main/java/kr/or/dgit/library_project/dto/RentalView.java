@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.mysql.jdbc.TimeUtil;
+
 public class RentalView {
 	private String bookCode;
 	private String bookName;
@@ -16,9 +18,15 @@ public class RentalView {
 	private Date returnDay;
 	
 public Object[] toArrayReturn() {
+		Date curdate = new Date();
+		long diffTime = rentalDay.getTime() - curdate.getTime();
+		long delaytime = 0;
+		if(diffTime < 0) {
+			delaytime = Math.abs(diffTime/(1000*60*60*24));
+		}
 		
 		return new Object[]{bookCode, bookName,author, 
-						publicName, price, null};
+						publicName, price, delaytime};
 	}
 	
 	public String getBookCode() {

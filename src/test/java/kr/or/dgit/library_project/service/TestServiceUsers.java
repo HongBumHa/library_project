@@ -1,6 +1,8 @@
 package kr.or.dgit.library_project.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -59,5 +61,12 @@ public class TestServiceUsers {
 		Assert.assertEquals(1, res);
 	}*/
 	
+	@Test
+	public void testFIndselectByUserList() {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("userId", "tes%");
+		List<Users> lists = service.findSelectByUserList(map);
+		Assert.assertNotNull(lists);
+	}
 	
 }
