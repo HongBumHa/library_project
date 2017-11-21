@@ -1,5 +1,7 @@
 package kr.or.dgit.library_project.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +31,12 @@ public class RentalBookDaoImpl implements RentalBookDao {
 	}
 
 	@Override
+	public List<RentalBook> selectRentalBookByCode(RentalBook rentalBook) {
+		log.debug("selectRentalBookByCode()");
+		return sqlSession.selectList(namespace+".selectRentalBookByCode", rentalBook);
+	}
+	
+	@Override
 	public int insertData(RentalBook rentalBook) {
 		log.debug("insertData()");
 		return sqlSession.insert(namespace + ".insertData", rentalBook);
@@ -39,5 +47,8 @@ public class RentalBookDaoImpl implements RentalBookDao {
 		log.debug("deleteByWhereRentalBook()");
 		return sqlSession.insert(namespace + ".deleteByWhereRentalBook", rentalBook);
 	}
+
+
+	
 
 }

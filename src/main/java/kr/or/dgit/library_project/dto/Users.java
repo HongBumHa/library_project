@@ -124,7 +124,6 @@ public class Users {
 	public Users(int delayDay) {
 		this.delayDay = delayDay;
 	}
-	
 	public Object[] toArray() {
 		return new Object[] {userId,userName,userTel,userAddr,userEmail,userLeave};
 	}

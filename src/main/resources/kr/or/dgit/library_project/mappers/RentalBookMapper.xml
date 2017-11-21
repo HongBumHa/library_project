@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.dgit.library_project.dao.RentalBookDao">
+	<sql id="selectSqlByCode">
+		select * from rentalbook where user_id=#{userId}
+	</sql>
+	
+	<select id="selectRentalBookByCode">
+		<include refid="selectSqlByCode"/>
+	</select>
 	<sql id = "insertSql">
 		insert into rentalbook(rentalday, book_code, user_id, returnday)
-		values(#{rentalDay}, #{bookCode}, #{userId}, #{returnDay})
+		values(curdate(), #{bookCode}, #{userId}, curdate()+3)
 	</sql>
 	
 	<insert id="insertData" parameterType="RentalBook">

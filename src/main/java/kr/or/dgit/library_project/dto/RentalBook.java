@@ -61,4 +61,9 @@ public class RentalBook {
 	     }
 	  }
 
+	public RentalBook(String bookCode, String userId) {
+		this.bookCode = bookCode;
+		this.userId = userId;
+	}
+
 }

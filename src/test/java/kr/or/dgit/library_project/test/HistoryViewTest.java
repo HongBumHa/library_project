@@ -28,13 +28,7 @@ public class HistoryViewTest {
 	public static void tearDownAfterClass() throws Exception {
 		historyViewService = null;
 	}
-/*
-	@Test
-	public void test1_1FindAllHistoryViewData() {
-		List<HistoryView> lists = historyViewService.findAllHistoryViewData();
-		Assert.assertNotNull(lists);
-	}
-	*/
+
 	/*@Test
 	public void test1_2FindWhereHistoryViewData() {
 		HistoryView historyView = new HistoryView();

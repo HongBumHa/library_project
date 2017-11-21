@@ -27,7 +27,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Book;
+import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.service.BookService;
+import kr.or.dgit.library_project.service.RentalViewService;
+import kr.or.dgit.library_project.ui.MainUi;
 
 public class RentalBookPanel extends JPanel {
 
@@ -66,7 +69,6 @@ public class RentalBookPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadDataEach();
-
 			}
 		});
 		btnSearch.setBounds(485, 11, 93, 23);
@@ -88,15 +90,15 @@ public class RentalBookPanel extends JPanel {
 		add(pUserRentInfo);
 		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblUserName = new JLabel("xxx님의 대여 현황");
+		JLabel lblUserName = new JLabel(MainUi.getUsers().getUserId()+"님의 대여 현황");
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblUserName);
 
-		JLabel lblRent = new JLabel("대여: 5권");
+		JLabel lblRent = new JLabel("대여: "+rentBookCountById()+" 권");
 		lblRent.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblRent);
 
-		JLabel lblReturn = new JLabel("미반납: 1권");
+		JLabel lblReturn = new JLabel("연체: ");
 		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblReturn);
 	}
@@ -110,9 +112,12 @@ public class RentalBookPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RentBookInfoView rbiv=new RentBookInfoView();
-				rbiv.setVisible(true);
-				
+				if(checkRent()==true) {
+					RentBookInfoView rbiv=new RentBookInfoView();
+					rbiv.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "대여 불가능 도서입니다.");
+				}
 			}
 		});
 	}
@@ -161,25 +166,17 @@ public class RentalBookPanel extends JPanel {
 		
 		if (searchBy.equals("도서코드")) {
 			map.put("bookCode", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("도서명")) {
 			map.put("bookName", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("저 자")) {
 			map.put("author", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
 		if (searchBy.equals("출판사")) {
-
 			map.put("publicName", "%"+item+"%");
-			lists = BookService.getInstance().selectBookBySomething(map);
-			return lists;
 		}
+		lists = BookService.getInstance().selectBookBySomething(map);
 		return lists;
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
@@ -200,13 +197,26 @@ public class RentalBookPanel extends JPanel {
 		});
 	}
 	
-	public void selectedBook() {
+	public boolean checkRent() {
 		int selectedIndex=table.getSelectedRow();
-		String bCode=(String) table.getValueAt(selectedIndex, 0);
-		String bName=(String) table.getValueAt(selectedIndex, 1);
-		String bAuthor=(String) table.getValueAt(selectedIndex, 2);
-		String bPublisher=(String) table.getValueAt(selectedIndex, 3);
-		int bPrice=(int) table.getValueAt(selectedIndex, 4);
-		int bRentalCount=(int) table.getValueAt(selectedIndex, 5);
+		boolean result;
+		
+		int bAmount=(int) table.getValueAt(selectedIndex, 5);
+		if(bAmount<=0) {
+			result=false;
+		}else
+			result=true;
+		
+		return result;
+	}
+	
+	public int rentBookCountById() {
+		String userId=MainUi.getUsers().getUserId();
+		RentalView rv=new RentalView();
+		rv.setUserId(userId);
+		List<RentalView> lists=RentalViewService.getInstance().findByWhereRentalView(rv);
+		int count=lists.size();
+		
+		return count;
 	}
 }

@@ -1,7 +1,7 @@
 package kr.or.dgit.library_project.service;
 
 import java.util.List;
-import java.util.Vector;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -33,6 +33,20 @@ private static final RentalViewService instance = new RentalViewService();
 		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			RentalViewDao dao = new RentalViewDaoImpl(sqlSession);
 			return dao.selectByWhereRentalView(rentalView);
+		}
+	}
+	
+	public List<RentalView> findAllRentalViewMap(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			RentalViewDao dao = new RentalViewDaoImpl(sqlSession);
+			return dao.selectAllRentalViewMap();
+		}
+	}
+	
+	public List<RentalView> findByWhereRentalViewMap(Map<String, Object> map){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			RentalViewDao dao=new RentalViewDaoImpl(sqlSession);
+			return dao.selectByWhereRentalViewMap(map);
 		}
 	}
 }

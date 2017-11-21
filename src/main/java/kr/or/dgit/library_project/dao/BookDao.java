@@ -8,7 +8,7 @@ import kr.or.dgit.library_project.dto.Book;
 public interface BookDao {
 	List<Book> selectBookByAll();
 	List<Book> selectBookBySomething(Map<String, Object> map);
-	
+	Book selectBookByCode(Book book);
 	int insertBook(Book Book);
 	int updateBook(Book book);
 	int deleteBook(Book book);

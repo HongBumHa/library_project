@@ -3,7 +3,7 @@
 <mapper namespace="kr.or.dgit.library_project.dao.BookDao">
 	
 	<resultMap type="Book" id="BookResult">
-		<id property="bookCode" column="book_code"/>
+		<id property="bookCode" column="book_Code"/>
 		<result property="bookName" column="book_name"/>
 		<result property="author" column="author"/>
 		<result property="publicName" column="public_name"/>
@@ -59,9 +59,14 @@
 	</sql>
 	
 	<!-- selectBookByAll -->
-	<select id="selectBookByAll" parameterType="Book" resultType="Book">
+	<select id="selectBookByAll" parameterType="Book" resultMap="BookResult">
 		<include refid="selectSqlAll"/>
 		where b.public_name=p.public_code order by book_code
+	</select>
+	
+	<select id="selectBookByCode" parameterType="Book" resultMap="BookResult">
+		<include refid="selectSqlAll"/>
+		where b.public_name=p.public_code and book_code=#{bookCode}
 	</select>
 	
 	<!-- selectBookBySomething -->
