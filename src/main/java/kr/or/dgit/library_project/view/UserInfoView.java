@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -35,9 +36,9 @@ public class UserInfoView extends JPanel {
 	private JTextField tfUserName;
 	private JTextField tfUserTel;
 	private JTextField tfUserEamil;
-	private JTextField tfUserPw;
-	private JTextField tfUserPwCh;
-	private  JTextField tfDoro;
+	private JPasswordField tfUserPw;
+	private JPasswordField tfUserPwCh;
+	private JTextField tfDoro;
 	private JTextField tfAddr;
 	private DefaultComboBoxModel sidoModel;
 	private Users u;
@@ -160,7 +161,7 @@ public class UserInfoView extends JPanel {
 		lblUserPw.setBounds(12, 8, 57, 15);
 		pUserPw.add(lblUserPw);
 		
-		tfUserPw = new JTextField();
+		tfUserPw = new JPasswordField();
 		tfUserPw.setBounds(81, 5, 215, 21);
 		tfUserPw.setColumns(10);
 		pUserPw.add(tfUserPw);
@@ -175,7 +176,7 @@ public class UserInfoView extends JPanel {
 		lblUserPwCh.setBounds(0, 8, 84, 15);
 		pUserPwCh.add(lblUserPwCh);
 		
-		tfUserPwCh = new JTextField();
+		tfUserPwCh = new JPasswordField();
 		tfUserPwCh.setBounds(88, 5, 215, 21);
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
@@ -183,6 +184,10 @@ public class UserInfoView extends JPanel {
 		JButton btnUpdate = new JButton("수 정");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(tfUserPw.getText().length() <=7) {
+					JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
+					return;
+				}
 				if(tfUserPw.getText().equals(tfUserPwCh.getText())) {
 					userUpdatae();
 					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
@@ -211,6 +216,7 @@ public class UserInfoView extends JPanel {
 				if(i == 0) {
 					u.setUserLeave("N");
 					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+					UsersService.getInstance().findupdateUsers(u);
 					setVisible(false);
 				}
 			}
