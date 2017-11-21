@@ -63,13 +63,11 @@ public class BookInsertDelete extends JPanel {
 		BookGroup book = new BookGroup();
 		allMachMiddleGroup();
 		
-		JPanel BookDelInsertPanel = new JPanel();
-		add(BookDelInsertPanel, BorderLayout.CENTER);
-		BookDelInsertPanel.setLayout(null);
+		setLayout(null);
 		
 		JScrollPane tableScroll = new JScrollPane();
 		tableScroll.setBounds(12, 41, 470, 326);
-		BookDelInsertPanel.add(tableScroll);
+		add(tableScroll);
 		
 		radioDelete = new JRadioButton("보유도서제거");
 		radioInsert = new JRadioButton("새로운도서생성");
@@ -89,35 +87,35 @@ public class BookInsertDelete extends JPanel {
 			}
 		});
 	
-		BookDelInsertPanel.add(radioInsert);
+		add(radioInsert);
 		
 		JLabel lbBigGroup = new JLabel("대분류");
 		lbBigGroup.setBounds(484, 42, 57, 15);
-		BookDelInsertPanel.add(lbBigGroup);
+		add(lbBigGroup);
 		
 		JLabel lbMiddleGroup = new JLabel("중분류");
 		lbMiddleGroup.setBounds(483, 67, 43, 15);
-		BookDelInsertPanel.add(lbMiddleGroup);
+		add(lbMiddleGroup);
 		
 		JLabel lbAuthor = new JLabel("저자");
 		lbAuthor.setBounds(502, 104, 42, 15);
-		BookDelInsertPanel.add(lbAuthor);
+		add(lbAuthor);
 		
 		JLabel lbPrice = new JLabel("가격");
 		lbPrice.setBounds(502, 135, 36, 15);
-		BookDelInsertPanel.add(lbPrice);
+		add(lbPrice);
 		
 		JLabel lbPublisher = new JLabel("출판사");
 		lbPublisher.setBounds(500, 160, 58, 15);
-		BookDelInsertPanel.add(lbPublisher);
+		add(lbPublisher);
 		
 		JLabel lbBookName = new JLabel("책제목");
 		lbBookName.setBounds(499, 200, 42, 15);
-		BookDelInsertPanel.add(lbBookName);
+		add(lbBookName);
 		
 		JLabel lbBookCount = new JLabel("수량");
 		lbBookCount.setBounds(501, 225, 57, 15);
-		BookDelInsertPanel.add(lbBookCount);
+		add(lbBookCount);
 		
 		comboBigGroup = new JComboBox();
 		comboBigGroup.setBounds(555, 39, 65, 21);
@@ -129,10 +127,10 @@ public class BookInsertDelete extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				BookGroup middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
 				comboMiddleGroup.setModel(createComboModel(middlebook));
-				BookDelInsertPanel.setVisible(true);
+				setVisible(true);
 			}
 		});
-		BookDelInsertPanel.add(comboBigGroup);
+		add(comboBigGroup);
 		
 		comboMiddleGroup = new JComboBox();
 		comboMiddleGroup.setBounds(555, 64, 65, 21);
@@ -140,31 +138,31 @@ public class BookInsertDelete extends JPanel {
 		middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
 		
 		comboMiddleGroup.setModel(createComboModel(middlebook));
-		BookDelInsertPanel.add(comboMiddleGroup);
+		add(comboMiddleGroup);
 		
 		tfAuthor = new JTextField();
 		tfAuthor.setBounds(557, 101, 116, 21);
-		BookDelInsertPanel.add(tfAuthor);
+		add(tfAuthor);
 		tfAuthor.setColumns(10);
 		
 		tfPrice = new JTextField();
 		tfPrice.setBounds(557, 132, 116, 21);
-		BookDelInsertPanel.add(tfPrice);
+		add(tfPrice);
 		tfPrice.setColumns(10);
 		
 		tfPublisher = new JTextField();
 		tfPublisher.setBounds(555, 157, 116, 21);
-		BookDelInsertPanel.add(tfPublisher);
+		add(tfPublisher);
 		tfPublisher.setColumns(10);
 		
 		tfBookName = new JTextField();
 		tfBookName.setBounds(561, 197, 116, 21);
-		BookDelInsertPanel.add(tfBookName);
+		add(tfBookName);
 		tfBookName.setColumns(10);
 		
 		tfBookCount = new JTextField();
 		tfBookCount.setBounds(561, 222, 116, 21);
-		BookDelInsertPanel.add(tfBookCount);
+		add(tfBookCount);
 		tfBookCount.setColumns(10);
 		
 		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
@@ -178,7 +176,7 @@ public class BookInsertDelete extends JPanel {
 				tfFieldNotUsing();
 			}
 		});
-		BookDelInsertPanel.add(radioDelete);
+		add(radioDelete);
 		
 		
 		searchTable = new JTable();
@@ -240,14 +238,14 @@ public class BookInsertDelete extends JPanel {
 		
 		tfSearch = new JTextField();
 		tfSearch.setBounds(121, 10, 219, 21);
-		BookDelInsertPanel.add(tfSearch);
+		add(tfSearch);
 		tfSearch.setColumns(10);
 		
 		comboSearch = new JComboBox();
 		comboSearch.setToolTipText("");
 		comboSearch.setBounds(12, 10, 97, 21);
 		comboSearch.setModel(searchComboModel);
-		BookDelInsertPanel.add(comboSearch);
+		add(comboSearch);
 		
 		JButton btnSearch = new JButton("검색");
 		btnSearch.setBounds(344, 8, 65, 23);
@@ -258,11 +256,11 @@ public class BookInsertDelete extends JPanel {
 				loadDataEach();
 			}
 		});
-		BookDelInsertPanel.add(btnSearch);
+		add(btnSearch);
 		
 		
 		btnClickEvent.setBounds(571, 253, 97, 23);
-		BookDelInsertPanel.add(btnClickEvent);
+		add(btnClickEvent);
 
 	}
 	
