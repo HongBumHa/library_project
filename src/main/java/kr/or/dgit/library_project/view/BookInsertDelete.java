@@ -1,27 +1,26 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.BorderLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
@@ -33,7 +32,6 @@ public class BookInsertDelete extends JPanel {
 	private JTextField tfSearch;
 	private JTextField tfAuthor;
 	private JTextField tfPrice;
-	private JTextField tfPublisher;
 	private JTextField tfBookName;
 	private JTextField tfBookCount;
 	private DefaultComboBoxModel bigGroupModel;
@@ -47,17 +45,23 @@ public class BookInsertDelete extends JPanel {
 	
 	private JComboBox comboBigGroup;
 	private JComboBox comboMiddleGroup;
-	private DefaultComboBoxModel middleComboModel;
 //	private BookGroupService bgSer = new BookGroupService();
 	private List<BookGroup> bigGroupLists;
 	private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
 	private JComboBox comboSearch;
 	private JTextField[] tfArrays;
+	private HashMap<String, BookGroup[]> middleMap;
+	private JRadioButton radioDelete;
+	private JRadioButton radioInsert;
+	private JRadioButton[] radioArray;
+	private JButton btnClickEvent;
+	private JTextField tfPublisher;
 	
 	public BookInsertDelete() {
 		setLayout(new BorderLayout(0, 0));
 		
 		BookGroup book = new BookGroup();
+		allMachMiddleGroup();
 		
 		JPanel BookDelInsertPanel = new JPanel();
 		add(BookDelInsertPanel, BorderLayout.CENTER);
@@ -67,12 +71,24 @@ public class BookInsertDelete extends JPanel {
 		tableScroll.setBounds(12, 41, 470, 326);
 		BookDelInsertPanel.add(tableScroll);
 		
-		JRadioButton radioDelete = new JRadioButton("보유도서제거");
-		radioDelete.setBounds(434, 9, 110, 23);
-		BookDelInsertPanel.add(radioDelete);
+		radioDelete = new JRadioButton("보유도서제거");
+		radioInsert = new JRadioButton("새로운도서생성");
+		radioArray  = new JRadioButton[]{radioDelete, radioInsert};
+		btnClickEvent = new JButton("제거");
 		
-		JRadioButton radioInsert = new JRadioButton("새로운도서생성");
+		radioDelete.setBounds(434, 9, 110, 23);
+		radioDelete.setSelected(true);
+		
 		radioInsert.setBounds(545, 9, 132, 23);
+		radioInsert.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				radioSelectControl(radioInsert);
+				btnClickEvent.setText("도서추가");
+			}
+		});
+	
 		BookDelInsertPanel.add(radioInsert);
 		
 		JLabel lbBigGroup = new JLabel("대분류");
@@ -122,7 +138,7 @@ public class BookInsertDelete extends JPanel {
 		comboMiddleGroup.setBounds(555, 64, 65, 21);
 		BookGroup middlebook = new BookGroup();
 		middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
-		System.out.println(middlebook.getBigGroup());
+		
 		comboMiddleGroup.setModel(createComboModel(middlebook));
 		BookDelInsertPanel.add(comboMiddleGroup);
 		
@@ -151,7 +167,19 @@ public class BookInsertDelete extends JPanel {
 		BookDelInsertPanel.add(tfBookCount);
 		tfBookCount.setColumns(10);
 		
-		tfArrays = new JTextField[]{tfAuthor, tfPrice, tfPublisher, tfBookName, tfBookCount};
+		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
+		
+		radioDelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				radioSelectControl(radioDelete);
+				btnClickEvent.setText("제거");
+				tfFieldNotUsing();
+			}
+		});
+		BookDelInsertPanel.add(radioDelete);
+		
 		
 		searchTable = new JTable();
 		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
@@ -160,12 +188,42 @@ public class BookInsertDelete extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				int i =0;
-				for(i= 0; i < tfArrays.length; i++) {
-					tfArrays[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i).toString());
+				int bigIndex = 0;
+				int middleIndex = 0;
+				String bookcodeInfo = searchTable.getValueAt(searchTable.getSelectedRow(), 0).toString();
+				
+				String bigGroupCode = bookcodeInfo.substring(0, 2);
+				String middleGroupCode = bookcodeInfo.substring(2, 4);
+				String booklastCode = bookcodeInfo.substring(4, 8);
+				
+				List<BookGroup> list = BookGroupService.getInstance().findAllBookBigGroup();
+				
+				for(int n = 0; n < list.size(); n++) {
+					if(list.get(n).getBigGroup().equals(bigGroupCode)) {
+						bigIndex = n;
+					}
 				}
+				
+				comboBigGroup.setSelectedIndex(bigIndex);
+				
+				for(int a = 0; a < middleMap.get(bigGroupCode).length; a++) {
+					if(middleMap.get(bigGroupCode)[a].getMiddleGroup().equals(middleGroupCode)) {
+						middleIndex = a;
+					}
+				}
+				
+				comboMiddleGroup.setSelectedIndex(middleIndex);
+				
+				for(int i= 0; i < tfArrays.length; i++) {
+					tfArrays[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
+//					private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
+				}
+				
+				tfFieldNotUsing();
 			}
 		});
+		JPopupMenu popupMenu = new JPopupMenu("변경");	
+		searchTable.setComponentPopupMenu(popupMenu);
 		searchTable.setModel(searchTableModel);
 		tableScroll.setViewportView(searchTable);
 		
@@ -191,7 +249,7 @@ public class BookInsertDelete extends JPanel {
 		});
 		BookDelInsertPanel.add(btnSearch);
 		
-		JButton btnClickEvent = new JButton("제거");
+		
 		btnClickEvent.setBounds(571, 253, 97, 23);
 		BookDelInsertPanel.add(btnClickEvent);
 
@@ -211,11 +269,11 @@ public class BookInsertDelete extends JPanel {
 			return bigGroupModel;
 		}
 		
-		List<BookGroup> middleLists = BookGroupService.getInstance().findAllMiddleGroup(bookgroup);
-		String[] middleComboLists = new String[middleLists.size()];
+		BookGroup[] middleMapArray = middleMap.get(bookgroup.getBigGroup());
+		String[] middleComboLists = new String[middleMapArray.length];
 	
-		for(int i = 0; i < middleLists.size(); i++) {
-			middleComboLists[i] = middleLists.get(i).getBookMiddleGroupName();
+		for(int i = 0; i < middleMapArray.length; i++) {
+			middleComboLists[i] = middleMapArray[i].getBookMiddleGroupName();
 		}
 		middleGroupModel = new DefaultComboBoxModel<>(middleComboLists);
 		return middleGroupModel;
@@ -274,5 +332,59 @@ public class BookInsertDelete extends JPanel {
 	public void loadDataEach() {
 		DefaultTableModel model = new DefaultTableModel(getDataEach(), searchTableTitle);
 		searchTable.setModel(model);
+	}
+	
+	public void allMachMiddleGroup() {
+		BookGroup bookGroup = new BookGroup();
+		
+		middleMap = new HashMap<>();
+
+		List<BookGroup> middlelist = BookGroupService.getInstance().findAllMiddleGroup(bookGroup);
+		List<BookGroup> biglist = BookGroupService.getInstance().findAllBookBigGroup();
+		
+		BookGroup[][] bookTwoArray = new BookGroup[biglist.size()][10];
+		
+		int index = 0;
+		int TwoArrayindex = 0;	
+		
+		
+		for(int n = 0; n < middlelist.size(); n++) {
+			if(TwoArrayindex == 10) {
+				TwoArrayindex = 0; 
+			}
+			if(bookTwoArray[index][0] == null) {
+				System.out.println("null 조건: "+n);
+				bookTwoArray[index][0] = middlelist.get(n);
+				TwoArrayindex++; 
+				continue;
+			}
+			
+			if(bookTwoArray[index][0].getBookMiddleGroupName().equals(biglist.get(index).getBookBigGroupName())){
+				bookTwoArray[index][TwoArrayindex] = middlelist.get(n); 
+				TwoArrayindex++; 
+				if(n % 10 == 9) {
+					middleMap.put(biglist.get(index).getBigGroup(), bookTwoArray[index]);
+					index++;
+					continue;
+				}
+				continue;
+			}
+		}
+	}
+	public void radioSelectControl(JRadioButton jrBtn) {
+		if(jrBtn.isSelected() == true) {
+			for(JRadioButton jj : radioArray) {
+				jj.setSelected(false);
+			}
+			jrBtn.setSelected(true);
+		}
+		else {
+			return;
+		}
+	}
+	public void tfFieldNotUsing() {
+		for(int i = 0 ; i < tfArrays.length; i++) {
+			tfArrays[i].setEnabled(false);
+		}
 	}
 }
