@@ -19,8 +19,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
 import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
+import kr.or.dgit.library_project.view.ManagerPieChart;
 
 public class Manager extends JFrame {
 
@@ -252,9 +256,11 @@ public class Manager extends JFrame {
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 		
-		/*ManagerGraph panel = new ManagerGraph();
-		tabbedPane.addTab("New tab", null, panel, null);
-		panel.setLayout(null);*/
+		ManagerPieChart Chart = new ManagerPieChart();
+		JFreeChart jChart=Chart.callPieChart();
+		ChartPanel cPanel=new ChartPanel(jChart);
+		tabbedPane.addTab("현황차트", null, cPanel, null);
+		
 
 	}
 }

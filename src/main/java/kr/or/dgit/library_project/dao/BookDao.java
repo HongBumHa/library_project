@@ -9,6 +9,7 @@ public interface BookDao {
 	List<Book> selectBookByAll();
 	List<Book> selectBookBySomething(Map<String, Object> map);
 	Book selectBookByCode(Book book);
+	Book selectBookForChart(Book book);
 	int insertBook(Book Book);
 	int updateBook(Book book);
 	int deleteBook(Book book);
