@@ -83,4 +83,10 @@ public class BookService {
 			sqlSession.close();
 		}
 	}
+	public List<Book> findselectByRank(){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByRank();
+		}
+	}
 }

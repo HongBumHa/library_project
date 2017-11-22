@@ -42,8 +42,7 @@ public class BookInsertDelete extends JPanel {
 	private BookGroup book = new BookGroup();
 	private BookGroupService bgSer = new BookGroupService();
 	private List<BookGroup> bigGroupLists;
-	
-	
+
 	public BookInsertDelete() {
 		setLayout(new BorderLayout(0, 0));
 		

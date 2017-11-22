@@ -23,7 +23,7 @@ public class UserInfo extends JFrame {
 	private JPanel contentPane;
 	public UserInfo() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 933, 575);
+		setBounds(100, 100, 826, 575);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
