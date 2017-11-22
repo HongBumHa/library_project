@@ -44,6 +44,12 @@ public class BookDaoImpl implements BookDao {
 	}
 	
 	@Override
+	public Book selectBookGroupRow(Book book) {
+		log.debug("selectBookGroupRow()");
+		return sqlSession.selectOne(namespace+"selectBookGroupRow", book);
+	}
+	
+	@Override
 	public int insertBook(Book book) {
 		log.debug("insertBook()");
 		return sqlSession.insert(namespace+"insertBook", book);
@@ -60,6 +66,8 @@ public class BookDaoImpl implements BookDao {
 		log.debug("deleteBook()");
 		return sqlSession.delete(namespace+"deleteBook", book);
 	}
+
+	
 
 	
 

@@ -2,12 +2,15 @@ package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DecimalFormat;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 import kr.or.dgit.library_project.dto.Book;
@@ -26,33 +29,26 @@ public class ManagerPieChart extends JPanel {
 	public JFreeChart callPieChart() {
 		DefaultPieDataset data = new DefaultPieDataset();
 		int[] countArr = bigGroup();
-		data.setValue("총류", countArr[0]);
-		data.setValue("철학", countArr[1]);
-		data.setValue("종교", countArr[2]);
-		data.setValue("사화과학", countArr[3]);
-		data.setValue("자연과학", countArr[4]);
-		data.setValue("기술과학", countArr[5]);
-		data.setValue("예술", countArr[6]);
-		data.setValue("언어", countArr[7]);
-		data.setValue("문학", countArr[8]);
-		data.setValue("역사", countArr[9]);
+		String[] bookGroupName= {"총류","철학","종교","사회과학","자연과학","기술과학","예술","언어","문학","역사"};
+		int sum=0;
+		for(int i=0;i<10;i++) {
+			sum+=countArr[i];
+		}
+		for(int i=0;i<10;i++) {
+			data.setValue(bookGroupName[i]+ratioCal(countArr[i], sum), countArr[i]);
+		}
+
 		// create a chart...
-		JFreeChart chart = ChartFactory.createPieChart("Sample Pie Chart", data, true, // legend?
+		JFreeChart chart = ChartFactory.createPieChart("분류별 도서 대여현황", data, true, // legend?
 				true, // tooltips?
 				false // URLs?
 		);
-//		CategoryPlot p = (CategoryPlot) chart.getPlot();
-//		p.setBackgroundPaint(Color.white);
-//		// 차트의 배경 라인 색상입니다.
-//		p.setRangeGridlinePaint(Color.gray);
-//		// X 축의 라벨 설정입니다. (보조 타이틀)
-//		p.getDomainAxis().setLabelFont(new Font("나눔바른고딕", Font.BOLD, 13));
-//		// X 축의 도메인 설정입니다.
-//		p.getDomainAxis().setTickLabelFont(new Font("나눔바른고딕", Font.BOLD, 8));
-//		// Y 축의 라벨 설정입니다. (보조 타이틀)
-//		p.getRangeAxis().setLabelFont(new Font("나눔바른고딕", Font.BOLD, 8));
-//		// Y 축의 도메인 설정입니다.
-//		p.getRangeAxis().setTickLabelFont(new Font("나눔바른고딕", Font.BOLD, 8));
+//		CategoryPlot p = chart.getCategoryPlot();
+		PiePlot p=(PiePlot) chart.getPlot();
+		p.setLabelFont(new Font("돋움", Font.BOLD,13));
+		
+		chart.getLegend().setItemFont(new Font("돋움", Font.BOLD,13));
+		chart.getTitle().setFont(new Font("돋움", Font.BOLD,20));
 
 		return chart;
 
@@ -61,6 +57,7 @@ public class ManagerPieChart extends JPanel {
 	public int[] bigGroup() {
 		Book book = new Book();
 		String[] bookArr = { "%A0%", "%b0%", "%c0%", "%d0%", "%e0%", "%f0%", "%g0%", "%h0%", "%i0%", "%j0%", };
+		
 		int[] rentCount = new int[10];
 		for (int i = 0; i < bookArr.length; i++) {
 			book.setBookCode(bookArr[i]);
@@ -69,5 +66,11 @@ public class ManagerPieChart extends JPanel {
 		}
 
 		return rentCount;
+	}
+	
+	public String ratioCal(int totalNum, int num) {
+		DecimalFormat df=new DecimalFormat("(##0.0%)");
+		String ratio=df.format((double)totalNum/(double)num);
+		return ratio;
 	}
 }

@@ -53,6 +53,7 @@ public class Manager extends JFrame {
 	}
 
 	public Manager() {
+		setTitle("관리자 모드");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 804, 657);
 		contentPane = new JPanel();
@@ -64,8 +65,8 @@ public class Manager extends JFrame {
 		tabbedPane.setBounds(0, 0, 787, 618);
 		contentPane.add(tabbedPane);
 		
-		ManagerRentalBook panel_18 = new ManagerRentalBook();
-		tabbedPane.addTab("대여/반납관리", null, panel_18, null);
+		ManagerRentalBook rentReturn = new ManagerRentalBook();
+		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
 		
 		JPanel panel_one = new JPanel();
 		tabbedPane.addTab("회원관리", null, panel_one, null);
@@ -244,22 +245,11 @@ public class Manager extends JFrame {
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
-		
-
-		JLabel lblNewLabel = new JLabel("회원정보");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 281, 94, 30);
-		panel_18.add(lblNewLabel);
 /**/		
 		BookInsertDelete insertDeletePanel = new BookInsertDelete();
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 		
-		ManagerPieChart Chart = new ManagerPieChart();
-		JFreeChart jChart=Chart.callPieChart();
-		ChartPanel cPanel=new ChartPanel(jChart);
-		tabbedPane.addTab("현황차트", null, cPanel, null);
 		
 
 	}
