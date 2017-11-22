@@ -26,6 +26,12 @@ import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {
@@ -52,77 +58,77 @@ public class ManegerUserInfo extends JPanel {
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
-		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_9.setBounds(136, 63, 556, 206);
+		panel_9.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		panel_9.setBounds(80, 65, 648, 165);
 		add(panel_9);
 		
 		JPanel pId = new JPanel();
 		pId.setLayout(null);
-		pId.setBounds(9, 6, 228, 31);
+		pId.setBounds(19, 6, 190, 31);
 		panel_9.add(pId);
 		
 		JLabel lblId = new JLabel("아이디");
 		lblId.setHorizontalAlignment(SwingConstants.CENTER);
-		lblId.setBounds(12, 8, 47, 15);
+		lblId.setBounds(4, 8, 47, 15);
 		pId.add(lblId);
 		
 		tfId = new JTextField();
 		tfId.setColumns(10);
-		tfId.setBounds(86, 5, 116, 21);
+		tfId.setBounds(63, 5, 116, 21);
 		pId.add(tfId);
 		
 		JPanel pName = new JPanel();
 		pName.setLayout(null);
-		pName.setBounds(9, 47, 228, 31);
+		pName.setBounds(19, 47, 190, 31);
 		panel_9.add(pName);
 		
 		JLabel lblName = new JLabel("이 름");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setBounds(12, 8, 40, 15);
+		lblName.setBounds(5, 7, 40, 15);
 		pName.add(lblName);
 		
 		tfName = new JTextField();
 		tfName.setColumns(10);
-		tfName.setBounds(84, 5, 116, 21);
+		tfName.setBounds(62, 4, 116, 21);
 		pName.add(tfName);
 		
 		JPanel pTel = new JPanel();
 		pTel.setLayout(null);
-		pTel.setBounds(249, 47, 295, 31);
+		pTel.setBounds(221, 47, 295, 31);
 		panel_9.add(pTel);
 		
 		JLabel lblTel = new JLabel("전화번호");
 		lblTel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTel.setBounds(5, 8, 65, 15);
+		lblTel.setBounds(3, 7, 65, 15);
 		pTel.add(lblTel);
 		
 		tfTel = new JTextField();
 		tfTel.setColumns(10);
-		tfTel.setBounds(82, 5, 116, 21);
+		tfTel.setBounds(73, 4, 201, 21);
 		pTel.add(tfTel);
 		
 		JPanel pAddr = new JPanel();
 		pAddr.setLayout(null);
-		pAddr.setBounds(8, 89, 536, 69);
+		pAddr.setBounds(19, 86, 497, 69);
 		panel_9.add(pAddr);
 		
 		JLabel lblAddr = new JLabel("주 소");
 		lblAddr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddr.setBounds(12, 10, 44, 15);
+		lblAddr.setBounds(12, 14, 44, 15);
 		pAddr.add(lblAddr);
 		
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		cmbSido = new JComboBox<String>(sidoModel);
-		cmbSido.setBounds(254, 10, 99, 21);
+		cmbSido.setBounds(68, 11, 99, 21);
 		pAddr.add(cmbSido);
 		
 		tfAddr = new JTextField();
 		tfAddr.setColumns(10);
-		tfAddr.setBounds(22, 38, 514, 21);
+		tfAddr.setBounds(68, 40, 376, 21);
 		pAddr.add(tfAddr);
 		
 		tfDoro = new JTextField();
-		tfDoro.setBounds(354, 10, 94, 21);
+		tfDoro.setBounds(179, 11, 177, 21);
 		pAddr.add(tfDoro);
 		tfDoro.setColumns(10);
 		
@@ -133,43 +139,35 @@ public class ManegerUserInfo extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		btnAddr.setBounds(458, 10, 76, 23);
+		btnAddr.setBounds(368, 10, 76, 23);
 		pAddr.add(btnAddr);
 		
 		JPanel pEmail = new JPanel();
 		pEmail.setLayout(null);
-		pEmail.setBounds(249, 6, 295, 31);
+		pEmail.setBounds(221, 6, 295, 31);
 		panel_9.add(pEmail);
 		
 		JLabel lblEmail = new JLabel("이메일");
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmail.setBounds(2, 8, 57, 15);
+		lblEmail.setBounds(4, 8, 57, 15);
 		pEmail.add(lblEmail);
 		
 		tfEmail = new JTextField();
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(81, 5, 215, 21);
+		tfEmail.setBounds(70, 5, 202, 21);
 		pEmail.add(tfEmail);
 		
 		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				userUpdatae();
-			}
-		});
-		btnUpdate.setBounds(447, 168, 97, 23);
+		btnUpdate.setBounds(528, 33, 97, 23);
 		panel_9.add(btnUpdate);
 		
 		JButton btnClear = new JButton("확 인");
-		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-			}
-		});
-		btnClear.setBounds(344, 168, 97, 23);
+		btnClear.setBounds(529, 60, 97, 23);
 		panel_9.add(btnClear);
 		
 		JButton btnDel = new JButton("회원탈퇴");
+		btnDel.setBounds(528, 86, 97, 23);
+		panel_9.add(btnDel);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
@@ -181,13 +179,21 @@ public class ManegerUserInfo extends JPanel {
 			}
 
 		});
-		btnDel.setBounds(237, 168, 97, 23);
-		panel_9.add(btnDel);
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userUpdatae();
+			}
+		});
 		
 		
 		JPanel pSerach = new JPanel();
 		pSerach.setLayout(null);
-		pSerach.setBounds(163, 10, 491, 43);
+		pSerach.setBounds(100, 10, 491, 43);
 		add(pSerach);
 		cmbSearch = new JComboBox<String>();
 		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] {"아이디", "이름", "전화번호", "이메일"}));
@@ -206,17 +212,17 @@ public class ManegerUserInfo extends JPanel {
 		pSerach.add(btnsearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 278, 758, 258);
+		scrollPane.setBounds(12, 235, 758, 258);
 		add(scrollPane);
 		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
 		table = new JTable();
 		table.setModel(tableModel);
 		scrollPane.setViewportView(table);
-		
+		table.setComponentPopupMenu(createPopupMenu());;
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 10, 94, 30);
+		lblNewLabel.setBounds(3, 10, 94, 30);
 		add(lblNewLabel);
 		
 		btnsearch.addActionListener(new ActionListener() {
@@ -330,4 +336,30 @@ public class ManegerUserInfo extends JPanel {
 		List<Users> lists = UsersService.getInstance().findSelectByUserList(map);
 		return lists;
 	}
+	
+	private JPopupMenu createPopupMenu() {
+		JPopupMenu popUpMenu = new JPopupMenu();
+		JMenuItem item = new JMenuItem("확인");
+		item.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				selectTable();
+				
+			}
+		});
+		popUpMenu.add(item);
+		return popUpMenu;
+	}
+
+	protected void selectTable() {
+		int selectedIndex=table.getSelectedRow();
+		tfId.setText((String)table.getValueAt(selectedIndex, 0));
+		tfName.setText((String)table.getValueAt(selectedIndex, 1));
+		tfTel.setText((String)table.getValueAt(selectedIndex, 2));
+		tfAddr.setText((String)table.getValueAt(selectedIndex, 3));
+		tfEmail.setText((String)table.getValueAt(selectedIndex, 4));
+	}
+
 }

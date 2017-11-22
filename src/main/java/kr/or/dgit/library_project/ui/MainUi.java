@@ -55,6 +55,7 @@ public class MainUi extends JFrame {
 	}
 
 	public MainUi() {
+		setResizable(false);
 		setTitle("Library System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 702, 485);

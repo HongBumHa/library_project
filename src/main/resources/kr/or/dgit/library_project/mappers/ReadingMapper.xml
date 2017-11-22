@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.library_project.dao.ReadingDao">
+	<resultMap type="Reading" id="ReadingResult">
+		<result property="bookName" column="book_name"/>
+		<result property="author" column="author"/>
+		<result property="publicName" column="public_name"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		select * from reading
+	</sql>
+	<select id="selectByAll" resultMap="ReadingResult">
+		<include refid="selectSql"/>
+	</select>
+	
+	<sql id="insertSql">
+		insert into reading(book_name,author,public_name) values(#{bookName},#{author},#{publicName})
+	</sql>
+	<insert id="insertReading" parameterType="Reading">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<sql id="deleteSql">
+		delete from reading where book_name = #{bookName}
+	</sql>
+	
+	<delete id="deleteReading" parameterType="Reading">
+		<include refid="deleteSql"/>
+	</delete>
+</mapper>
