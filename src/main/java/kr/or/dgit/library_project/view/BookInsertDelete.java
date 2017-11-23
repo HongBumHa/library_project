@@ -126,17 +126,16 @@ public class BookInsertDelete extends JPanel {
 					Book book = new Book();
 					book.setAuthor(tfAuthor.getText());
 					
-					System.out.println(BookService.getInstance().findselectByWhereBookData(book).size());
-					
 					if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
-						book.setPublicName(tfPublisher.getText());
-						System.out.println("if 첫번째" + book);
-						System.out.println("if 첫번째" + BookService.getInstance().findselectByWhereBookData(book).size());
+						Publisher publisher = new Publisher();
+						publisher.setPublicName(tfPublisher.getText());
+						
+						book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
+				
 						if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
 							book.setBookName(tfBookName.getText());
-							System.out.println("if 두번째" + BookService.getInstance().findselectByWhereBookData(book).size());
+
 							if(BookService.getInstance().findselectByWhereBookData(book).size() != 0){
-								System.out.println("if 세번째");
 								JOptionPane.showMessageDialog(null, "이미 존재하는 도서 입니다.");
 								
 								return;

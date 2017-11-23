@@ -52,13 +52,13 @@
 	<sql id = "whereSqlBookData">
 		<where>
 			<if test = "author != null">
-				author = #{author}
+				author like #{author}
 			</if>
 			<if test = "publicName != null">
-				and public_name = #{publicName}
+				and public_name like #{publicName}
 			</if>
 			<if test="bookName != null">
-				and book_name = #{bookName}
+				and book_name like #{bookName}
 			</if>
 		</where>
 	</sql>
