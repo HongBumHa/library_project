@@ -58,7 +58,7 @@ public class MainUi extends JFrame {
 		setResizable(false);
 		setTitle("Library System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 702, 485);
+		setBounds(100, 100, 692, 473);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -153,11 +153,13 @@ public class MainUi extends JFrame {
 				JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
 				Manager managerUi = new Manager();
 				managerUi.setVisible(true);
+				setVisible(false);
 				break;
 			case 2:
 				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
 				UserInfo uinfo = new UserInfo();
 				uinfo.setVisible(true);
+				setVisible(false);
 				break;
 			case 3:
 				JOptionPane.showMessageDialog(null, "블랙리스트입니다");

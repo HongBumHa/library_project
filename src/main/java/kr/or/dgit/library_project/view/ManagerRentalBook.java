@@ -3,16 +3,17 @@ package kr.or.dgit.library_project.view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -20,13 +21,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.HistoryView;
 import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.RentalViewService;
-import javax.swing.DefaultComboBoxModel;
 
 public class ManagerRentalBook extends JPanel {
 	public static JTable table;
@@ -151,6 +153,7 @@ public class ManagerRentalBook extends JPanel {
 	public void loadDataRent() {
 		DefaultTableModel model = new DefaultTableModel(getDataRent(), getRentColumnNames());
 		table.setModel(model);
+		setAlignWidth();
 	}
 
 	public String[] getRentColumnNames() {
@@ -174,6 +177,7 @@ public class ManagerRentalBook extends JPanel {
 	public void loadDataReturn() {
 		DefaultTableModel model = new DefaultTableModel(getDataReturn(), getReturnColumnNames());
 		table.setModel(model);
+		setAlignWidth();
 	}
 
 	public Object[][] getDataReturn() {
@@ -198,6 +202,7 @@ public class ManagerRentalBook extends JPanel {
 			table.setModel(model);
 			tfSearch.setText("");
 		}
+		setAlignWidth();
 	}
 
 	private Object[][] getDataRentEach() {
@@ -274,5 +279,30 @@ public class ManagerRentalBook extends JPanel {
 		}
 		lists=HistoryViewService.getInstance().findWhereHistoryViewMap(map);
 		return lists;
+	}
+	
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER,0,1,2,3,4,5,6,7,8);
+		setCellWidth(100, 300, 80, 80, 100, 150, 100, 100, 100);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = table.getColumnModel();
+		System.out.println(Arrays.toString(width));
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = table.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -19,7 +20,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.HistoryView;
 import kr.or.dgit.library_project.dto.Post;
@@ -256,12 +259,14 @@ public class UserInfoView extends JPanel {
 
 	public void settingTableView() {
 		historyTable.setModel(makeTableModel());
+		setAlignWidth();
 		historyTable.setVisible(true);
 		scrollPane_1.setViewportView(historyTable);
 		scrollPane_1.setVisible(true);
 	}
 
 	private DefaultTableModel makeTableModel() {
+		
 		return new DefaultTableModel(getData(),getColumnNames());
 	}
 
@@ -342,4 +347,30 @@ public class UserInfoView extends JPanel {
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
 	}
+	
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER,0,1,2,3,4,5,6);
+		setCellWidth(80, 300, 80, 80, 50, 100, 100);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = historyTable.getColumnModel();
+		System.out.println(Arrays.toString(width));
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = historyTable.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+	
 }

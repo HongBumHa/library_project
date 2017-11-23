@@ -24,7 +24,7 @@ public class UserInfo extends JFrame {
 	private JPanel contentPane;
 	public UserInfo() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 826, 575);
+		setBounds(100, 100, 842, 575);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -32,7 +32,7 @@ public class UserInfo extends JFrame {
 		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(5, 5, 980, 534);
+		tabbedPane.setBounds(5, 5, 819, 534);
 		contentPane.add(tabbedPane);
 
 		RentalBookPanel rentalBookTab = new RentalBookPanel();

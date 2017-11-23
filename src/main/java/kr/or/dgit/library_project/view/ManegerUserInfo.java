@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,25 +14,23 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {
@@ -212,11 +211,12 @@ public class ManegerUserInfo extends JPanel {
 		pSerach.add(btnsearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 235, 758, 258);
+		scrollPane.setBounds(12, 235, 758, 343);
 		add(scrollPane);
 		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
 		table = new JTable();
 		table.setModel(tableModel);
+		setAlignWidth();
 		scrollPane.setViewportView(table);
 		table.setComponentPopupMenu(createPopupMenu());;
 		JLabel lblNewLabel = new JLabel("회원정보");
@@ -229,6 +229,7 @@ public class ManegerUserInfo extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model = new DefaultTableModel(searchData(),getColumnNames());
 				table.setModel(model);
+				setAlignWidth();
 			}
 		});
 	}
@@ -362,4 +363,30 @@ public class ManegerUserInfo extends JPanel {
 		tfEmail.setText((String)table.getValueAt(selectedIndex, 4));
 	}
 
+public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER, 0, 1,2,3,4,5);
+		setCellWidth(70, 70, 100, 330, 150, 60);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = table.getColumnModel();
+		System.out.println(Arrays.toString(width));
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = table.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+		
+	}
+	
 }

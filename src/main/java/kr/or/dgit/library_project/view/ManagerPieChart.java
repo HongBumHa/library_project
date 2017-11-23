@@ -1,15 +1,12 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 

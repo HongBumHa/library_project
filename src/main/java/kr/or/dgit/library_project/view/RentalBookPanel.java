@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.RentalView;
@@ -147,6 +150,7 @@ public class RentalBookPanel extends JPanel {
 	public void loadDataAll() {
 		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames());
 		table.setModel(model);
+		setAlignWidth();
 	}
 
 	public String[] getColumnNames() {
@@ -166,6 +170,7 @@ public class RentalBookPanel extends JPanel {
 	public void loadDataEach() {
 		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames());
 		table.setModel(model);
+		setAlignWidth();
 	}
 
 	public Object[][] getDataEach() {
@@ -239,4 +244,30 @@ public class RentalBookPanel extends JPanel {
 		
 		return count;
 	}
+	
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER,0,1,2,3,4,5,6);
+		setCellWidth(70, 300, 100, 100, 70, 30, 55);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = table.getColumnModel();
+		System.out.println(Arrays.toString(width));
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = table.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+	
 }
