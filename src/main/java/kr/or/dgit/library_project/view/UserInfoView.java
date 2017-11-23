@@ -351,7 +351,7 @@ public class UserInfoView extends JPanel {
 	
 	public void setAlignWidth() {
 		setAlign(SwingConstants.CENTER,0,1,2,3,4,5,6);
-		setCellWidth(80, 300, 80, 80, 50, 100, 100);
+		setCellWidth(80, 300, 80, 80, 50, 80, 80);
 	}
 	
 	public void setCellWidth(int...width) {

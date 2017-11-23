@@ -36,18 +36,23 @@ import kr.or.dgit.library_project.service.RentalViewService;
 import kr.or.dgit.library_project.ui.MainUi;
 
 public class RentalBookPanel extends JPanel {
-
+	private static final RentalBookPanel instance=new RentalBookPanel();
+	
 	private JPanel contentPane;
 	private JTextField tfSearch;
 	public static JTable table;
-	private JComboBox comboBox;
+	public JComboBox comboBox;
 
-	public RentalBookPanel() {
+	public static RentalBookPanel getInstance() {
+		return instance;
+	}
+
+	private RentalBookPanel() {
 		setLayout(null);
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(219, 10, 391, 54);
+		pSearch.setBounds(220, 10, 466, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
@@ -65,16 +70,19 @@ public class RentalBookPanel extends JPanel {
 		tfSearch = new JTextField();
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
-		tfSearch.setBounds(117, 10, 159, 25);
+		tfSearch.setBounds(117, 10, 221, 25);
 		pSearch.add(tfSearch);
 
 		JButton btnSearch = new JButton("search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedItem().equals("전체보기")) {
+					
+				}else
 				loadDataEach();
 			}
 		});
-		btnSearch.setBounds(288, 11, 93, 23);
+		btnSearch.setBounds(350, 11, 93, 23);
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -89,7 +97,7 @@ public class RentalBookPanel extends JPanel {
 
 		JPanel pUserRentInfo = new JPanel();
 		pUserRentInfo.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pUserRentInfo.setBounds(12, 10, 195, 54);
+		pUserRentInfo.setBounds(12, 10, 181, 54);
 		add(pUserRentInfo);
 		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -100,10 +108,6 @@ public class RentalBookPanel extends JPanel {
 		JLabel lblRent = new JLabel("대여: "+rentBookCountById()+" 권");
 		lblRent.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblRent);
-
-		JLabel lblReturn = new JLabel("연체: ");
-		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
-		pUserRentInfo.add(lblReturn);
 		
 		JButton btnReading = new JButton("도서신청");
 		btnReading.addActionListener(new ActionListener() {

@@ -189,6 +189,7 @@ public class ReturnTabPanel extends JPanel {
 				rtBookService.deleteDataByWhereRentalBook(rtBook);
 
 				RentalDataTable.setModel(createTableModel(rentalView));
+				setAlignWidth();
 				RentalDataTable.setVisible(true);
 				refreshTextField();
 

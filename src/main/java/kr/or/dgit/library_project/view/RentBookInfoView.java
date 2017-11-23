@@ -117,6 +117,12 @@ public class RentBookInfoView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				rentBook();
 				setVisible(false);
+				if(RentalBookPanel.getInstance().comboBox.getSelectedItem().equals("전체보기")) {
+					RentalBookPanel.getInstance().loadDataAll();
+				}else {
+					RentalBookPanel.getInstance().loadDataEach();
+				}
+				
 			}
 		});
 		panel_1.add(btnRent);
