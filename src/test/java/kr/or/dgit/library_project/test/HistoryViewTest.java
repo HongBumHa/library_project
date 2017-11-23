@@ -11,7 +11,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.HistoryView;
+import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.HistoryViewService;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -87,4 +89,27 @@ public class HistoryViewTest {
 		String date = dd.format(lists.get(0).getReturnDay());
 		Assert.assertEquals(date,"2017-11-15");
 	}*/
+	
+	/*@Test
+	public void test3DeleteBookTesting() {
+		Book book = new Book();
+		book.setBookCode("J0092321");
+		
+		int res = BookService.getInstance().deleteBook(book);
+		Assert.assertEquals(1, res);
+	}*/
+	
+	@Test
+	public void test4UpdateBookTesting() {
+		Book book = new Book();
+		book.setBookCode("J0091121");
+		book.setBookName("최고보다는 최선을");
+		book.setAuthor("박경용");
+		book.setPublicName("0004");
+		book.setPrice(12000);
+		book.setAmount(8);
+		
+		int res = BookService.getInstance().updateBook(book);
+		Assert.assertEquals(1, res);
+	}
 }

@@ -56,6 +56,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("updateBook Ser:" + book.toString());
 			int res=dao.updateBook(book);
 			sqlSession.commit();
 			return res;
@@ -72,6 +73,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("service book : " + book.getBookCode());
 			int res=dao.deleteBook(book);
 			sqlSession.commit();
 			return res;

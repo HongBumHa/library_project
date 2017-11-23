@@ -8,6 +8,7 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.RentalView;
 
 public class RentalViewDaoImpl implements RentalViewDao {
@@ -55,5 +56,9 @@ public class RentalViewDaoImpl implements RentalViewDao {
 		return sqlSession.selectList(namespace+".selectByWhereRentalViewMap", map);
 	}
 
-	
+	@Override
+	public RentalView selectByBookDataRentalView(Book book) {
+		log.debug("selectByBookDataRentalView");
+		return sqlSession.selectOne(namespace+".selectByBookDataRentalView", book);
+	}
 }
