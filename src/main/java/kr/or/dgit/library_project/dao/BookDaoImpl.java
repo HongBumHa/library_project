@@ -55,6 +55,12 @@ public class BookDaoImpl implements BookDao {
 		return sqlSession.delete(namespace+"deleteBook", book);
 	}
 
+	@Override
+	public List<Book> selectByRank() {
+		log.debug("selectByRank()");
+		return sqlSession.selectList(namespace+"selectByRank");
+	}
+
 	
 
 }

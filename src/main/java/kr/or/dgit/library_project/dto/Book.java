@@ -143,4 +143,8 @@ public class Book {
 	public Object[] toArray() {
 		return new Object[] {bookCode, bookName, author, publicName, price, amount, allRentalCount};
 	}
+	
+	public Object[] toArray2() {
+		return new Object[] {amount,bookName,author,publicName,amount,allRentalCount};
+	}
 }

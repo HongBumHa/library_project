@@ -8,6 +8,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.library_project.dto.HistoryView;
+import kr.or.dgit.library_project.dto.Users;
 
 public class HistoryViewDaoImpl implements HistoryViewDao {
 
@@ -47,5 +48,11 @@ public class HistoryViewDaoImpl implements HistoryViewDao {
 	public List<HistoryView> selectByWhereHistoryViewMap(Map<String, Object> map) {
 		log.debug("selectWhereHistoryViewMap()");
 		return sqlSession.selectList(namespace + ".selectByWhereHistoryViewMap", map);
+	}
+
+	@Override
+	public HistoryView selectByUserReturnCount(Users user) {
+		log.debug("selectByUserReturnCount()");
+		return sqlSession.selectOne(namespace +".selectByUserReturnCount",user);
 	}
 }

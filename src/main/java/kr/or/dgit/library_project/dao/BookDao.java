@@ -12,4 +12,6 @@ public interface BookDao {
 	int insertBook(Book Book);
 	int updateBook(Book book);
 	int deleteBook(Book book);
+	
+	List<Book> selectByRank();
 }

@@ -54,6 +54,8 @@ public class PostView extends JFrame {
 			tableModel = new DefaultTableModel(getData(),getColumnNames());
 		}else if(ioi ==0) {
 			tableModel = new DefaultTableModel(getData2(),getColumnNames2());
+		}else {
+			tableModel = new DefaultTableModel(getData3(),getColumnNames3());
 		}
 		
 		table = new JTable();
@@ -79,8 +81,11 @@ public class PostView extends JFrame {
 					 
 					 uiv.getTfAddr().setText(addr);
 					 setVisible(false);
-				 }else {
+				 }else if(ioi ==0) {
 					 mba.getTfUserAddr().setText(addr);
+					 setVisible(false);
+				 }else if(ioi ==3) {
+					 ManegerUserInfo.getTfAddr().setText(addr);
 					 setVisible(false);
 				 }
 				
@@ -96,6 +101,25 @@ public class PostView extends JFrame {
 		});
 		panel.add(btnCencal);
 		
+	}
+
+	private String[] getColumnNames3() {
+		return new String[] {"우편번호","시도","시군구","도로","건물명1","건물명2"};
+		
+	}
+
+	private Object[][] getData3() {
+		String sido = (String)ManegerUserInfo.getCmbSido().getSelectedItem();
+		String doro = ManegerUserInfo.getTfDoro().getText()  + "%";
+		Post post = new Post(sido,doro);
+		List<Post> lists = PostService.getInstance().findSelectByDoroList(post);
+		Object[][] datas = new Object[lists.size()][];
+		for(int i =0; i < lists.size(); i++) {
+			
+			datas[i] = lists.get(i).toArray();
+			
+		}
+		return datas;
 	}
 
 	private Object[][] getData2() {
@@ -145,6 +169,7 @@ public class PostView extends JFrame {
 			datas[i] = lists.get(i).toArray();
 		
 		}
+	
 		return datas;
 	}
 

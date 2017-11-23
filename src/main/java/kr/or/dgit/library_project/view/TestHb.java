@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class ManegerViewingTesting extends JFrame {
+public class TestHb extends JFrame {
 
-	private JPanel contentPane;
+	private UserReadingBook contentPane;
 
 	/**
 	 * Launch the application.
@@ -18,7 +18,7 @@ public class ManegerViewingTesting extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManegerViewingTesting frame = new ManegerViewingTesting();
+					TestHb frame = new TestHb();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,16 +30,13 @@ public class ManegerViewingTesting extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManegerViewingTesting() {
+	public TestHb() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 680, 356);
-		contentPane = new JPanel();
+		setBounds(100, 100, 642, 443);
+		contentPane = new UserReadingBook();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		ManegerTesting panel = new ManegerTesting();
-		contentPane.add(panel, BorderLayout.CENTER);
+		setContentPane(contentPane);
 	}
+
 }

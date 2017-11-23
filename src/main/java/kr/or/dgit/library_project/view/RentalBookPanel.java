@@ -44,7 +44,7 @@ public class RentalBookPanel extends JPanel {
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(219, 10, 586, 54);
+		pSearch.setBounds(219, 10, 391, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
@@ -62,7 +62,7 @@ public class RentalBookPanel extends JPanel {
 		tfSearch = new JTextField();
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
-		tfSearch.setBounds(117, 10, 356, 25);
+		tfSearch.setBounds(117, 10, 159, 25);
 		pSearch.add(tfSearch);
 
 		JButton btnSearch = new JButton("search");
@@ -71,7 +71,7 @@ public class RentalBookPanel extends JPanel {
 				loadDataEach();
 			}
 		});
-		btnSearch.setBounds(485, 11, 93, 23);
+		btnSearch.setBounds(288, 11, 93, 23);
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -101,6 +101,26 @@ public class RentalBookPanel extends JPanel {
 		JLabel lblReturn = new JLabel("연체: ");
 		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblReturn);
+		
+		JButton btnReading = new JButton("도서신청");
+		btnReading.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReadingVIew frame = new ReadingVIew();
+				frame.setVisible(true);
+			}
+		});
+		btnReading.setBounds(708, 10, 97, 23);
+		add(btnReading);
+		
+		JButton btnBestBook = new JButton("인기도서");
+		btnBestBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BestBookView frame = new BestBookView();
+				frame.setVisible(true);
+			}
+		});
+		btnBestBook.setBounds(708, 43, 97, 23);
+		add(btnBestBook);
 	}
 
 	private void addPopupMenu() {

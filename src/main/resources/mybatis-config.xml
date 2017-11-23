@@ -33,6 +33,7 @@
 		<mapper resource="kr/or/dgit/library_project/mappers/BookGroupMapper.xml" />
 		<mapper resource="kr/or/dgit/library_project/mappers/BookMapper.xml" />
 		<mapper resource="kr/or/dgit/library_project/mappers/PostMapper.xml" />
+		<mapper resource="kr/or/dgit/library_project/mappers/ReadingMapper.xml" />
 	</mappers>
 
 </configuration>

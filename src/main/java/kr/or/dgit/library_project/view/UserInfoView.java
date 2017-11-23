@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -35,9 +36,9 @@ public class UserInfoView extends JPanel {
 	private JTextField tfUserName;
 	private JTextField tfUserTel;
 	private JTextField tfUserEamil;
-	private JTextField tfUserPw;
-	private JTextField tfUserPwCh;
-	private  JTextField tfDoro;
+	private JPasswordField tfUserPw;
+	private JPasswordField tfUserPwCh;
+	private JTextField tfDoro;
 	private JTextField tfAddr;
 	private DefaultComboBoxModel sidoModel;
 	private Users u;
@@ -54,7 +55,7 @@ public class UserInfoView extends JPanel {
 		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(228, 31, 594, 246);
+		pUserInfo.setBounds(167, 25, 594, 227);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 		
@@ -160,7 +161,7 @@ public class UserInfoView extends JPanel {
 		lblUserPw.setBounds(12, 8, 57, 15);
 		pUserPw.add(lblUserPw);
 		
-		tfUserPw = new JTextField();
+		tfUserPw = new JPasswordField();
 		tfUserPw.setBounds(81, 5, 215, 21);
 		tfUserPw.setColumns(10);
 		pUserPw.add(tfUserPw);
@@ -175,14 +176,62 @@ public class UserInfoView extends JPanel {
 		lblUserPwCh.setBounds(0, 8, 84, 15);
 		pUserPwCh.add(lblUserPwCh);
 		
-		tfUserPwCh = new JTextField();
+		tfUserPwCh = new JPasswordField();
 		tfUserPwCh.setBounds(88, 5, 215, 21);
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
 		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBounds(12, 25, 148, 217);
+		add(panel_7);
+		panel_7.setLayout(null);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(11, 288, 775, 246);
+		add(scrollPane_1);
+		
+		historyTable = new JTable();
+		
+		settingTableView();
+		
+		JButton btnNewButton_2 = new JButton("히스토리");
+		btnNewButton_2.setBounds(10, 255, 115, 23);
+		add(btnNewButton_2);
+		
 		JButton btnUpdate = new JButton("수 정");
+		btnUpdate.setBounds(662, 255, 90, 23);
+		add(btnUpdate);
+		
+		JButton btnCancel = new JButton("취 소");
+		btnCancel.setBounds(560, 255, 90, 23);
+		add(btnCancel);
+		
+		JButton btnLeave = new JButton("회원탈퇴");
+		btnLeave.setBounds(454, 255, 90, 23);
+		add(btnLeave);
+		btnLeave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				if(i == 0) {
+					u.setUserLeave("N");
+					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+					UsersService.getInstance().findupdateUsers(u);
+					setVisible(false);
+				}
+			}
+		});
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearTf();
+			}
+		});
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(tfUserPw.getText().length() <=7) {
+					JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
+					return;
+				}
 				if(tfUserPw.getText().equals(tfUserPwCh.getText())) {
 					userUpdatae();
 					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
@@ -191,50 +240,6 @@ public class UserInfoView extends JPanel {
 				}
 			}
 		});
-		btnUpdate.setBounds(191, 213, 97, 23);
-		pUserInfo.add(btnUpdate);
-		
-		JButton btnCancel = new JButton("취 소");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clearTf();
-			}
-		});
-		btnCancel.setBounds(294, 213, 97, 23);
-		pUserInfo.add(btnCancel);
-		
-		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-				if(i == 0) {
-					u.setUserLeave("N");
-					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
-					setVisible(false);
-				}
-			}
-		});
-		btnLeave.setBounds(503, 213, 81, 23);
-		pUserInfo.add(btnLeave);
-		
-		JPanel panel_7 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_7.getLayout();
-		flowLayout.setVgap(15);
-		panel_7.setBounds(47, 45, 148, 137);
-		add(panel_7);
-		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(48, 300, 775, 246);
-		add(scrollPane_1);
-		
-		historyTable = new JTable();
-		
-		settingTableView();
-		
-		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(47, 267, 115, 23);
-		add(btnNewButton_2);
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -261,11 +266,11 @@ public class UserInfoView extends JPanel {
 	}
 
 	public void clearTf() {
-		tfUserId.setText(u.getUserId());
-		tfUserName.setText(u.getUserName());
-		tfAddr.setText(u.getUserAddr());
-		tfUserTel.setText(u.getUserTel());
-		tfUserEamil.setText(u.getUserEmail());
+		tfUserId.setText("");
+		tfUserName.setText("");
+		tfAddr.setText("");
+		tfUserTel.setText("");
+		tfUserEamil.setText("");
 	}
 
 	public UserInfoView(String str) {

@@ -20,8 +20,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.view.BookInsertDelete;
-import kr.or.dgit.library_project.view.ManagerGraph;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
+import kr.or.dgit.library_project.view.ManegerUserInfo;
 
 public class Manager extends JFrame {
 
@@ -278,36 +278,19 @@ public class Manager extends JFrame {
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
-		
-/*<<<<<<< HEAD
-		JLabel lbLast = new JLabel("회원정보");
-		lbLast.setFont(new Font("굴림", Font.BOLD, 15));
-		lbLast.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLast.setBounds(12, 281, 94, 30);
-		panel_one.add(lbLast);
-		
-		ManagerUserinfo panel_18 = new ManagerUserinfo();
-		JPanel jp = new JPanel(new BorderLayout());
-		jp.add(panel_18, BorderLayout.CENTER);
-		
-		JButton btnNewButton = new JButton("New button");
-		panel_18.add(btnNewButton);
-		tabbedPane.addTab("kkkk", null, jp, null);
 
-		
-=======*/
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		panel_18.add(lblNewLabel);
 		
+
 		BookInsertDelete insertDeletePanel = new BookInsertDelete();
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 		
-		ManagerGraph panel = new ManagerGraph();
+		ManegerUserInfo panel = new ManegerUserInfo();
 		tabbedPane.addTab("New tab", null, panel, null);
-		panel.setLayout(null);
 	}
 }

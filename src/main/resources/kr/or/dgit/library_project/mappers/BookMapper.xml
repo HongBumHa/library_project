@@ -90,5 +90,12 @@
 		<include refid="deleteSql"/>
 		<include refid="whereSqlCode"/>
 	</delete>
+	
+	<sql id="selectByRankcountSql">
+		select * from book order by all_rentel_count desc
+	</sql>
+	<select id="selectByRank" resultMap="BookResult">
+		<include refid="selectByRankcountSql"/>
+	</select>
 
 </mapper>
