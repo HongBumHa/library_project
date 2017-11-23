@@ -58,7 +58,7 @@ public class ManegerUserInfo extends JPanel {
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
-		panel_9.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_9.setBounds(80, 65, 648, 165);
 		add(panel_9);
 		
