@@ -266,11 +266,11 @@ public class UserInfoView extends JPanel {
 	}
 
 	public void clearTf() {
-		tfUserId.setText(u.getUserId());
-		tfUserName.setText(u.getUserName());
-		tfAddr.setText(u.getUserAddr());
-		tfUserTel.setText(u.getUserTel());
-		tfUserEamil.setText(u.getUserEmail());
+		tfUserId.setText("");
+		tfUserName.setText("");
+		tfAddr.setText("");
+		tfUserTel.setText("");
+		tfUserEamil.setText("");
 	}
 
 	public UserInfoView(String str) {
