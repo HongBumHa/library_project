@@ -1,41 +1,36 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
+import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
-import javax.swing.AbstractButton;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Vector;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.ComboBoxModel;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import javax.swing.border.LineBorder;
 
 public class MemberApp extends JFrame {
 
@@ -114,6 +109,7 @@ public class MemberApp extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				tfDoro.setText("");
+				tfDoro.setForeground(new Color(0, 0, 0));
 			}
 		});
 		tfDoro.setForeground(new Color(230, 230, 250));
@@ -154,7 +150,7 @@ public class MemberApp extends JFrame {
 		
 		tfId = new JTextField();
 	
-		tfId.setForeground(new Color(230, 230, 250));
+		tfId.setForeground(Color.BLACK);
 		pId.add(tfId);
 		tfId.setColumns(10);
 		
@@ -335,11 +331,12 @@ public class MemberApp extends JFrame {
 				
 			}
 		});
-		
+		Book b = new Book();
+		b.setPrice(10000000);
+		System.out.println(b);
 	}
 
-	protected void insertUser() {
-		
+	protected void insertUser() {	
 		if(idRes!=1) {
 			JOptionPane.showMessageDialog(null, "중복검사를 하세요");
 			return;

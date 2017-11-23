@@ -140,7 +140,7 @@ public class RentBookInfoView extends JFrame {
 		String bName=(String) RentalBookPanel.table.getValueAt(selectedIndex, 1);
 		String bAuthor=(String) RentalBookPanel.table.getValueAt(selectedIndex, 2);
 		String bPublisher=(String) RentalBookPanel.table.getValueAt(selectedIndex, 3);
-		int bPrice=(int) RentalBookPanel.table.getValueAt(selectedIndex, 4);
+		String bPrice=(String) RentalBookPanel.table.getValueAt(selectedIndex, 4);
 		int bRentalCount=(int) RentalBookPanel.table.getValueAt(selectedIndex, 5);
 		
 		tfBookCode.setText(bCode);

@@ -70,24 +70,26 @@ public class PostView extends JFrame {
 		btnAdd = new JButton("확인");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
-				String addr = selectTable();
 				
+				String addr = selectTable();
 				 int i = JOptionPane.showConfirmDialog(null, 
 						addr, 
 						"주소 확인창", 
 						JOptionPane.YES_NO_OPTION, 
 						JOptionPane.QUESTION_MESSAGE);
-				 if(ioi ==1) {
-					 
-					 uiv.getTfAddr().setText(addr);
-					 setVisible(false);
-				 }else if(ioi ==0) {
-					 mba.getTfUserAddr().setText(addr);
-					 setVisible(false);
-				 }else if(ioi ==3) {
-					 ManegerUserInfo.getTfAddr().setText(addr);
-					 setVisible(false);
+				 if(i ==0) {
+					 if(ioi ==1) {
+						 uiv.getTfAddr().setText(addr);
+						 setVisible(false);
+					 }else if(ioi ==0) {
+						 mba.getTfUserAddr().setText(addr);
+						 setVisible(false);
+					 }else if(ioi ==3) {
+						 ManegerUserInfo.getTfAddr().setText(addr);
+						 setVisible(false);
+					 }
 				 }
+				 
 				
 			}
 		});
