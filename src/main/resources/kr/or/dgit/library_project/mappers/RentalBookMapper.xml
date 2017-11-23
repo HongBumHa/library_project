@@ -37,4 +37,16 @@
 		<include refid="deleteWhereSql"/>
 	</delete>
 	
+	<sql id="userRentalBookCount">
+		select count(user_id) from rentalbook where user_id=#{userId};
+	</sql>
+	
+	<resultMap type="RentalBook" id="UserCount">
+		<result property="userId" column="count(user_id)" />
+	</resultMap>
+	
+	<select id="selectByUserRentalCount" resultMap="UserCount" parameterType="Users">
+		<include refid="userRentalBookCount"></include>
+	</select>
+	
 </mapper>

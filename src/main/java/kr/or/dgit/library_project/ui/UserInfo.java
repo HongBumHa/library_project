@@ -16,6 +16,7 @@ import kr.or.dgit.library_project.view.RentalBookPanel;
 import kr.or.dgit.library_project.view.ReturnTabPanel;
 import kr.or.dgit.library_project.view.UserInfoView;
 import kr.or.dgit.library_project.view.UserReadingBook;
+import kr.or.dgit.library_project.view.UserpresentView;
 
 public class UserInfo extends JFrame {
 
@@ -49,9 +50,8 @@ public class UserInfo extends JFrame {
 		testing.setLayout(null);
 		tabbedPane.addTab("회원정보", null, testing, null);
 		
-		UserReadingBook ReadingBookTab = new UserReadingBook();
-		ReadingBookTab.setToolTipText("");
-		tabbedPane.addTab("도서신청", null, ReadingBookTab, null);
+		UserpresentView 유저현황 = new UserpresentView();
+		tabbedPane.addTab("New tab", null, 유저현황, null);
 
 	}	
 }

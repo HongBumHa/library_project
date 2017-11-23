@@ -25,6 +25,9 @@ import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.ReadingService;
 
 public class UserReadingBook extends JPanel {
+	private JTextField tfBookName;
+	private JTextField tfAuthor;
+	private JTextField tfPublicName;
 
 	
 	public UserReadingBook() {
@@ -32,7 +35,7 @@ public class UserReadingBook extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panel_1.setBounds(11, 21, 775, 329);
+		panel_1.setBounds(11, 21, 775, 127);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -42,39 +45,69 @@ public class UserReadingBook extends JPanel {
 		panel_1.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblTotel = new JLabel("총 대여량 :");
-		lblTotel.setFont(new Font("굴림", Font.BOLD, 12));
-		lblTotel.setBounds(11, 21, 92, 15);
-		panel.add(lblTotel);
+		JLabel lblBookName = new JLabel("도서명 :");
+		lblBookName.setFont(new Font("굴림", Font.BOLD, 12));
+		lblBookName.setBounds(11, 21, 57, 15);
+		panel.add(lblBookName);
 		
-		JLabel lblRentel = new JLabel("대여 수량 :");
-		lblRentel.setFont(new Font("굴림", Font.BOLD, 12));
-		lblRentel.setBounds(209, 21, 84, 15);
-		panel.add(lblRentel);
+		tfBookName = new JTextField();
+		tfBookName.setBounds(65, 17, 181, 21);
+		panel.add(tfBookName);
+		tfBookName.setColumns(10);
 		
-		JLabel lblReturn = new JLabel("반납량 :");
-		lblReturn.setFont(new Font("굴림", Font.BOLD, 12));
-		lblReturn.setBounds(435, 21, 57, 15);
-		panel.add(lblReturn);
+		JLabel lblAuthor = new JLabel("저자명 :");
+		lblAuthor.setFont(new Font("굴림", Font.BOLD, 12));
+		lblAuthor.setBounds(257, 21, 57, 15);
+		panel.add(lblAuthor);
 		
-		JLabel lblTotelint = new JLabel("");
-		lblTotelint.setBounds(84, 21, 57, 15);
-		panel.add(lblTotelint);
+		tfAuthor = new JTextField();
+		tfAuthor.setBounds(314, 17, 116, 21);
+		panel.add(tfAuthor);
+		tfAuthor.setColumns(10);
 		
-		JLabel lblRentelint = new JLabel("");
-		lblRentelint.setBounds(291, 21, 57, 15);
-		panel.add(lblRentelint);
+		JLabel lblPublicName = new JLabel("출판사명 :");
+		lblPublicName.setFont(new Font("굴림", Font.BOLD, 12));
+		lblPublicName.setBounds(435, 21, 69, 15);
+		panel.add(lblPublicName);
 		
-		JLabel lblReturnint = new JLabel("");
-		lblReturnint.setBounds(490, 21, 57, 15);
-		panel.add(lblReturnint);
+		tfPublicName = new JTextField();
+		tfPublicName.setBounds(501, 17, 116, 21);
+		panel.add(tfPublicName);
+		tfPublicName.setColumns(10);
 		
-		JLabel lblTitle = new JLabel("현황 보기");
+		JButton btnAdd = new JButton("도서신청");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int res = insertReading();
+				if(res != -1) {
+					JOptionPane.showMessageDialog(null, "도서 신청되었습니다.");
+				}else {
+					JOptionPane.showMessageDialog(null, "다시 입력해주세요.");
+				}
+			}
+		});
+		btnAdd.setFont(new Font("굴림", Font.BOLD, 12));
+		btnAdd.setBounds(642, 17, 97, 23);
+		panel.add(btnAdd);
+		
+		JLabel lblTitle = new JLabel("도서 신청");
 		lblTitle.setBounds(11, 10, 85, 28);
 		panel_1.add(lblTitle);
 		lblTitle.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 
+
 	}
 
 
+
+	protected int insertReading() {
+		
+		String bookName = tfBookName.getText();
+		String author = tfAuthor.getText();
+		String publicName = tfPublicName.getText();
+		Reading rBook = new Reading(bookName, author, publicName);
+		System.out.println(rBook);
+		int res = ReadingService.getInstance().findinsert(rBook);
+		return res;
+	}
 }

@@ -119,4 +119,16 @@
 		parameterType="HistoryView">
 		<include refid="selectByUser" />
 	</select>
+	
+	<sql id="userReturntalBookCount">
+		select count(user_id) from history where user_id=#{userId};
+	</sql>
+	
+	<resultMap type="HistoryView" id="UserCount">
+		<result property="price" column="count(user_id)" />
+	</resultMap>
+	
+	<select id="selectByUserReturnCount" resultMap="UserCount" parameterType="Users">
+		<include refid="userReturntalBookCount"></include>
+	</select>
 </mapper>
