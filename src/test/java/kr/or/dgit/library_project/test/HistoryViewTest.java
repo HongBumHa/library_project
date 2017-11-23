@@ -99,7 +99,7 @@ public class HistoryViewTest {
 		Assert.assertEquals(1, res);
 	}*/
 	
-	@Test
+	/*@Test
 	public void test4UpdateBookTesting() {
 		Book book = new Book();
 		book.setBookCode("J0091121");
@@ -111,5 +111,14 @@ public class HistoryViewTest {
 		
 		int res = BookService.getInstance().updateBook(book);
 		Assert.assertEquals(1, res);
+	}*/
+	
+	@Test
+	public void test5selectByBigMiddleGroupCode() {
+		Book book = new Book();
+		book.setBookCode("A000");
+		List<Book> lists = BookService.getInstance().findselectByBigMiddleGroupCode(book);
+		
+		Assert.assertNotNull(lists);
 	}
 }

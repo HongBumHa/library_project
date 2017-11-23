@@ -48,6 +48,20 @@
 			</if>
 		</where>
 	</sql>
+	
+	<sql id = "whereSqlBookData">
+		<where>
+			<if test = "author != null">
+				author = #{author}
+			</if>
+			<if test = "publicName != null">
+				and public_name = #{publicName}
+			</if>
+			<if test="bookName != null">
+				and book_name = #{bookName}
+			</if>
+		</where>
+	</sql>
 
 	<sql id="whereSqlAll">
 		<where>
@@ -65,6 +79,8 @@
 			</if>
 		</where>
 	</sql>
+	
+	
 	
 	<!-- selectBookByAll -->
 	<select id="selectBookByAll" parameterType="Book" resultMap="BookResult">
@@ -124,6 +140,22 @@
 	</sql>
 	<select id="selectByRank" resultMap="BookResult">
 		<include refid="selectByRankcountSql"/>
+	</select>
+	
+	<select id = "selectByWhereBookData" parameterType="Book" resultType="Book">
+		<include refid="selectSql"/>
+		<include refid="whereSqlBookData"/>
+	</select>
+	
+	<sql id="whereBigMiddleGroupCode">
+		<where>
+			book_code like '#{bookCode}%'
+		</where>
+	</sql>
+	
+	<select id = "selectByBigMiddleGroupCode" parameterType="Book" resultType="Book">
+		<include refid="selectSql"/>
+		<include refid="whereBigMiddleGroupCode"/>
 	</select>
 
 </mapper>

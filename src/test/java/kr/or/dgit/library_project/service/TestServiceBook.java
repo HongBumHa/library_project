@@ -22,13 +22,13 @@ public class TestServiceBook {
 		bookService=null;
 	}
 	
-	@Test
+	/*@Test
 	public void testBookGroupRow() {
 		Book book=new Book();
 		book.setBookCode("%A0%");
 		Book test=bookService.selectBookGroupRow(book);
 		Assert.assertNotNull(test);
-	}
+	}*/
 	
 	/*@Test
 	public void testchart() {

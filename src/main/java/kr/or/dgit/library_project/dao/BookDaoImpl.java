@@ -73,10 +73,15 @@ public class BookDaoImpl implements BookDao {
 		return sqlSession.selectList(namespace+"selectByRank");
 	}
 
-	
+	@Override
+	public List<Book> selectByWhereBookData(Book book) {
+		log.debug("selectByWhereBookData()");
+		return sqlSession.selectList(namespace+"selectByWhereBookData", book);
+	}
 
-	
-
-	
-
+	@Override
+	public List<Book> selectByBigMiddleGroupCode(Book book) {
+		log.debug("selectByBigMiddleGroupCode()");
+		return sqlSession.selectList(namespace+"selectByBigMiddleGroupCode", book);
+	}
 }

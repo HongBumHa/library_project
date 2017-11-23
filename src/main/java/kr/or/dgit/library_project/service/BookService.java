@@ -105,4 +105,18 @@ public class BookService {
 			return dao.selectByRank();
 		}
 	}
+	
+	public List<Book> findselectByWhereBookData(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByWhereBookData(book);
+		}
+	}
+	
+	public List<Book> findselectByBigMiddleGroupCode(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByBigMiddleGroupCode(book);
+		}
+	}
 }

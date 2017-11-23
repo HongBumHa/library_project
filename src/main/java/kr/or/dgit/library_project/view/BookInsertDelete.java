@@ -123,6 +123,36 @@ public class BookInsertDelete extends JPanel {
 					setVisible(true);
 				}
 				if(btnClickEvent.getText() == "도서추가") {
+					Book book = new Book();
+					book.setAuthor(tfAuthor.getText());
+					
+					System.out.println(BookService.getInstance().findselectByWhereBookData(book).size());
+					
+					if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
+						book.setPublicName(tfPublisher.getText());
+						System.out.println("if 첫번째" + book);
+						System.out.println("if 첫번째" + BookService.getInstance().findselectByWhereBookData(book).size());
+						if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
+							book.setBookName(tfBookName.getText());
+							System.out.println("if 두번째" + BookService.getInstance().findselectByWhereBookData(book).size());
+							if(BookService.getInstance().findselectByWhereBookData(book).size() != 0){
+								System.out.println("if 세번째");
+								JOptionPane.showMessageDialog(null, "이미 존재하는 도서 입니다.");
+								
+								return;
+							}
+						}
+					}
+
+					String bigNo = bigGroupLists.get(comboBigGroup.getSelectedIndex()).getBigGroup();
+					String middleNo = middleMap.get(bigNo)[comboMiddleGroup.getSelectedIndex()].getMiddleGroup();
+					String GroupInfo = bigNo + middleNo;
+					
+					Map<String, Object> map=new HashMap<String, Object>();
+					map.put("bookCode", GroupInfo+"%");
+					List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
+
+					System.out.println(selectList.get(0));
 					
 				}
 			}
