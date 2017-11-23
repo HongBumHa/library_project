@@ -19,9 +19,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
 import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 import kr.or.dgit.library_project.view.ManegerUserInfo;
+import kr.or.dgit.library_project.view.ManagerPieChart;
+
 
 public class Manager extends JFrame {
 
@@ -50,6 +55,7 @@ public class Manager extends JFrame {
 	}
 
 	public Manager() {
+		setTitle("관리자 모드");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 804, 657);
 		contentPane = new JPanel();
@@ -61,8 +67,8 @@ public class Manager extends JFrame {
 		tabbedPane.setBounds(0, 0, 787, 618);
 		contentPane.add(tabbedPane);
 		
-		ManagerRentalBook panel_18 = new ManagerRentalBook();
-		tabbedPane.addTab("대여/반납관리", null, panel_18, null);
+		ManagerRentalBook rentReturn = new ManagerRentalBook();
+		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
 		
 		JPanel panel_one = new JPanel();
 		tabbedPane.addTab("회원관리", null, panel_one, null);
@@ -235,49 +241,13 @@ public class Manager extends JFrame {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"아이디", "이 름", "전화번호", "주 소", "이메일"
 			}
 		));
 		scrollPane_1.setViewportView(table_1);
+/*<<<<<<< HEAD
 
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
@@ -286,11 +256,13 @@ public class Manager extends JFrame {
 		panel_18.add(lblNewLabel);
 		
 
+=======*/
 		BookInsertDelete insertDeletePanel = new BookInsertDelete();
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
-		
+
 		ManegerUserInfo panel = new ManegerUserInfo();
 		tabbedPane.addTab("New tab", null, panel, null);
+
 	}
 }

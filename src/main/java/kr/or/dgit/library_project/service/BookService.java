@@ -42,6 +42,20 @@ public class BookService {
 		}
 	}
 	
+	public Book selectBookForChart(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookForChart(book);
+		}
+	}
+	
+	public Book selectBookGroupRow(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookGroupRow(book);
+		}
+	}
+	
 	public int insertBook(Book book) {
 		int res=-1;
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){

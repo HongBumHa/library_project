@@ -20,6 +20,14 @@
 		select book_code, book_name, author, p.public_name, price, amount, all_rentel_count from book b, publisher p
 	</sql>
 	
+	<sql id="selectSqlForChart">
+		select sum(all_rentel_count) from book where book_code like #{bookCode}
+	</sql>
+	
+	<sql id="selectSqlRow">
+		select count(*) from book where book_code like #{bookCode}
+	</sql>
+	
 	<sql id="insertSql">
 		insert into book (book_code, book_name, author, public_name, price, amount) 
 			values(#{bookCode}, #{bookName}, #{author}, #{publicName}, #{price}, #{amount})
@@ -74,7 +82,27 @@
 		<include refid="selectSqlAll"/>
 		<include refid="whereSqlAll"/>
 	</select>
-
+	
+	<resultMap type="Book" id="testBook">
+		<result  property="allRentalCount" column="sum(all_rentel_count)"/>
+	</resultMap>
+	
+	<!-- selectRentalCountForChart -->
+	<select id="selectRentalCountForChart" parameterType="Book" resultMap="testBook">
+		<include refid="selectSqlForChart"></include>
+	</select>
+	
+	
+	<!-- selectBookGroupRow -->
+	<resultMap type="Book" id="bookGroupRow">
+		<result  property="allRentalCount" column="count(*)"/>
+	</resultMap>
+	
+	<select id="selectBookGroupRow" parameterType="Book" resultMap="bookGroupRow">
+		<include refid="selectSqlRow"/>
+	</select>
+	
+	
 	<!-- insertBook -->
 	<insert id="insertBook">
 		<include refid="insertSql"/>
