@@ -31,6 +31,7 @@ import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.ui.MainUi;
+import javax.swing.ImageIcon;
 
 public class UserInfoView extends JPanel {
 	private JTable table;
@@ -58,7 +59,7 @@ public class UserInfoView extends JPanel {
 		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(167, 25, 594, 227);
+		pUserInfo.setBounds(213, 26, 594, 227);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 		
@@ -184,13 +185,8 @@ public class UserInfoView extends JPanel {
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
 		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBounds(12, 25, 148, 217);
-		add(panel_7);
-		panel_7.setLayout(null);
-		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(11, 288, 775, 246);
+		scrollPane_1.setBounds(32, 289, 775, 246);
 		add(scrollPane_1);
 		
 		historyTable = new JTable();
@@ -198,20 +194,25 @@ public class UserInfoView extends JPanel {
 		settingTableView();
 		
 		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(10, 255, 115, 23);
+		btnNewButton_2.setBounds(20, 258, 115, 23);
 		add(btnNewButton_2);
 		
 		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(662, 255, 90, 23);
+		btnUpdate.setBounds(717, 258, 90, 23);
 		add(btnUpdate);
 		
 		JButton btnCancel = new JButton("취 소");
-		btnCancel.setBounds(560, 255, 90, 23);
+		btnCancel.setBounds(615, 258, 90, 23);
 		add(btnCancel);
 		
 		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.setBounds(454, 255, 90, 23);
+		btnLeave.setBounds(509, 258, 90, 23);
 		add(btnLeave);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\userimg.png"));
+		lblNewLabel.setBounds(6, 33, 204, 202);
+		add(lblNewLabel);
 		btnLeave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

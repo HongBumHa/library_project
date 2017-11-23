@@ -33,6 +33,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ComboBoxModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.border.LineBorder;
 
 public class MemberApp extends JFrame {
 
@@ -62,6 +65,7 @@ public class MemberApp extends JFrame {
 	private static final MemberApp instance = new MemberApp();
 	private JTextField tfEmail1;
 	private JTextField tfEmail2;
+	private JLabel lblIdCh;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -91,12 +95,13 @@ public class MemberApp extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel pAddr = new JPanel();
-		pAddr.setBounds(34, 311, 399, 59);
+		pAddr.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pAddr.setBounds(30, 311, 399, 62);
 		contentPane.add(pAddr);
 		pAddr.setLayout(null);
 		
 		JLabel lblUserAddr = new JLabel("주소");
-		lblUserAddr.setBounds(12, 10, 94, 15);
+		lblUserAddr.setBounds(6, 12, 94, 15);
 		pAddr.add(lblUserAddr);
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		 cmbUserAddr = new JComboBox<String>();
@@ -105,6 +110,14 @@ public class MemberApp extends JFrame {
 		pAddr.add(cmbUserAddr);
 		
 		tfDoro = new JTextField();
+		tfDoro.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				tfDoro.setText("");
+			}
+		});
+		tfDoro.setForeground(new Color(230, 230, 250));
+		tfDoro.setText("도로명");
 		tfDoro.setHorizontalAlignment(SwingConstants.CENTER);
 		tfDoro.setBounds(245, 7, 80, 24);
 		pAddr.add(tfDoro);
@@ -112,7 +125,7 @@ public class MemberApp extends JFrame {
 		
 		tfUserAddr = new JTextField();
 		tfUserAddr.setHorizontalAlignment(SwingConstants.RIGHT);
-		tfUserAddr.setBounds(0, 35, 399, 24);
+		tfUserAddr.setBounds(6, 35, 387, 24);
 		pAddr.add(tfUserAddr);
 		tfUserAddr.setColumns(10);
 		
@@ -131,34 +144,39 @@ public class MemberApp extends JFrame {
 		pAddr.add(btnNewButton);
 		
 		JPanel pId = new JPanel();
-		pId.setBounds(34, 46, 295, 30);
+		pId.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pId.setBounds(30, 44, 295, 30);
 		contentPane.add(pId);
 		pId.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lbId = new JLabel("아이디");
+		JLabel lbId = new JLabel(" 아이디");
 		pId.add(lbId);
 		
 		tfId = new JTextField();
+	
+		tfId.setForeground(new Color(230, 230, 250));
 		pId.add(tfId);
 		tfId.setColumns(10);
 		
 		JPanel pPw = new JPanel();
-		pPw.setBounds(34, 131, 295, 30);
+		pPw.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pPw.setBounds(30, 129, 295, 30);
 		contentPane.add(pPw);
 		pPw.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblPw = new JLabel("비밀번호");
+		JLabel lblPw = new JLabel(" 비밀번호");
 		pPw.add(lblPw);
 		
 		tfPw = new JPasswordField();
 		pPw.add(tfPw);
 		
 		JPanel pName = new JPanel();
-		pName.setBounds(34, 89, 295, 30);
+		pName.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pName.setBounds(30, 87, 295, 30);
 		contentPane.add(pName);
 		pName.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblName = new JLabel("이 름");
+		JLabel lblName = new JLabel(" 이 름");
 		pName.add(lblName);
 		
 		tfName = new JTextField();
@@ -166,11 +184,12 @@ public class MemberApp extends JFrame {
 		pName.add(tfName);
 		
 		JPanel pPwch = new JPanel();
-		pPwch.setBounds(34, 172, 295, 30);
+		pPwch.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pPwch.setBounds(30, 170, 295, 30);
 		contentPane.add(pPwch);
 		pPwch.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblPwch = new JLabel("비밀번호 확인");
+		JLabel lblPwch = new JLabel(" 비밀번호 확인");
 		pPwch.add(lblPwch);
 		
 		tfPwch = new JPasswordField();
@@ -178,12 +197,13 @@ public class MemberApp extends JFrame {
 		pPwch.add(tfPwch);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
 		panel.setBounds(30, 212, 374, 40);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("전화번호");
-		label.setBounds(12, 13, 57, 15);
+		label.setBounds(5, 13, 57, 15);
 		panel.add(label);
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(getData());
 		cmbTel = new JComboBox(model);
@@ -224,6 +244,7 @@ public class MemberApp extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnAdd = new JButton("회원가입");
+		btnAdd.setBackground(new Color(106, 90, 205));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				insertUser();
@@ -254,12 +275,13 @@ public class MemberApp extends JFrame {
 		contentPane.add(pwChCh);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
 		panel_1.setLayout(null);
 		panel_1.setBounds(30, 261, 374, 40);
 		contentPane.add(panel_1);
 		
 		JLabel label_2 = new JLabel("이메일");
-		label_2.setBounds(12, 13, 57, 15);
+		label_2.setBounds(5, 14, 57, 15);
 		panel_1.add(label_2);
 		
 		tfEmail1 = new JTextField();
@@ -276,8 +298,13 @@ public class MemberApp extends JFrame {
 		tfEmail2.setBounds(233, 10, 129, 21);
 		panel_1.add(tfEmail2);
 		
-		tfPw.addKeyListener(new KeyAdapter() {
+		lblIdCh = new JLabel("8자리이상입력해주세요");
+		lblIdCh.setForeground(new Color(0, 255, 0));
+		lblIdCh.setBounds(184, 28, 146, 15);
+		contentPane.add(lblIdCh);
 		
+		tfPw.addKeyListener(new KeyAdapter() {
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(tfPw.getText().length() >= 8) {
@@ -395,6 +422,7 @@ public class MemberApp extends JFrame {
 	}
 
 	protected void idCheck(String text) {
+		lblIdCh.setText("");
 		if(text.length() <= 7) {
 			JOptionPane.showMessageDialog(null, "8자이상 입력하세요.");
 			return;
