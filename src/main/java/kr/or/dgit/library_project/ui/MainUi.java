@@ -65,7 +65,7 @@ public class MainUi extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("DGIT Library");
 		lblNewLabel.setForeground(new Color(255, 99, 71));
-		lblNewLabel.setFont(new Font("휴먼옛체", Font.BOLD, 55));
+		lblNewLabel.setFont(new Font("돋움", Font.BOLD, 55));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 10, 456, 75);
 		contentPane.add(lblNewLabel);
@@ -80,14 +80,14 @@ public class MainUi extends JFrame {
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JLabel lblPsw = new JLabel(" 비밀번호");
-		lblPsw.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+		lblPsw.setFont(new Font("돋움", Font.PLAIN, 15));
 		panel_1.add(lblPsw);
 
 		passwordField = new JPasswordField();
 		panel_1.add(passwordField);
 
 		JButton btnNewButton = new JButton("로그인");
-		btnNewButton.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+		btnNewButton.setFont(new Font("돋움", Font.PLAIN, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkId();
@@ -98,7 +98,7 @@ public class MainUi extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("취소");
-		btnNewButton_1.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+		btnNewButton_1.setFont(new Font("돋움", Font.PLAIN, 15));
 		btnNewButton_1.setBounds(164, 261, 97, 23);
 		contentPane.add(btnNewButton_1);
 
@@ -109,7 +109,7 @@ public class MainUi extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		btnNewButton_2.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+		btnNewButton_2.setFont(new Font("돋움", Font.PLAIN, 15));
 		btnNewButton_2.setBounds(116, 295, 97, 23);
 		contentPane.add(btnNewButton_2);
 
