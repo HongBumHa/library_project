@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.library_project.dao.RentalViewDao;
 import kr.or.dgit.library_project.dao.RentalViewDaoImpl;
+import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
@@ -47,6 +48,13 @@ private static final RentalViewService instance = new RentalViewService();
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			RentalViewDao dao=new RentalViewDaoImpl(sqlSession);
 			return dao.selectByWhereRentalViewMap(map);
+		}
+	}
+	
+	public RentalView findByBookDataRentalView(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			RentalViewDao dao=new RentalViewDaoImpl(sqlSession);
+			return dao.selectByBookDataRentalView(book);
 		}
 	}
 }

@@ -34,7 +34,7 @@
 	</sql>
 	
 	<sql id="updateSql">
-		update book set book_name=#{bookName}, author=#{author}, public_name=#{publicName}, price=#{price}, amount=#{amount}	where book_code=#{bookCode}
+		update book set book_name=#{bookName}, author=#{author}, public_name=#{publicName}, price=#{price}, amount=#{amount} where book_code=#{bookCode}
 	</sql>
 	
 	<sql id="deleteSql">
@@ -44,7 +44,7 @@
 	<sql id="whereSqlCode">
 		<where>
 			<if test="bookCode != null">
-				where book_code=#{bookCode}
+				book_code = #{bookCode}
 			</if>
 		</where>
 	</sql>
@@ -116,7 +116,14 @@
 	<!-- deleteBook -->
 	<delete id="deleteBook">
 		<include refid="deleteSql"/>
-		<include refid="whereSqlAll"/>
+		<include refid="whereSqlCode"/>
 	</delete>
+	
+	<sql id="selectByRankcountSql">
+		select * from book order by all_rentel_count desc
+	</sql>
+	<select id="selectByRank" resultMap="BookResult">
+		<include refid="selectByRankcountSql"/>
+	</select>
 
 </mapper>

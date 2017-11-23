@@ -34,12 +34,13 @@ dependencies {
    
    //Use 룩앤필
     compile files('libs_src/liquidlnf.jar')
-    
-    //jfreeChart
+
+
+    //jcommon-1.0.17
     compile files('libs_src/jcommon-1.0.17.jar')
-    
+    //jfreechart-1.0.14
     compile files('libs_src/jfreechart-1.0.14.jar')
-    
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     

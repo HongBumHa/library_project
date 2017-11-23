@@ -42,6 +42,20 @@ public class BookService {
 		}
 	}
 	
+	public Book selectBookForChart(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookForChart(book);
+		}
+	}
+	
+	public Book selectBookGroupRow(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookGroupRow(book);
+		}
+	}
+	
 	public int insertBook(Book book) {
 		int res=-1;
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
@@ -56,6 +70,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("updateBook Ser:" + book.toString());
 			int res=dao.updateBook(book);
 			sqlSession.commit();
 			return res;
@@ -72,6 +87,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("service book : " + book.getBookCode());
 			int res=dao.deleteBook(book);
 			sqlSession.commit();
 			return res;
@@ -81,6 +97,12 @@ public class BookService {
 			throw new RuntimeException(e.getCause());
 		}finally {
 			sqlSession.close();
+		}
+	}
+	public List<Book> findselectByRank(){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByRank();
 		}
 	}
 }

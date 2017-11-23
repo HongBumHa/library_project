@@ -2,6 +2,8 @@ package kr.or.dgit.library_project.service;
 
 import java.util.List;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.library_project.dao.PublisherDao;
@@ -10,6 +12,16 @@ import kr.or.dgit.library_project.dto.Publisher;
 import kr.or.dgit.library_project.util.MyBatisSqlSessionFactory;
 
 public class PublisherService{
+
+	private static final PublisherService instance = new PublisherService();
+	
+	public static PublisherService getInstance() {
+		return instance;
+	}
+	
+	public PublisherService() {
+		super();
+	}
 
 	public List<Publisher> selectPublisherByAll() {
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){

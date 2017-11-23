@@ -61,8 +61,10 @@ public class ManagerPieChart extends JPanel {
 		int[] rentCount = new int[10];
 		for (int i = 0; i < bookArr.length; i++) {
 			book.setBookCode(bookArr[i]);
-//			Book num = BookService.getInstance().selectBookForChart(book);
-//			rentCount[i] = num.getAllRentalCount();
+
+			Book num = BookService.getInstance().selectBookForChart(book);
+			rentCount[i] = num.getAllRentalCount();
+
 		}
 
 		return rentCount;

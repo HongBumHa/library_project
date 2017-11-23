@@ -1,18 +1,15 @@
 package kr.or.dgit.library_project.view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
+public class TestHb extends JFrame {
 
-public class TestBJJ extends JFrame {
-
-	private JPanel contentPane;
+	private UserReadingBook contentPane;
 
 	/**
 	 * Launch the application.
@@ -21,7 +18,7 @@ public class TestBJJ extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestBJJ frame = new TestBJJ();
+					TestHb frame = new TestHb();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,19 +30,13 @@ public class TestBJJ extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TestBJJ() {
+	public TestHb() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 730, 507);
-		contentPane = new JPanel();
+		setBounds(100, 100, 642, 443);
+		contentPane = new UserReadingBook();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		ManagerPieChart test = new ManagerPieChart();
-		JFreeChart test1 = test.callPieChart();
-		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
-		ChartPanel panel = new ChartPanel(test1);
-		
-		contentPane.add(panel);
 	}
 
 }

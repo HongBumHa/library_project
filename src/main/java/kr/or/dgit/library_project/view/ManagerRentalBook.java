@@ -34,6 +34,7 @@ public class ManagerRentalBook extends JPanel {
 	private JRadioButton radioRent;
 	private JRadioButton radioReturn;
 	private JComboBox comboBox;
+	private JButton btnChart;
 
 	public ManagerRentalBook() {
 		setLayout(null);
@@ -108,6 +109,7 @@ public class ManagerRentalBook extends JPanel {
 		radioReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loadDataReturn();
+				comboBox.setSelectedIndex(0);
 			}
 		});
 		radioReturn.setFont(new Font("굴림", Font.BOLD, 15));
@@ -117,6 +119,16 @@ public class ManagerRentalBook extends JPanel {
 		ButtonGroup  group = new ButtonGroup(); //라디오버튼 그룹화를 위한 버튼그룹 설정
 		group.add(radioRent);
 		group.add(radioReturn);
+		
+		btnChart = new JButton("도서현황보기");
+		btnChart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ManagerChart mgChart=new ManagerChart();
+				mgChart.setVisible(true);
+			}
+		});
+		btnChart.setBounds(580, 13, 130, 23);
+		panel_6.add(btnChart);
 
 		loadDataRent();
 	}
@@ -179,10 +191,12 @@ public class ManagerRentalBook extends JPanel {
 		if(radioRent.isSelected()==true) {
 			DefaultTableModel model = new DefaultTableModel(getDataRentEach(), getRentColumnNames());
 			table.setModel(model);
+			tfSearch.setText("");
 		}
 		if(radioReturn.isSelected()==true) {
 			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getReturnColumnNames());
 			table.setModel(model);
+			tfSearch.setText("");
 		}
 	}
 

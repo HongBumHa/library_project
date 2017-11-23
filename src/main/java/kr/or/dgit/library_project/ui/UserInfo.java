@@ -15,6 +15,8 @@ import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.view.RentalBookPanel;
 import kr.or.dgit.library_project.view.ReturnTabPanel;
 import kr.or.dgit.library_project.view.UserInfoView;
+import kr.or.dgit.library_project.view.UserReadingBook;
+import kr.or.dgit.library_project.view.UserpresentView;
 
 public class UserInfo extends JFrame {
 
@@ -22,7 +24,7 @@ public class UserInfo extends JFrame {
 	private JPanel contentPane;
 	public UserInfo() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1009, 575);
+		setBounds(100, 100, 826, 575);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -47,6 +49,9 @@ public class UserInfo extends JFrame {
 		UserInfoView testing = UserInfoView.getInstance();
 		testing.setLayout(null);
 		tabbedPane.addTab("회원정보", null, testing, null);
+		
+		UserpresentView 유저현황 = new UserpresentView();
+		tabbedPane.addTab("New tab", null, 유저현황, null);
 
 	}	
 }

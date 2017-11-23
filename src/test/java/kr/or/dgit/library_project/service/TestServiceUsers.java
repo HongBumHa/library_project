@@ -61,12 +61,12 @@ public class TestServiceUsers {
 		Assert.assertEquals(1, res);
 	}*/
 	
-	@Test
+	/*@Test
 	public void testFIndselectByUserList() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("userId", "tes%");
 		List<Users> lists = service.findSelectByUserList(map);
 		Assert.assertNotNull(lists);
-	}
+	}*/
 	
 }

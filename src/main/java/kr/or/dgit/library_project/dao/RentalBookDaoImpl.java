@@ -7,6 +7,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.library_project.dto.RentalBook;
+import kr.or.dgit.library_project.dto.Users;
 
 public class RentalBookDaoImpl implements RentalBookDao {
 
@@ -46,6 +47,12 @@ public class RentalBookDaoImpl implements RentalBookDao {
 	public int deleteByWhereRentalBook(RentalBook rentalBook) {
 		log.debug("deleteByWhereRentalBook()");
 		return sqlSession.insert(namespace + ".deleteByWhereRentalBook", rentalBook);
+	}
+
+	@Override
+	public RentalBook selectByUserRentalCount(Users user) {
+		log.debug("selectByUserRentalCount()");
+		return sqlSession.selectOne(namespace + ".selectByUserRentalCount", user);
 	}
 
 

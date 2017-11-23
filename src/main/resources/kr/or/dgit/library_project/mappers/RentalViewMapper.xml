@@ -25,6 +25,12 @@
 		</where>
 	</sql>
 	
+	<sql id="whereBookCode">
+		<where>
+			book_code = #{bookCode}
+		</where>
+	</sql>
+	
 	<resultMap type="RentalView" id="RentalViewMap">
 		<result property="bookCode" column="book_Code"/>
 		<result property="bookName" column="book_name"/>
@@ -81,6 +87,11 @@
 	<select id="selectByWhereRentalViewMap" parameterType="map" resultMap="RentalViewMap">
 		<include refid="allRentalViewMap"/>
 		<include refid="whereRentalDataMap"/>
+	</select>
+	
+	<select id="selectByBookDataRentalView" parameterType = "Book" resultType="RentalView">
+		<include refid="allRentalView"/>
+		<include refid="whereBookCode"/>
 	</select>
 
 </mapper>

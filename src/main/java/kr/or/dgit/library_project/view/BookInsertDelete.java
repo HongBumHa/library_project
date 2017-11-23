@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -22,10 +23,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import kr.or.dgit.library_project.dao.BookDaoImpl;
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
+import kr.or.dgit.library_project.dto.Publisher;
 import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
+import kr.or.dgit.library_project.service.PublisherService;
+import kr.or.dgit.library_project.service.RentalViewService;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
@@ -56,14 +61,16 @@ public class BookInsertDelete extends JPanel {
 	private JRadioButton[] radioArray;
 	private JButton btnClickEvent;
 	private JTextField tfPublisher;
-	
+	private String bookcodeInfo;
+
 	public BookInsertDelete() {
 		setLayout(new BorderLayout(0, 0));
 		
 		BookGroup book = new BookGroup();
 		allMachMiddleGroup();
-		
 		setLayout(null);
+		
+		bookcodeInfo = new String();
 		
 		JScrollPane tableScroll = new JScrollPane();
 		tableScroll.setBounds(12, 41, 470, 326);
@@ -73,17 +80,67 @@ public class BookInsertDelete extends JPanel {
 		radioInsert = new JRadioButton("새로운도서생성");
 		radioArray  = new JRadioButton[]{radioDelete, radioInsert};
 		btnClickEvent = new JButton("제거");
+		btnClickEvent.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(btnClickEvent.getText() == "제거") {
+					Book book = new Book();
+					book.setBookCode(bookcodeInfo);
+					
+					if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
+						JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
+						return;
+					}
+					// history내의 정보 변화는 나중에
+					
+					System.out.println("bookCodeDelete Check : " + book.getBookCode());
+					
+					BookService.getInstance().deleteBook(book);
+					searchTable.setModel(createTableModel());
+					setVisible(true);
+				}
+				if(btnClickEvent.getText() == "변경") {
+					Book book = new Book();
+					book.setBookCode(bookcodeInfo);
+					
+					if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
+						JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
+						return;
+					}
+					
+					Publisher pb = new Publisher();
+					pb.setPublicName(tfPublisher.getText());
+
+					book.setBookName(tfBookName.getText());
+					book.setAuthor(tfAuthor.getText());
+					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
+					book.setPrice(Integer.parseInt(tfPrice.getText()));
+					book.setAmount(Integer.parseInt(tfBookCount.getText()));
+
+					BookService.getInstance().updateBook(book);
+					searchTable.setModel(createTableModel());
+					setVisible(true);
+				}
+				if(btnClickEvent.getText() == "도서추가") {
+					
+				}
+			}
+		});
 		
 		radioDelete.setBounds(434, 9, 110, 23);
 		radioDelete.setSelected(true);
 		
 		radioInsert.setBounds(545, 9, 132, 23);
+		radioInsert.setSelected(false);
 		radioInsert.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				radioSelectControl(radioInsert);
 				btnClickEvent.setText("도서추가");
+				tfFieldClearAndAdding();
+				setVisible(true);
 			}
 		});
 	
@@ -167,6 +224,8 @@ public class BookInsertDelete extends JPanel {
 		
 		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
 		
+		tfFieldNotUsing();
+		
 		radioDelete.addActionListener(new ActionListener() {
 			
 			@Override
@@ -180,7 +239,6 @@ public class BookInsertDelete extends JPanel {
 		
 		
 		searchTable = new JTable();
-		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
 		searchTable.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -188,7 +246,7 @@ public class BookInsertDelete extends JPanel {
 				super.mouseClicked(e);
 				int bigIndex = 0;
 				int middleIndex = 0;
-				String bookcodeInfo = searchTable.getValueAt(searchTable.getSelectedRow(), 0).toString();
+				bookcodeInfo = searchTable.getValueAt(searchTable.getSelectedRow(), 0).toString();
 				
 				String bigGroupCode = bookcodeInfo.substring(0, 2);
 				String middleGroupCode = bookcodeInfo.substring(2, 4);
@@ -218,6 +276,8 @@ public class BookInsertDelete extends JPanel {
 				}
 				btnClickEvent.setText("제거");
 				tfFieldNotUsing();
+				radioDelete.setSelected(true);
+				radioSelectControl(radioDelete);
 			}
 		});
 		JPopupMenu popupMenu = new JPopupMenu();
@@ -233,7 +293,7 @@ public class BookInsertDelete extends JPanel {
 			}
 		});
 		searchTable.setComponentPopupMenu(popupMenu);
-		searchTable.setModel(searchTableModel);
+		searchTable.setModel(createTableModel());
 		tableScroll.setViewportView(searchTable);
 		
 		tfSearch = new JTextField();
@@ -262,6 +322,11 @@ public class BookInsertDelete extends JPanel {
 		btnClickEvent.setBounds(571, 253, 97, 23);
 		add(btnClickEvent);
 
+	}
+
+	private DefaultTableModel createTableModel() {
+		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
+		return searchTableModel;
 	}
 	
 	public DefaultComboBoxModel createComboModel(BookGroup bookgroup) {
@@ -362,7 +427,6 @@ public class BookInsertDelete extends JPanel {
 				TwoArrayindex = 0; 
 			}
 			if(bookTwoArray[index][0] == null) {
-				System.out.println("null 조건: "+n);
 				bookTwoArray[index][0] = middlelist.get(n);
 				TwoArrayindex++; 
 				continue;
@@ -388,12 +452,22 @@ public class BookInsertDelete extends JPanel {
 			jrBtn.setSelected(true);
 		}
 		else {
-			return;
+			for(JRadioButton jj : radioArray) {
+				if(jj != jrBtn) {
+					jj.setSelected(true);
+				}
+			}
 		}
 	}
 	public void tfFieldNotUsing() {
 		for(int i = 0 ; i < tfArrays.length; i++) {
 			tfArrays[i].setEnabled(false);
+		}
+	}
+	public void tfFieldClearAndAdding() {
+		for(int i = 0 ; i < tfArrays.length; i++) {
+			tfArrays[i].setText("");
+			tfArrays[i].setEnabled(true);
 		}
 	}
 }
