@@ -116,6 +116,7 @@ public class RentBookInfoView extends JFrame {
 		btnRent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rentBook();
+				ReturnTabPanel.getInstance().reloadTableView();
 				setVisible(false);
 				if(RentalBookPanel.getInstance().comboBox.getSelectedItem().equals("전체보기")) {
 					RentalBookPanel.getInstance().loadDataAll();

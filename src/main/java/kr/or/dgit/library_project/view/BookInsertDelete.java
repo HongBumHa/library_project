@@ -1,6 +1,6 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,7 +23,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import kr.or.dgit.library_project.dao.BookDaoImpl;
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
 import kr.or.dgit.library_project.dto.Publisher;
@@ -64,13 +63,13 @@ public class BookInsertDelete extends JPanel {
 	private String bookcodeInfo;
 
 	public BookInsertDelete() {
-		setLayout(new BorderLayout(0, 0));
 		
 		BookGroup book = new BookGroup();
 		allMachMiddleGroup();
 		setLayout(null);
 		
 		bookcodeInfo = new String();
+		setLayout(null);
 		
 		JScrollPane tableScroll = new JScrollPane();
 		tableScroll.setBounds(12, 41, 470, 326);
@@ -97,6 +96,9 @@ public class BookInsertDelete extends JPanel {
 					System.out.println("bookCodeDelete Check : " + book.getBookCode());
 					
 					BookService.getInstance().deleteBook(book);
+					for(int i = 0 ; i < tfArrays.length; i++) {
+						tfArrays[i].setText("");
+					}
 					searchTable.setModel(createTableModel());
 					setVisible(true);
 				}
@@ -123,7 +125,77 @@ public class BookInsertDelete extends JPanel {
 					setVisible(true);
 				}
 				if(btnClickEvent.getText() == "도서추가") {
+					Book book = new Book();
+					book.setAuthor(tfAuthor.getText());
+					Publisher publisher = new Publisher();
+					publisher.setPublicName(tfPublisher.getText());
 					
+					System.out.println("name " + tfBookName.getText());
+					book.setBookName(tfBookName.getText());
+					
+					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) != null) {
+						book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
+						if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {		
+							book.setBookName(tfBookName.getText());
+
+							if(BookService.getInstance().findselectByWhereBookData(book).size() != 0){
+								JOptionPane.showMessageDialog(null, "이미 존재하는 도서 입니다.");
+								tfFieldClearAndAdding();
+								return;
+							}
+						}
+					}
+
+					String bigNo = bigGroupLists.get(comboBigGroup.getSelectedIndex()).getBigGroup();
+					String middleNo = middleMap.get(bigNo)[comboMiddleGroup.getSelectedIndex()].getMiddleGroup();
+					String GroupInfo = bigNo + middleNo;
+					
+					Map<String, Object> map=new HashMap<String, Object>();
+					map.put("bookCode", GroupInfo+"%");
+					List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
+
+					String bookLastCode = "";				
+					
+					int bookIncreCode = Integer.parseInt(selectList.get(selectList.size()-1).getBookCode().substring(4, 8));
+					String checkLine = (bookIncreCode+1)+"";
+					int loop = checkLine.length();
+					
+					for( int i = 4; i > loop  ; i--) {
+						bookLastCode += "0";
+					}
+					
+					bookLastCode += checkLine;
+						
+					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) == null) {
+						List<Publisher> pbList = PublisherService.getInstance().selectPublisherByAll();
+						int pbCode = Integer.parseInt(pbList.get(pbList.size()-1).getPublicCode());
+
+						String pubCodeSt = "";
+
+						String checkLine2 = (pbCode+1)+"";
+						int loop2 = checkLine2.length();
+						for( int i = 4; i > loop2  ; i--) {
+							pubCodeSt += "0";
+						}
+						pubCodeSt += checkLine2;
+
+						publisher.setPublicCode(pubCodeSt);
+						PublisherService.getInstance().insertPublisher(publisher);
+					}
+					
+					book.setBookCode(GroupInfo+bookLastCode);
+					book.setAmount(Integer.parseInt(tfBookCount.getText()));
+					book.setPrice(Integer.parseInt(tfPrice.getText()));
+					
+					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
+					
+					BookService.getInstance().insertBook(book);
+					
+					tfFieldClearAndAdding();
+					
+					searchTable.setModel(createTableModel());
+//					searchTable.setVisible(true);
+					setVisible(true);
 				}
 			}
 		});
@@ -147,35 +219,36 @@ public class BookInsertDelete extends JPanel {
 		add(radioInsert);
 		
 		JLabel lbBigGroup = new JLabel("대분류");
-		lbBigGroup.setBounds(484, 42, 57, 15);
+		lbBigGroup.setBounds(494, 42, 57, 15);
 		add(lbBigGroup);
 		
 		JLabel lbMiddleGroup = new JLabel("중분류");
-		lbMiddleGroup.setBounds(483, 67, 43, 15);
+		lbMiddleGroup.setBounds(494, 67, 43, 15);
 		add(lbMiddleGroup);
 		
 		JLabel lbAuthor = new JLabel("저자");
-		lbAuthor.setBounds(502, 104, 42, 15);
+		lbAuthor.setBounds(494, 110, 42, 15);
 		add(lbAuthor);
 		
 		JLabel lbPrice = new JLabel("가격");
-		lbPrice.setBounds(502, 135, 36, 15);
+		lbPrice.setBounds(494, 135, 36, 15);
 		add(lbPrice);
 		
 		JLabel lbPublisher = new JLabel("출판사");
-		lbPublisher.setBounds(500, 160, 58, 15);
+		lbPublisher.setBounds(494, 160, 58, 15);
 		add(lbPublisher);
 		
 		JLabel lbBookName = new JLabel("책제목");
-		lbBookName.setBounds(499, 200, 42, 15);
+		lbBookName.setBounds(494, 185, 42, 15);
 		add(lbBookName);
 		
 		JLabel lbBookCount = new JLabel("수량");
-		lbBookCount.setBounds(501, 225, 57, 15);
+		lbBookCount.setBounds(494, 210, 57, 15);
 		add(lbBookCount);
 		
 		comboBigGroup = new JComboBox();
-		comboBigGroup.setBounds(555, 39, 65, 21);
+		comboBigGroup.setPreferredSize(new Dimension(60, 21));
+		comboBigGroup.setBounds(555, 39, 97, 21);
 //		comboBigGroup.setModel(bigGroupModel);
 		comboBigGroup.setModel(createComboModel(book));
 		comboBigGroup.addActionListener(new ActionListener() {
@@ -190,7 +263,7 @@ public class BookInsertDelete extends JPanel {
 		add(comboBigGroup);
 		
 		comboMiddleGroup = new JComboBox();
-		comboMiddleGroup.setBounds(555, 64, 65, 21);
+		comboMiddleGroup.setBounds(555, 64, 97, 21);
 		BookGroup middlebook = new BookGroup();
 		middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
 		
@@ -198,29 +271,29 @@ public class BookInsertDelete extends JPanel {
 		add(comboMiddleGroup);
 		
 		tfAuthor = new JTextField();
-		tfAuthor.setBounds(557, 101, 116, 21);
+		tfAuthor.setBounds(545, 107, 116, 21);
 		add(tfAuthor);
-		tfAuthor.setColumns(10);
+		tfAuthor.setColumns(11);
 		
 		tfPrice = new JTextField();
-		tfPrice.setBounds(557, 132, 116, 21);
+		tfPrice.setBounds(545, 132, 116, 21);
 		add(tfPrice);
-		tfPrice.setColumns(10);
+		tfPrice.setColumns(11);
 		
 		tfPublisher = new JTextField();
-		tfPublisher.setBounds(555, 157, 116, 21);
+		tfPublisher.setBounds(545, 157, 116, 21);
 		add(tfPublisher);
-		tfPublisher.setColumns(10);
+		tfPublisher.setColumns(11);
 		
 		tfBookName = new JTextField();
-		tfBookName.setBounds(561, 197, 116, 21);
+		tfBookName.setBounds(545, 182, 116, 21);
 		add(tfBookName);
-		tfBookName.setColumns(10);
+		tfBookName.setColumns(11);
 		
 		tfBookCount = new JTextField();
-		tfBookCount.setBounds(561, 222, 116, 21);
+		tfBookCount.setBounds(545, 207, 116, 21);
 		add(tfBookCount);
-		tfBookCount.setColumns(10);
+		tfBookCount.setColumns(11);
 		
 		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
 		
@@ -304,6 +377,14 @@ public class BookInsertDelete extends JPanel {
 		comboSearch = new JComboBox();
 		comboSearch.setToolTipText("");
 		comboSearch.setBounds(12, 10, 97, 21);
+		comboSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboSearch.getSelectedItem()=="전체보기") {
+					loadDataEach();
+					setVisible(true);
+				}
+			}
+		});
 		comboSearch.setModel(searchComboModel);
 		add(comboSearch);
 		
@@ -322,6 +403,8 @@ public class BookInsertDelete extends JPanel {
 		btnClickEvent.setBounds(571, 253, 97, 23);
 		add(btnClickEvent);
 
+		setVisible(true);
+		
 	}
 
 	private DefaultTableModel createTableModel() {
