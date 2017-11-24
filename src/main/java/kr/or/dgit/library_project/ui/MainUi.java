@@ -107,6 +107,7 @@ public class MainUi extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MemberApp frame = MemberApp.getInstance();
+				frame.clear();
 				frame.setVisible(true);
 			}
 		});
@@ -148,26 +149,35 @@ public class MainUi extends JFrame {
 			JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요");
 		} else {
 			users = service.findUsersByNo(new Users(id));
-			switch (rank) {
-			case 1:
-				JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
-				Manager managerUi = new Manager();
-				managerUi.setVisible(true);
-				setVisible(false);
-				break;
-			case 2:
-				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
-				UserInfo uinfo = new UserInfo();
-				uinfo.setVisible(true);
-				setVisible(false);
-				break;
-			case 3:
-				JOptionPane.showMessageDialog(null, "블랙리스트입니다");
-				break;
-			}
 
+			if (users.getUserLeave().equals("N")) {
+				JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
+				return;
+			}
 		}
+
+		switch (rank) {
+		case 1:
+			JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
+			Manager managerUi = new Manager();
+			managerUi.setVisible(true);
+			setVisible(false);
+			break;
+		case 2:
+			JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
+			UserInfo uinfo = new UserInfo();
+			uinfo.setVisible(true);
+			setVisible(false);
+			break;
+		case 3:
+			JOptionPane.showMessageDialog(null, "블랙리스트입니다");
+			break;
+		}
+
 	}
+
+
+
 	public static Users getUsers() {
 		return users;
 	}

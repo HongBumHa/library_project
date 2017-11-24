@@ -151,7 +151,11 @@ public class ManagerRentalBook extends JPanel {
 	}
 	
 	public void loadDataRent() {
-		DefaultTableModel model = new DefaultTableModel(getDataRent(), getRentColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataRent(), getRentColumnNames()){
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
 		setAlignWidth();
 	}
@@ -288,7 +292,6 @@ public class ManagerRentalBook extends JPanel {
 	
 	public void setCellWidth(int...width) {
 		TableColumnModel cModel = table.getColumnModel();
-		System.out.println(Arrays.toString(width));
 		for(int i=0; i<width.length; i++){
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}

@@ -39,38 +39,38 @@ public class UserpresentView extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(12, 63, 391, 71);
+		panel_1.setBounds(12, 63, 393, 71);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblTotel = new JLabel("총 대여량 :");
 		lblTotel.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblTotel.setBounds(9, 23, 84, 15);
+		lblTotel.setBounds(12, 23, 84, 15);
 		panel_1.add(lblTotel);
 		
 		lblToteint = new JLabel("");
 		lblToteint.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblToteint.setBounds(83, 23, 45, 15);
+		lblToteint.setBounds(86, 23, 45, 15);
 		panel_1.add(lblToteint);
 		
 		JLabel lblRental = new JLabel("현 대여량 :");
 		lblRental.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblRental.setBounds(136, 23, 75, 15);
+		lblRental.setBounds(127, 23, 75, 15);
 		panel_1.add(lblRental);
 		
 		lblRentalint = new JLabel("");
 		lblRentalint.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblRentalint.setBounds(215, 23, 57, 15);
+		lblRentalint.setBounds(206, 23, 57, 15);
 		panel_1.add(lblRentalint);
 		
 		JLabel lblReturn = new JLabel("총 반납량 :");
 		lblReturn.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblReturn.setBounds(272, 22, 72, 15);
+		lblReturn.setBounds(247, 23, 72, 15);
 		panel_1.add(lblReturn);
 		
 		lblReturnint = new JLabel("");
 		lblReturnint.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		lblReturnint.setBounds(354, 22, 41, 15);
+		lblReturnint.setBounds(329, 23, 41, 15);
 		panel_1.add(lblReturnint);
 		
 		UserChart panel_2 = new UserChart();

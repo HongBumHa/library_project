@@ -23,6 +23,7 @@ public class UserInfo extends JFrame {
 
 	private JPanel contentPane;
 	public UserInfo() {
+		setResizable(false);
 		setTitle("DGIT LIBRARY USER MODE");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 842, 575);
@@ -30,10 +31,9 @@ public class UserInfo extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(5, 5, 819, 534);
 		contentPane.add(tabbedPane);
 
 		RentalBookPanel rentalBookTab = RentalBookPanel.getInstance();

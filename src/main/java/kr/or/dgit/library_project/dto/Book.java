@@ -148,6 +148,6 @@ public class Book {
 	
 	public Object[] toArray2() {
 
-		return new Object[] {amount,bookName,author,publicName,amount,allRentalCount};
+		return new Object[] {price,bookName,author,publicName,amount,allRentalCount};
 	}
 }

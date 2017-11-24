@@ -51,11 +51,23 @@ public class PostView extends JFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		DefaultTableModel tableModel = null;
 		if(ioi ==1) {
-			tableModel = new DefaultTableModel(getData(),getColumnNames());
+			tableModel = new DefaultTableModel(getData(),getColumnNames()){
+				public boolean isCellEditable(int i, int c) {
+					return false;
+				}
+			};
 		}else if(ioi ==0) {
-			tableModel = new DefaultTableModel(getData2(),getColumnNames2());
+			tableModel = new DefaultTableModel(getData2(),getColumnNames2()){
+				public boolean isCellEditable(int i, int c) {
+					return false;
+				}
+			};
 		}else {
-			tableModel = new DefaultTableModel(getData3(),getColumnNames3());
+			tableModel = new DefaultTableModel(getData3(),getColumnNames3()){
+				public boolean isCellEditable(int i, int c) {
+					return false;
+				}
+			};
 		}
 		
 		table = new JTable();
@@ -89,8 +101,6 @@ public class PostView extends JFrame {
 						 setVisible(false);
 					 }
 				 }
-				 
-				
 			}
 		});
 		panel.add(btnAdd);

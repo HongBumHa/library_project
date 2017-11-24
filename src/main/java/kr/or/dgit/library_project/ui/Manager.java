@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 import kr.or.dgit.library_project.view.ManegerUserInfo;
+import java.awt.BorderLayout;
 
 
 public class Manager extends JFrame {
@@ -41,30 +42,21 @@ public class Manager extends JFrame {
 	}
 
 	public Manager() {
+		setResizable(false);
 		setTitle("관리자 모드");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 804, 657);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 787, 618);
 		contentPane.add(tabbedPane);
 		
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
 		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
-/*<<<<<<< HEAD
 
-		JLabel lblNewLabel = new JLabel("회원정보");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 281, 94, 30);
-		panel_18.add(lblNewLabel);
-		
-
-=======*/
 		BookInsertDelete insertDeletePanel = new BookInsertDelete();
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);

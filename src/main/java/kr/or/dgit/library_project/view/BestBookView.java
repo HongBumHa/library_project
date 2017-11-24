@@ -56,20 +56,22 @@ public class BestBookView extends JFrame {
 		int j = 1;
 		Object[][] datas = new Object[10][];
 		for(int i =0; i < 10; i++) {
-			
+			if(i ==0) {
+				lists.get(i).setPrice(j);
+			}
 			if(i !=0&&i != 9) {
 				if(lists.get(i).getAllRentalCount() < lists.get(i-1).getAllRentalCount()) {
-					lists.get(i).setAmount(++j);
+					lists.get(i).setPrice(++j);
 					
 				}else if(lists.get(i).getAllRentalCount() ==lists.get(i-1).getAllRentalCount()) {
-					lists.get(i).setAmount(j);
+					lists.get(i).setPrice(j);
 				}
 			}else if (i == 9) {
 				if(lists.get(i).getAllRentalCount() <lists.get(i-1).getAllRentalCount()) {
-					lists.get(i).setAmount(++j);
+					lists.get(i).setPrice(++j);
 					
-				}else if(lists.get(i).getAllRentalCount() ==lists.get(i-1).getAllRentalCount()) {
-					lists.get(i).setAmount(j);
+			}else if(lists.get(i).getAllRentalCount() ==lists.get(i-1).getAllRentalCount()) {
+					lists.get(i).setPrice(j);
 				}
 			}
 			datas[i] = lists.get(i).toArray2();

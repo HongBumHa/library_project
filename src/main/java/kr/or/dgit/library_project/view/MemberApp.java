@@ -12,6 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -61,29 +63,14 @@ public class MemberApp extends JFrame {
 	private JTextField tfEmail1;
 	private JTextField tfEmail2;
 	private JLabel lblIdCh;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MemberApp frame = new MemberApp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public static MemberApp getInstance() {
 		return instance;
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	private MemberApp() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 492, 471);
+		setBounds(100, 100, 492, 512);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -243,8 +230,10 @@ public class MemberApp extends JFrame {
 		btnAdd.setBackground(new Color(106, 90, 205));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				insertUser();
-				setVisible(false);
+				if(insertUser()) {
+					setVisible(false);
+				}
+				
 			}
 		});
 		btnAdd.setBounds(371, 392, 97, 30);
@@ -331,41 +320,58 @@ public class MemberApp extends JFrame {
 				
 			}
 		});
-		Book b = new Book();
-		b.setPrice(10000000);
-		System.out.println(b);
 	}
 
-	protected void insertUser() {	
+	protected boolean insertUser() {	
+		
 		if(idRes!=1) {
 			JOptionPane.showMessageDialog(null, "중복검사를 하세요");
-			return;
+			return false;
 		}
+		Pattern p = Pattern.compile("^[가-힣]{2,5}$");
+		Matcher m = p.matcher(tfName.getText());
 		if(tfName.getText().length() ==0) {
 			JOptionPane.showMessageDialog(null, "이름을 입력하세요");
-			return;
+			return false;
+		}else if(!m.find()) {
+			JOptionPane.showMessageDialog(null, "이름을 2~5자 한글로 입력하세요");
+			return false;
 		}
+		
 		if(pwRes!=1) {
 			JOptionPane.showMessageDialog(null, "비밀번호를 8자이상입력하세요");
-			return;
+			return false;
 		}
 		if(pwChRes!=1) {
 			JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다");
-			return;
+			return false;
 		}
+		
+		p = Pattern.compile("^[a-zA-Z0-9]{5,15}$");
+		m = p.matcher(tfEmail1.getText());
+		
 		if(tfEmail1.getText().length()==0 || tfEmail2.getText().length() ==0) {
 			JOptionPane.showMessageDialog(null, "이메일을 입력하세요");
-			return;
+			return false;
+		}else if(!m.find()) {
+			JOptionPane.showMessageDialog(null, "이메일아이디가 잘못입력되었습니다.");
+			return false;
 		}
+		p = Pattern.compile("^[0-9]{3,4}$");
+		m = p.matcher(tfTel1.getText());
+		Pattern p2 = Pattern.compile("^[0-9]{4}$");
+		Matcher m2 = p.matcher(tfTel2.getText());
 		if(tfTel1.getText().length() ==0 ||tfTel2.getText().length() ==0) {
 			JOptionPane.showMessageDialog(null, "전화번호를 입력하세요");
-			return;
-		}else if(tfTel1.getText().length() <=2 ||tfTel1.getText().length() !=4){
+			return false;
+		}else if(!m.find() ||!m2.find()){
 			JOptionPane.showMessageDialog(null, "다시 전화번호를 입력하세요");
-			return;
+			return false;
 		}
+		
 		if(tfUserAddr.getText().length() == 0) {
 			JOptionPane.showMessageDialog(null, "주소를 입력하세요");
+			return false;
 		}
 		String email = tfEmail1.getText()+"@"+tfEmail2.getText();
 		String tel = (String) cmbTel.getSelectedItem() +"-"+tfTel1.getText()+"-"+tfTel2.getText();
@@ -385,9 +391,10 @@ public class MemberApp extends JFrame {
 		}else {
 			JOptionPane.showMessageDialog(null, "축하합니다 회원가입이 되었습니다.");
 		}
+		return true;
 	}
 
-	protected void clear() {
+	public void clear() {
 		tfId.setText("");
 		tfPw.setText("");
 		tfPwch.setText("");
@@ -395,6 +402,8 @@ public class MemberApp extends JFrame {
 		tfTel2.setText("");
 		tfTel1.setText("");
 		tfName.setText("");
+		tfEmail1.setText("");
+		tfEmail2.setText("");
 	}
 
 	public JTextField getTfDoro() {

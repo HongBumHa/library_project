@@ -223,7 +223,11 @@ public class ReturnTabPanel extends JPanel {
 			datas[i] = rentalObj.toArrayReturn();
 		}
 
-		TableModel ttmodel = new DefaultTableModel(datas, sts);
+		TableModel ttmodel = new DefaultTableModel(datas, sts){
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		return ttmodel;
 	}
 

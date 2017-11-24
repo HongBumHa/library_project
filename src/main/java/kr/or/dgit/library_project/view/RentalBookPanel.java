@@ -90,6 +90,19 @@ public class RentalBookPanel extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2) {
+					if(checkRent()==true) {
+						RentBookInfoView rbiv=new RentBookInfoView();
+						rbiv.setVisible(true);
+					}else {
+						JOptionPane.showMessageDialog(null, "대여 불가능 도서입니다.");
+					}
+				}
+			}
+		});
 		addPopupMenu();
 		
 		loadDataAll();
@@ -152,7 +165,11 @@ public class RentalBookPanel extends JPanel {
 	
 
 	public void loadDataAll() {
-		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
 		setAlignWidth();
 	}
@@ -172,7 +189,11 @@ public class RentalBookPanel extends JPanel {
 	}
 
 	public void loadDataEach() {
-		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
 		setAlignWidth();
 	}
