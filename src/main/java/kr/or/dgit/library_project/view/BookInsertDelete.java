@@ -125,19 +125,19 @@ public class BookInsertDelete extends JPanel {
 				if(btnClickEvent.getText() == "도서추가") {
 					Book book = new Book();
 					book.setAuthor(tfAuthor.getText());
+					Publisher publisher = new Publisher();
+					publisher.setPublicName(tfPublisher.getText());
 					
-					if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
-						Publisher publisher = new Publisher();
-						publisher.setPublicName(tfPublisher.getText());
-						
+					System.out.println("name " + tfBookName.getText());
+					
+					
+					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) != null) {
 						book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
-				
-						if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {
+						if(BookService.getInstance().findselectByWhereBookData(book).size() != 0) {		
 							book.setBookName(tfBookName.getText());
 
 							if(BookService.getInstance().findselectByWhereBookData(book).size() != 0){
 								JOptionPane.showMessageDialog(null, "이미 존재하는 도서 입니다.");
-								
 								return;
 							}
 						}
@@ -151,7 +151,74 @@ public class BookInsertDelete extends JPanel {
 					map.put("bookCode", GroupInfo+"%");
 					List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
 
-					System.out.println(selectList.get(0));
+					int index = 0;
+					
+					System.out.println(selectList.get(index).getBookCode().substring(4, 8));
+					
+					int firstRowBookCode = Integer.parseInt(selectList.get(index).getBookCode().substring(4, 8));
+					int secondRowBookCode = Integer.parseInt(selectList.get(index+1).getBookCode().substring(4, 8));
+					String bookLastCode = "";				
+					
+					System.out.println("codeInt first, second " + firstRowBookCode + ", "+firstRowBookCode  );
+					
+					
+					if(secondRowBookCode-firstRowBookCode == 1) {
+						index += 1;
+					}
+					if(secondRowBookCode-firstRowBookCode > 1) {
+						String checkLine = (firstRowBookCode+1)+"";
+						int loop = checkLine.length();
+						for( int i = 4; i == loop ; i--) {
+							bookLastCode += "0";
+						}
+						System.out.println("if bookLastCode "+bookLastCode);
+						System.out.println("if checkline " + checkLine);
+						bookLastCode += checkLine;
+					}
+					if(firstRowBookCode > 0) {
+						bookLastCode = "0000";
+					}
+					
+					System.out.println("GroupInfo "+ GroupInfo );
+					
+					System.out.println("bookLastCode : " + bookLastCode);
+					
+					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) == null) {
+						List<Publisher> pbList = PublisherService.getInstance().selectPublisherByAll();
+						int publicIndex = 0;
+						String pubCodeSt = "";
+						
+						int firstRowPublickCode = Integer.parseInt(pbList.get(index).getPublicCode());
+						int secondRowPublicCode = Integer.parseInt(pbList.get(index+1).getPublicCode());
+						
+
+						if(secondRowPublicCode-firstRowPublickCode == 1) {
+							publicIndex += 1;
+						}
+						if(secondRowPublicCode-firstRowPublickCode > 1) {
+							String checkLine = (firstRowPublickCode+1)+"";
+							int loop = checkLine.length();
+							for( int i = 4; i <= loop ; i--) {
+								pubCodeSt += "0";
+							}
+							pubCodeSt += checkLine;
+						}
+						
+						publisher.setPublicCode(pubCodeSt);
+						PublisherService.getInstance().insertPublisher(publisher);
+						
+						System.out.println("pubCode" + pubCodeSt);
+					}
+					
+					book.setBookCode(GroupInfo+bookLastCode);
+					book.setAmount(Integer.parseInt(tfBookCount.getText()));
+					book.setPrice(Integer.parseInt(tfPrice.getText()));
+					
+					BookService.getInstance().insertBook(book);
+					
+					searchTable.setModel(createTableModel());
+					searchTable.setVisible(true);
+					setVisible(true);
 					
 				}
 			}
