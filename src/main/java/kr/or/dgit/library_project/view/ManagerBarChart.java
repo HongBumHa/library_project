@@ -8,6 +8,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import kr.or.dgit.library_project.dto.Book;
@@ -36,6 +37,7 @@ public class ManagerBarChart extends JPanel {
 		changeFont(chart);
 		chart.getLegend().setItemFont(new Font("돋움", Font.PLAIN, 15));
 		chart.getTitle().setFont(new Font("돋움", Font.PLAIN, 20));
+		
 		return chart;
 
 	}
@@ -55,7 +57,7 @@ public class ManagerBarChart extends JPanel {
 
 	private void changeFont(JFreeChart chart) {
 		CategoryPlot plot = chart.getCategoryPlot();
-
+		
 		Font font = plot.getDomainAxis().getLabelFont();
 		// X축 라벨
 		plot.getDomainAxis().setLabelFont(new Font("돋움", font.getStyle(), font.getSize()));

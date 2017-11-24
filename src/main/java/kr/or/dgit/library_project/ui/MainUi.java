@@ -130,10 +130,8 @@ public class MainUi extends JFrame {
 		for (Users u : lists) {
 
 			if (id.equals(u.getUserId())) {
-
 				resId = u.getUserId();
 				if (pw.equals(u.getUserPw())) {
-
 					resPw = u.getUserPw();
 					rank = u.getRankCode();
 					break;
@@ -165,9 +163,9 @@ public class MainUi extends JFrame {
 				JOptionPane.showMessageDialog(null, "블랙리스트입니다");
 				break;
 			}
-
 		}
 	}
+
 	public static Users getUsers() {
 		return users;
 	}

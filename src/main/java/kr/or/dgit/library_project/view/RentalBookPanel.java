@@ -77,7 +77,7 @@ public class RentalBookPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedItem().equals("전체보기")) {
-					
+					return;
 				}else
 				loadDataEach();
 			}
