@@ -40,7 +40,7 @@ public class UserInfo extends JFrame {
 		tabbedPane.addTab("대 여", null, rentalBookTab, null);
 
 
-		ReturnTabPanel returnTab = new ReturnTabPanel();
+		ReturnTabPanel returnTab =  ReturnTabPanel.getInstance();
 		returnTab.setLayout(null);
 		tabbedPane.addTab("반 납", null, returnTab, null);
 

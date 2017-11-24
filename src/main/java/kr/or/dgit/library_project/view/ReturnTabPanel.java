@@ -39,9 +39,16 @@ public class ReturnTabPanel extends JPanel {
 			"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
 		};
 	private JTextField[] tfFields;
+	
+	private static final ReturnTabPanel instance = new ReturnTabPanel();
+	private RentalView rentalView;
 
+	public static ReturnTabPanel getInstance() {
+		return instance;
+	}
+	
 
-	public ReturnTabPanel() {
+	private ReturnTabPanel() {
 		setLayout(null);
 		userId = MainUi.getUsers();
 		
@@ -159,7 +166,7 @@ public class ReturnTabPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		RentalDataTable = new JTable();
 		
-		RentalView rentalView = new RentalView();
+		rentalView = new RentalView();
 		rentalView.setUserId(userId.getUserId());
 		
 		tfFields = new JTextField[] {tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay};
@@ -189,8 +196,7 @@ public class ReturnTabPanel extends JPanel {
 				RentalBookService rtBookService = new RentalBookService();
 				rtBookService.deleteDataByWhereRentalBook(rtBook);
 				
-				RentalDataTable.setModel(createTableModel(rentalView));
-				RentalDataTable.setVisible(true);
+				reloadTableView();
 				refreshTextField();
 				
 				UserInfoView.getInstance().settingTableView();
@@ -230,5 +236,10 @@ public class ReturnTabPanel extends JPanel {
 		for(int i= 0; i < tfFields.length; i++) {
 			tfFields[i].setText("");
 		}
+	}
+	
+	public void reloadTableView() {
+		RentalDataTable.setModel(createTableModel(rentalView));
+		RentalDataTable.setVisible(true);
 	}
 }
