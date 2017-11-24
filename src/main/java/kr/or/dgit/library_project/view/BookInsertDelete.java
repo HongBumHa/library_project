@@ -1,6 +1,6 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,7 +23,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import kr.or.dgit.library_project.dao.BookDaoImpl;
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
 import kr.or.dgit.library_project.dto.Publisher;
@@ -31,7 +30,6 @@ import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.PublisherService;
 import kr.or.dgit.library_project.service.RentalViewService;
-import java.awt.Dimension;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
@@ -98,6 +96,9 @@ public class BookInsertDelete extends JPanel {
 					System.out.println("bookCodeDelete Check : " + book.getBookCode());
 					
 					BookService.getInstance().deleteBook(book);
+					for(int i = 0 ; i < tfArrays.length; i++) {
+						tfArrays[i].setText("");
+					}
 					searchTable.setModel(createTableModel());
 					setVisible(true);
 				}
@@ -139,6 +140,7 @@ public class BookInsertDelete extends JPanel {
 
 							if(BookService.getInstance().findselectByWhereBookData(book).size() != 0){
 								JOptionPane.showMessageDialog(null, "이미 존재하는 도서 입니다.");
+								tfFieldClearAndAdding();
 								return;
 							}
 						}
@@ -151,9 +153,7 @@ public class BookInsertDelete extends JPanel {
 					Map<String, Object> map=new HashMap<String, Object>();
 					map.put("bookCode", GroupInfo+"%");
 					List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
-					
-					int index = 0;
-					
+
 					String bookLastCode = "";				
 					
 					int bookIncreCode = Integer.parseInt(selectList.get(selectList.size()-1).getBookCode().substring(4, 8));
@@ -165,10 +165,7 @@ public class BookInsertDelete extends JPanel {
 					}
 					
 					bookLastCode += checkLine;
-					
-					System.out.println("pub cond " + PublisherService.getInstance().selectPublisherByCodeName(publisher));
-					
-					
+						
 					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) == null) {
 						List<Publisher> pbList = PublisherService.getInstance().selectPublisherByAll();
 						int pbCode = Integer.parseInt(pbList.get(pbList.size()-1).getPublicCode());
@@ -181,7 +178,7 @@ public class BookInsertDelete extends JPanel {
 							pubCodeSt += "0";
 						}
 						pubCodeSt += checkLine2;
-						
+
 						publisher.setPublicCode(pubCodeSt);
 						PublisherService.getInstance().insertPublisher(publisher);
 					}
@@ -189,14 +186,16 @@ public class BookInsertDelete extends JPanel {
 					book.setBookCode(GroupInfo+bookLastCode);
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 					book.setPrice(Integer.parseInt(tfPrice.getText()));
-					book.setPublicName(publisher.getPublicCode());
+					
+					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
 					
 					BookService.getInstance().insertBook(book);
 					
-					searchTable.setModel(createTableModel());
-					searchTable.setVisible(true);
-					setVisible(true);
+					tfFieldClearAndAdding();
 					
+					searchTable.setModel(createTableModel());
+//					searchTable.setVisible(true);
+					setVisible(true);
 				}
 			}
 		});
@@ -404,6 +403,8 @@ public class BookInsertDelete extends JPanel {
 		btnClickEvent.setBounds(571, 253, 97, 23);
 		add(btnClickEvent);
 
+		setVisible(true);
+		
 	}
 
 	private DefaultTableModel createTableModel() {
