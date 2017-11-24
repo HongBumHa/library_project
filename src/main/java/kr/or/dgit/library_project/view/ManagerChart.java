@@ -18,11 +18,11 @@ public class ManagerChart extends JFrame {
 
 	public ManagerChart() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1420, 483);
+		setBounds(100, 100, 723, 914);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 1, 0, 0));
+		contentPane.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JPanel panelPie = new JPanel();
 		contentPane.add(panelPie);
