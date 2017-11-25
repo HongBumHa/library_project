@@ -257,7 +257,7 @@ public class Manager extends JFrame {
 		
 
 =======*/
-		BookInsertDelete insertDeletePanel = new BookInsertDelete();
+		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 
