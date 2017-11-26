@@ -1,24 +1,18 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,10 +20,10 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
-import kr.or.dgit.library_project.dto.Publisher;
+import kr.or.dgit.library_project.dto.Reading;
 import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
-import kr.or.dgit.library_project.service.PublisherService;
+import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
 
 public class BookInsertDelete extends JPanel {
@@ -40,9 +34,10 @@ public class BookInsertDelete extends JPanel {
 			);
 	
 	private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
+	private String[] readingTableTitle = new String[] {"도서명", "저자", "출판사"};
 	private JComboBox comboSearch;
 	private String bookcodeInfo;
-	private JTable table;	
+	private JTable readingTable;	
 	private ManagerInserDeletePopupFrame mIDfram = new ManagerInserDeletePopupFrame();;
 	private static BookInsertDelete instance = new BookInsertDelete();	
 	
@@ -101,12 +96,70 @@ public class BookInsertDelete extends JPanel {
 		});
 		add(btnSearch);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(504, 66, 257, 326);
-		add(scrollPane);
+		JScrollPane readingScroll = new JScrollPane();
+		readingScroll.setBounds(504, 66, 257, 326);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		
+		readingTable = new JTable();
+		readingTable.setModel(createReadingTableModel());
+		
+		JPopupMenu readingTablePopup = new JPopupMenu();
+		JMenuItem readingInsertItem = new JMenuItem("신청도서추가");
+		JMenuItem readingDeleteItem = new JMenuItem("신청도서거절");
+		
+		
+		readingInsertItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTextField[] field = ManagerInserDeletePopUp.getInstance().getTfArrays();		
+				String[] readingTableData = new String[readingTable.getColumnCount()];
+				
+				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청도서추가");
+				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("신청도서를 추가 합니다.");
+				
+				for(int i = 0; i < readingTable.getColumnCount(); i++) {
+					readingTableData[i] = (String)readingTable.getValueAt(readingTable.getSelectedRow(), i);
+				}
+				
+				field[0].setText(readingTableData[0]);
+				field[1].setText(readingTableData[1]);
+				field[2].setText(readingTableData[2]);
+				
+				mIDfram.setVisible(true);
+			}
+		});
+		
+		readingDeleteItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] readingTableData = new String[readingTable.getColumnCount()];
+				
+				for(int i = 0; i < readingTable.getColumnCount(); i++) {
+					readingTableData[i] = (String)readingTable.getValueAt(readingTable.getSelectedRow(), i);
+				}
+				
+				int checkVal = JOptionPane.showConfirmDialog(null, "신청 도서를 받지 않겠습니까? \n <신청 도서 내용> \n"+
+						"책 제목 : " +readingTableData[0]+"\n"+
+						"저자 : " + readingTableData[1]+"\n"+
+						"출판사 : " + readingTableData[2]
+						,"신청도서 삭제 경고", JOptionPane.YES_NO_OPTION,  JOptionPane.WARNING_MESSAGE);
+				
+				if(checkVal == 0) {
+					Reading reading = new Reading();
+					reading.setBookName(readingTableData[0]);
+					refreshReadingTable(reading);
+				}
+			}
+		});
+		
+		readingTablePopup.add(readingInsertItem);
+		readingTablePopup.add(readingDeleteItem);
+		readingTable.setComponentPopupMenu(readingTablePopup);
+		readingScroll.setViewportView(readingTable);
+		add(readingScroll);
 		
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override
@@ -211,6 +264,12 @@ public class BookInsertDelete extends JPanel {
 		searchTable.setVisible(true);
 	}
 	
+	public void refreshReadingTable(Reading reading) {
+		ReadingService.getInstance().deleteByName(reading);
+		readingTable.setModel(createReadingTableModel());
+		readingTable.setVisible(true);
+	}
+	
 	public Object[][] getDataAll() {
 		List<Book> lists = BookService.getInstance().selectBookByAll();
 
@@ -219,6 +278,21 @@ public class BookInsertDelete extends JPanel {
 			datas[i] = lists.get(i).toArray();
 		}
 		return datas;
+	}
+	
+	public Object[][] getReadingDataAll(){
+		List<Reading> lists = ReadingService.getInstance().findselectByAll();
+
+		Object[][] datas = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			datas[i] = lists.get(i).modelData();
+		}
+		return datas;
+	}
+	
+	public DefaultTableModel createReadingTableModel() {
+		DefaultTableModel searchTableModel = new DefaultTableModel(getReadingDataAll(), readingTableTitle);
+		return searchTableModel;
 	}
 	
 	public List<Book> searchItem() {

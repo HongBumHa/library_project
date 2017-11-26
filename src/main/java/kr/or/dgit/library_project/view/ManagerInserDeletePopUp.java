@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -14,17 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
 import kr.or.dgit.library_project.dto.Publisher;
+import kr.or.dgit.library_project.dto.Reading;
 import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.PublisherService;
 import kr.or.dgit.library_project.service.RentalViewService;
-
-import java.awt.Font;
 
 public class ManagerInserDeletePopUp extends JPanel {
 
@@ -207,45 +206,14 @@ public class ManagerInserDeletePopUp extends JPanel {
 							}
 						}
 					}
-
-					String bigNo = bigGroupLists.get(comboBigGroup.getSelectedIndex()).getBigGroup();
-					String middleNo = middleMap.get(bigNo)[comboMiddleGroup.getSelectedIndex()].getMiddleGroup();
-					String GroupInfo = bigNo + middleNo;
 					
-					Map<String, Object> map=new HashMap<String, Object>();
-					map.put("bookCode", GroupInfo+"%");
-					List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
-
-					String bookLastCode = "";				
-					
-					int bookIncreCode = Integer.parseInt(selectList.get(selectList.size()-1).getBookCode().substring(4, 8));
-					String checkLine = (bookIncreCode+1)+"";
-					int loop = checkLine.length();
-					
-					for( int i = 4; i > loop  ; i--) {
-						bookLastCode += "0";
-					}
-					
-					bookLastCode += checkLine;
+					String makeLastCode = createLastCode();
 						
 					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) == null) {
-						List<Publisher> pbList = PublisherService.getInstance().selectPublisherByAll();
-						int pbCode = Integer.parseInt(pbList.get(pbList.size()-1).getPublicCode());
-
-						String pubCodeSt = "";
-
-						String checkLine2 = (pbCode+1)+"";
-						int loop2 = checkLine2.length();
-						for( int i = 4; i > loop2  ; i--) {
-							pubCodeSt += "0";
-						}
-						pubCodeSt += checkLine2;
-
-						publisher.setPublicCode(pubCodeSt);
-						PublisherService.getInstance().insertPublisher(publisher);
+						createNewPubliser(publisher);
 					}
 					
-					book.setBookCode(GroupInfo+bookLastCode);
+					book.setBookCode(makeLastCode);
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 					book.setPrice(Integer.parseInt(tfPrice.getText()));
 					
@@ -254,6 +222,40 @@ public class ManagerInserDeletePopUp extends JPanel {
 					BookService.getInstance().insertBook(book);
 					
 					BookInsertDelete.getInstance().refreshSearchTable();
+					BookInsertDelete.getInstance().mIDFrameClose();
+				}
+				
+				if(btnClickEvent.getText() == "신청도서추가") {
+					Book book = new Book();
+					
+					for(int n = 0; n < tfArrays.length; n++) {
+						if(tfArrays[n].getText().equals("")) {
+							JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+					}
+					
+					
+					Publisher pb = new Publisher();
+					pb.setPublicName(tfPublisher.getText());
+					
+					if(PublisherService.getInstance().selectPublisherByCodeName(pb) == null) {
+						createNewPubliser(pb);
+					}
+	
+					book.setBookCode(createLastCode());
+					book.setBookName(tfBookName.getText());
+					book.setAuthor(tfAuthor.getText());
+					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
+					book.setPrice(Integer.parseInt(tfPrice.getText()));
+					book.setAmount(Integer.parseInt(tfBookCount.getText()));
+
+					BookService.getInstance().insertBook(book);
+					Reading reading = new Reading();
+					reading.setBookName(book.getBookName());
+					
+					BookInsertDelete.getInstance().refreshSearchTable();
+					BookInsertDelete.getInstance().refreshReadingTable(reading);
 					BookInsertDelete.getInstance().mIDFrameClose();
 				}
 			}
@@ -351,6 +353,23 @@ public class ManagerInserDeletePopUp extends JPanel {
 			}
 		}
 	}
+	
+	public void createNewPubliser(Publisher publisher) {
+		List<Publisher> pbList = PublisherService.getInstance().selectPublisherByAll();
+		int pbCode = Integer.parseInt(pbList.get(pbList.size()-1).getPublicCode());
+
+		String pubCodeSt = "";
+
+		String checkLine2 = (pbCode+1)+"";
+		int loop2 = checkLine2.length();
+		for( int i = 4; i > loop2  ; i--) {
+			pubCodeSt += "0";
+		}
+		pubCodeSt += checkLine2;
+
+		publisher.setPublicCode(pubCodeSt);
+		PublisherService.getInstance().insertPublisher(publisher);
+	}
 
 	public JComboBox getComboBigGroup() {
 		return comboBigGroup;
@@ -376,6 +395,28 @@ public class ManagerInserDeletePopUp extends JPanel {
 		return lbChangeTitle;
 	}
 	
-	
+	public String createLastCode() {
+		String bigNo = bigGroupLists.get(comboBigGroup.getSelectedIndex()).getBigGroup();
+		String middleNo = middleMap.get(bigNo)[comboMiddleGroup.getSelectedIndex()].getMiddleGroup();
+		String GroupInfo = bigNo + middleNo;
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("bookCode", GroupInfo+"%");
+		List<Book> selectList = BookService.getInstance().selectBookBySomething(map);
+
+		String bookLastCode = "";				
+		
+		int bookIncreCode = Integer.parseInt(selectList.get(selectList.size()-1).getBookCode().substring(4, 8));
+		String checkLine = (bookIncreCode+1)+"";
+		int loop = checkLine.length();
+		
+		for( int i = 4; i > loop  ; i--) {
+			bookLastCode += "0";
+		}
+		
+		bookLastCode += checkLine;
+		
+		return GroupInfo+bookLastCode;
+	}
 	
 }

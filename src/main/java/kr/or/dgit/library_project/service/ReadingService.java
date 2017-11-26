@@ -37,7 +37,7 @@ public class ReadingService {
 		return res;
 	}
 	
-	public int finddeleteByName(Reading reading){
+	public int deleteByName(Reading reading){
 		int res=-1;
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			ReadingDao dao =new ReadingDaoImpl(sqlSession);
