@@ -43,6 +43,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 	private DefaultComboBoxModel bigGroupModel;
 	private HashMap<String, BookGroup[]> middleMap;
 	private JButton btnClickEvent;
+	private ManagerInserDeletePopupFrame popupFrame;
 	
 	
 	//
@@ -104,17 +105,18 @@ public class ManagerInserDeletePopUp extends JPanel {
 //		add(tfPublisher);
 //		tfPublisher.setColumns(11);
 		
-		
 		List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
 		String[] pubArray = new String[pubList.size()];
 		
 		for(int n = 0; n < pubList.size(); n++ ) {
 			pubArray[n] = pubList.get(n).getPublicName();
 		}
-
+		
 		publisherCombo = new JComboBox(pubArray);
+		publisherCombo.setVisible(true);
 		ComboAgent agent = new ComboAgent(publisherCombo);
 		publisherCombo.setEditable(true);
+		
 		publisherCombo.setBounds(139, 175, 127, 21);
 		add(publisherCombo);
 		
@@ -240,6 +242,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 						
 					if(PublisherService.getInstance().selectPublisherByCodeName(publisher) == null) {
 						createNewPubliser(publisher);
+						refreshPublicComboItem();
 					}
 					
 					book.setBookCode(makeLastCode);
@@ -256,6 +259,13 @@ public class ManagerInserDeletePopUp extends JPanel {
 					Book book = new Book();
 					
 					for(int n = 0; n < tfArrays.length; n++) {
+						if(n == 2) {
+							if(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText().equals("") == true) {
+								JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+							continue;
+						}
 						if(tfArrays[n].getText().equals("")) {
 							JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
 							return;
@@ -282,6 +292,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					Reading reading = new Reading();
 					reading.setBookName(book.getBookName());
 					
+					refreshPublicComboItem();
 					BookInsertDelete.getInstance().refreshSearchTable();
 					BookInsertDelete.getInstance().refreshReadingTable(reading);
 					BookInsertDelete.getInstance().mIDFrameClose();
@@ -310,16 +321,50 @@ public class ManagerInserDeletePopUp extends JPanel {
 		btnCancel.setBounds(181, 267, 97, 23);
 		add(btnCancel);	
 		
-		testBtn = new JButton("test");
-		testBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText());
-			}
-		});
-		testBtn.setBounds(318, 230, 97, 23);
-		add(testBtn);
+//		testBtn = new JButton("test");
+//		testBtn.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				
+//				
+//				Publisher pb = new Publisher();
+//				pb.setPublicName(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText().replace(" ", ""));
+//				if(PublisherService.getInstance().selectPublisherByCodeName(pb) == null) {
+//					createNewPubliser(pb);
+//				}
+//				
+//				List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
+//				String[] pubArray = new String[pubList.size()];
+//				
+//				for(int n = 0; n < pubList.size(); n++ ) {
+//					pubArray[n] = pubList.get(n).getPublicName();
+//					System.out.println(pubList.get(n).getPublicName());
+//				}
+//				publisherCombo.setModel(new DefaultComboBoxModel(pubArray));
+//				ComboAgent agent = new ComboAgent(publisherCombo);
+//				publisherCombo.setVisible(true);
+//				setVisible(true);
+//			}
+//		});
+//		testBtn.setBounds(318, 230, 97, 23);
+//		add(testBtn);
+	}
+
+	private void refreshPublicComboItem() {	
+		List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
+		String[] pubArray = new String[pubList.size()];
+		
+		for(int n = 0; n < pubList.size(); n++ ) {
+			pubArray[n] = pubList.get(n).getPublicName();
+		}
+		
+		publisherCombo.setModel(new DefaultComboBoxModel(pubArray));
+		ComboAgent agent = new ComboAgent(publisherCombo);
+		publisherCombo.setVisible(true);
+		publisherCombo.setEditable(true);
+		setVisible(true);
 	}
 	public DefaultComboBoxModel createComboModel(BookGroup bookgroup) {
 		bigGroupLists = BookGroupService.getInstance().findAllBookBigGroup();
@@ -475,14 +520,19 @@ public class ManagerInserDeletePopUp extends JPanel {
 		return publisherCombo;
 	}
 	
-	public void publicComboSelected(String publisherName) {
+	public void setPopupFrame(ManagerInserDeletePopupFrame popupFrame) {
+		this.popupFrame = popupFrame;
+	}
+
+	public int publicComboSelected(String publisherName) {
 		for(int index = 0; index < publisherCombo.getItemCount(); index++) {
 			String item = publisherCombo.getItemAt(index).toString();
 			if(item.equals(publisherName) == true) {
 				publisherCombo.setSelectedIndex(index);
-				break;
+				return 0;
 			}
 		}
+		return 1;
 	}
 
 	class ComboAgent extends KeyAdapter
@@ -494,6 +544,7 @@ public class ManagerInserDeletePopUp extends JPanel {
         {
             combo = box;
             editor = (JTextField)combo.getEditor().getEditorComponent();
+            combo.setVisible(true);
             editor.addKeyListener(this);
         }
         

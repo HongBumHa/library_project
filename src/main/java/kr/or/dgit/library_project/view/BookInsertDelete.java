@@ -1,5 +1,6 @@
 package kr.or.dgit.library_project.view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,8 +27,6 @@ import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
-import javax.swing.JLabel;
-import java.awt.Font;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
@@ -40,7 +40,8 @@ public class BookInsertDelete extends JPanel {
 	private JComboBox comboSearch;
 	private String bookcodeInfo;
 	private JTable readingTable;	
-	private ManagerInserDeletePopupFrame mIDfram = new ManagerInserDeletePopupFrame();
+	private JTextField publisherJT;
+	private ManagerInserDeletePopupFrame mIDfram = ManagerInserDeletePopupFrame.getInstance();
 	private static BookInsertDelete instance = new BookInsertDelete();	
 	
 	public static BookInsertDelete getInstance() {
@@ -127,8 +128,15 @@ public class BookInsertDelete extends JPanel {
 				
 				field[0].setText(readingTableData[0]);
 				field[1].setText(readingTableData[1]);
-				field[2].setText(readingTableData[2]);
+				publisherJT = ((JTextField)(ManagerInserDeletePopUp.getInstance().getPublisherCombo().getEditor().getEditorComponent()));
+
+				System.out.println("정보 확인"+ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]));
 				
+				
+				if(ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]) == 1) {
+					publisherJT.setText(readingTableData[2]);
+				}
+
 				mIDfram.setVisible(true);
 			}
 		});
