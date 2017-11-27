@@ -84,7 +84,7 @@ public class RentalBookPanel extends JPanel {
 		tfSearch.setBounds(117, 10, 221, 25);
 		pSearch.add(tfSearch);
 
-		JButton btnSearch = new JButton("search");
+		JButton btnSearch = new JButton("검 색");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBox.getSelectedItem().equals("전체보기")) {
@@ -291,7 +291,6 @@ public class RentalBookPanel extends JPanel {
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = table.getColumnModel();
-		System.out.println(Arrays.toString(width));
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}

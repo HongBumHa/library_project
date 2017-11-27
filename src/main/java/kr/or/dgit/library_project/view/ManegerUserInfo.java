@@ -33,6 +33,8 @@ import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {
@@ -168,56 +170,86 @@ public class ManegerUserInfo extends JPanel {
 		tfEmail.setColumns(10);
 		tfEmail.setBounds(55, 4, 205, 21);
 		pEmail.add(tfEmail);
-		
+
 		JPanel pRank = new JPanel();
 		pRank.setBorder(null);
 		pRank.setLayout(null);
 		pRank.setBounds(371, 10, 157, 31);
 		panel_9.add(pRank);
-		
+
 		JLabel lblRank = new JLabel("등 급");
 		lblRank.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRank.setBounds(3, 8, 40, 15);
 		pRank.add(lblRank);
-		
-		cmbRank = new JComboBox();
-		cmbRank.setModel(new DefaultComboBoxModel<String>(new String[] {"관리자","회원","블랙리스트"}));
-		cmbRank.setBounds(44, 5, 109, 21);
-		
-		pRank.add(cmbRank);
-		
-				JButton btnUpdate = new JButton("수 정");
-				btnUpdate.setBounds(584, 28, 97, 23);
-				panel_9.add(btnUpdate);
-				
-						JButton btnClear = new JButton("확 인");
-						btnClear.setBounds(584, 65, 97, 23);
-						panel_9.add(btnClear);
-						
-								JButton btnDel = new JButton("회원탈퇴");
-								btnDel.setBounds(584, 102, 97, 23);
-								panel_9.add(btnDel);
-								btnDel.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-										if (i == 0) {
-											deleteU();
-										} else {
-											JOptionPane.showInternalMessageDialog(null, "취소하셨습니다");
-										}
-									}
 
-								});
-						btnClear.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								clear();
-							}
-						});
-				btnUpdate.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						userUpdatae();
-					}
-				});
+		cmbRank = new JComboBox();
+		cmbRank.setModel(new DefaultComboBoxModel<String>(new String[] { "관리자", "회원", "블랙리스트" }));
+		cmbRank.setBounds(44, 5, 109, 21);
+
+		pRank.add(cmbRank);
+
+		JButton btnUpdate = new JButton("수 정");
+		btnUpdate.setBounds(584, 28, 97, 23);
+		panel_9.add(btnUpdate);
+
+		JButton btnClear = new JButton("확 인");
+		btnClear.setBounds(584, 65, 97, 23);
+		panel_9.add(btnClear);
+
+		JButton btnDel = new JButton("회원탈퇴");
+		btnDel.setBounds(584, 102, 97, 23);
+		panel_9.add(btnDel);
+		btnDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				if (i == 0) {
+					deleteU();
+				} else {
+					JOptionPane.showInternalMessageDialog(null, "취소하셨습니다");
+				}
+			}
+
+		});
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clear();
+			}
+		});
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userUpdatae();
+			}
+		});
+
+		JPanel pSerach = new JPanel();
+		pSerach.setBounds(90, 15, 499, 30);
+		add(pSerach);
+		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
+		cmbSearch = new JComboBox<String>();
+		cmbSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmbSearch.getSelectedItem().equals("전체보기")) {
+					tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+						public boolean isCellEditable(int i, int c) {
+							return false;
+						}
+					};
+					tfSearch.setText("");
+					table.setModel(tableModel);
+					setAlignWidth();
+				}
+			}
+		});
+		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "전체보기", "아이디", "이름", "전화번호", "이메일" }));
+		pSerach.add(cmbSearch);
+
+		tfSearch = new JTextField();
+		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		tfSearch.setColumns(10);
+		pSerach.add(tfSearch);
+
+		JButton btnsearch = new JButton("검 색");
+		pSerach.add(btnsearch);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(9, 278, 777, 282);
@@ -228,6 +260,14 @@ public class ManegerUserInfo extends JPanel {
 			}
 		};
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					selectTable();
+				}
+			}
+		});
 		table.setModel(tableModel);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
@@ -238,30 +278,23 @@ public class ManegerUserInfo extends JPanel {
 		lblNewLabel_1.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(11, 252, 86, 25);
 		add(lblNewLabel_1);
-								
-										JPanel pSerach = new JPanel();
-										pSerach.setBounds(203, 29, 499, 30);
-										add(pSerach);
-										pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
-										cmbSearch = new JComboBox<String>();
-										cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
-										pSerach.add(cmbSearch);
-										
-												tfSearch = new JTextField();
-												tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
-												tfSearch.setColumns(10);
-												pSerach.add(tfSearch);
-												
-														JButton btnsearch = new JButton("검 색");
-														pSerach.add(btnsearch);
-														
-																btnsearch.addActionListener(new ActionListener() {
-																	public void actionPerformed(ActionEvent e) {
-																		DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
-																		table.setModel(model);
-																		setAlignWidth();
-																	}
-																});
+
+		cmbSearch = new JComboBox<String>();
+		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
+		pSerach.add(cmbSearch);
+
+		tfSearch = new JTextField();
+		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		tfSearch.setColumns(10);
+		pSerach.add(tfSearch);
+
+		btnsearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
+				table.setModel(model);
+				setAlignWidth();
+			}
+		});
 	}
 
 	public static JComboBox<String> getCmbSido() {
@@ -290,6 +323,10 @@ public class ManegerUserInfo extends JPanel {
 	}
 
 	protected void userUpdatae() {
+		if (!isCheck()) {
+			JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요", null, JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		String userId = tfId.getText();
 		Users u = UsersService.getInstance().findUsersByNo(new Users(userId));
 		String userName = tfName.getText();
@@ -298,10 +335,45 @@ public class ManegerUserInfo extends JPanel {
 		String userEmail = tfEmail.getText();
 		String userPw = u.getUserPw();
 		int delayDay = 0;
-		String rankCode = "2";
+		String rankCode = null;
+		String rankName = (String) cmbRank.getSelectedItem();
+		switch (rankName) {
+		case "관리자":
+			rankCode = "1";
+			break;
+		case "회원":
+			rankCode = "2";
+			break;
+		case "블랙리스트":
+			rankCode = "3";
+			break;
+		}
 		String userLeave = "Y";
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
+		JOptionPane.showMessageDialog(null, user.getUserName() + "님 정보가 수정되었습니다.");
+		tableModel = new DefaultTableModel(searchData(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
+		table.setModel(tableModel);
+		setAlignWidth();
+	}
+
+	private boolean isCheck() {
+		String userName = tfName.getText();
+		String userAddr = tfAddr.getText();
+		String userTel = tfTel.getText();
+		String userEmail = tfEmail.getText();
+		String userId = tfId.getText();
+		if (userName.equals("") || userAddr.equals("") || userTel.equals("") || userEmail.equals("")
+				|| userId.equals("")) {
+
+			return false;
+		}
+		return true;
+
 	}
 
 	protected void clear() {
@@ -315,9 +387,7 @@ public class ManegerUserInfo extends JPanel {
 	}
 
 	private String[] getColumnNames() {
-		return new String[] {
-				"아이디", "이 름", "전화번호", "주 소","이메일","등급","탈퇴여부"
-			};
+		return new String[] { "아이디", "이 름", "전화번호", "주 소", "이메일", "등급", "탈퇴여부" };
 
 	}
 
@@ -352,7 +422,9 @@ public class ManegerUserInfo extends JPanel {
 				return false;
 			}
 		};
+
 		table.setModel(tableModel);
+		setAlignWidth();
 
 	}
 
@@ -386,7 +458,7 @@ public class ManegerUserInfo extends JPanel {
 
 			@Override
 
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 
 				selectTable();
 
@@ -398,26 +470,26 @@ public class ManegerUserInfo extends JPanel {
 
 	protected void selectTable() {
 
-		int selectedIndex=table.getSelectedRow();
-		tfId.setText((String)table.getValueAt(selectedIndex, 0));
-		tfName.setText((String)table.getValueAt(selectedIndex, 1));
-		tfTel.setText((String)table.getValueAt(selectedIndex, 2));
-		tfAddr.setText((String)table.getValueAt(selectedIndex, 3));
-		tfEmail.setText((String)table.getValueAt(selectedIndex, 4));
-		cmbRank.setSelectedItem((String)table.getValueAt(selectedIndex, 5));
+		int selectedIndex = table.getSelectedRow();
+		tfId.setText((String) table.getValueAt(selectedIndex, 0));
+		tfName.setText((String) table.getValueAt(selectedIndex, 1));
+		tfTel.setText((String) table.getValueAt(selectedIndex, 2));
+		tfAddr.setText((String) table.getValueAt(selectedIndex, 3));
+		tfEmail.setText((String) table.getValueAt(selectedIndex, 4));
+		cmbRank.setSelectedItem((String) table.getValueAt(selectedIndex, 5));
 
 	}
 
 	public void setAlignWidth() {
 
-		setAlign(SwingConstants.CENTER, 0, 1,2,3,4,5,6);
-		setCellWidth(70, 70, 100, 300, 150,70, 50);
+		setAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
+		setCellWidth(70, 70, 100, 300, 150, 70, 50);
 
 	}
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = table.getColumnModel();
-		System.out.println(Arrays.toString(width));
+
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}

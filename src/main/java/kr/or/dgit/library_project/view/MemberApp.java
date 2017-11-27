@@ -344,10 +344,10 @@ public class MemberApp extends JFrame {
 
 		
 		if(pwRes!=1) {
-
 			JOptionPane.showMessageDialog(null, "비밀번호를 8자이상입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
+		
 		if (pwChRes != 1) {
 			JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다",null,JOptionPane.WARNING_MESSAGE);
 			return false;
@@ -364,12 +364,13 @@ public class MemberApp extends JFrame {
 		m = p.matcher(tfTel1.getText());
 		Pattern p2 = Pattern.compile("^[0-9]{4}$");
 		Matcher m2 = p.matcher(tfTel2.getText());
+		
 		if(tfTel1.getText().length() ==0 ||tfTel2.getText().length() ==0) {
 
 			JOptionPane.showMessageDialog(null, "전화번호를 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 
 			return false;
-		}else if(!m.find() ||!m2.find()){
+		}else if(!m.find() || !m2.find()){
 
 			JOptionPane.showMessageDialog(null, "다시 전화번호를 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;

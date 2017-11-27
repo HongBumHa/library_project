@@ -171,6 +171,7 @@ public class MainUi extends JFrame {
 			break;
 		case "3":
 			JOptionPane.showMessageDialog(null, "블랙리스트입니다");
+		
 			break;
 		}
 
