@@ -146,10 +146,10 @@ public class ManagerInserDeletePopUp extends JPanel {
 		
 		comboMiddleGroup = new JComboBox();
 		comboMiddleGroup.setBounds(139, 82, 97, 21);
-		BookGroup middlebook = new BookGroup();
+		/*BookGroup middlebook = new BookGroup();
 		middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
 		
-		comboMiddleGroup.setModel(createComboModel(middlebook));
+		comboMiddleGroup.setModel(createComboModel(middlebook));*/
 		add(comboMiddleGroup);
 		
 		btnClickEvent = new JButton("btnClickEvent");
