@@ -1,26 +1,22 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.service.RentalBookService;
 import kr.or.dgit.library_project.ui.MainUi;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.util.GregorianCalendar;
-import java.awt.event.ActionEvent;
 
 public class RentBookInfoView extends JFrame {
 
@@ -116,11 +112,18 @@ public class RentBookInfoView extends JFrame {
 		btnRent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rentBook();
+				ReturnTabPanel.getInstance().reloadTableView();
 				setVisible(false);
 				if(RentalBookPanel.getInstance().comboBox.getSelectedItem().equals("전체보기")) {
 					RentalBookPanel.getInstance().loadDataAll();
+					int res = RentalBookPanel.getInstance().rentBookCountById();
+					RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
+					
+					
+					UserpresentView.setting();
 				}else {
 					RentalBookPanel.getInstance().loadDataEach();
+					RentalBookPanel.getInstance().rentBookCountById();
 				}
 				
 			}

@@ -132,10 +132,8 @@ public class MainUi extends JFrame {
 		for (Users u : lists) {
 
 			if (id.equals(u.getUserId())) {
-
 				resId = u.getUserId();
 				if (pw.equals(u.getUserPw())) {
-
 					resPw = u.getUserPw();
 					rank = u.getRankCode();
 					break;
@@ -151,12 +149,14 @@ public class MainUi extends JFrame {
 		} else {
 			users = service.findUsersByNo(new Users(id));
 
+
 			if (users.getUserLeave().equals("N")) {
 				JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
 				return;
+
 			}
 		}
-		
+
 		switch (rank) {
 		case "1":
 			JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
@@ -176,6 +176,7 @@ public class MainUi extends JFrame {
 		}
 
 	}
+
 
 
 

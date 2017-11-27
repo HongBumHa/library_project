@@ -212,7 +212,9 @@ public class ManagerBookDetailInfo extends JFrame {
 	
 	private Users searchUser() {
 		int selectedIndex=ManagerRentalBook.table.getSelectedRow();
-		String uId=(String) ManagerRentalBook.table.getValueAt(selectedIndex, 3);
+		
+		String uId=(String) ManagerRentalBook.table.getValueAt(selectedIndex, 2);
+		
 		Users u=new Users();
 		u.setUserId(uId);
 		

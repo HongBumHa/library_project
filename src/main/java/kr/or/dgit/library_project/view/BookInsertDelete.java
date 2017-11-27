@@ -1,10 +1,7 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,238 +9,161 @@ import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import kr.or.dgit.library_project.dao.BookDaoImpl;
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
-import kr.or.dgit.library_project.dto.Publisher;
+import kr.or.dgit.library_project.dto.Reading;
 import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
-import kr.or.dgit.library_project.service.PublisherService;
+import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
 	private JTextField tfSearch;
-	private JTextField tfAuthor;
-	private JTextField tfPrice;
-	private JTextField tfBookName;
-	private JTextField tfBookCount;
-	private DefaultComboBoxModel bigGroupModel;
-	/*new DefaultComboBoxModel<>(
-			new String[]{"총류","철학","종교","사회과학","자연과학","기술과학","예술","언어","문학","역사"}
-			);*/
-	private DefaultComboBoxModel middleGroupModel;
 	private DefaultComboBoxModel searchComboModel = new DefaultComboBoxModel<>(
 			new String[] {"전체보기", "도서코드", "도서명", "저 자", "출판사"}
 			);
 	
-	private JComboBox comboBigGroup;
-	private JComboBox comboMiddleGroup;
-//	private BookGroupService bgSer = new BookGroupService();
-	private List<BookGroup> bigGroupLists;
 	private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
+	private String[] readingTableTitle = new String[] {"도서명", "저자", "출판사"};
 	private JComboBox comboSearch;
-	private JTextField[] tfArrays;
-	private HashMap<String, BookGroup[]> middleMap;
-	private JRadioButton radioDelete;
-	private JRadioButton radioInsert;
-	private JRadioButton[] radioArray;
-	private JButton btnClickEvent;
-	private JTextField tfPublisher;
 	private String bookcodeInfo;
+	private JTable readingTable;	
+	private ManagerInserDeletePopupFrame mIDfram = new ManagerInserDeletePopupFrame();;
+	private static BookInsertDelete instance = new BookInsertDelete();	
+	
+	public static BookInsertDelete getInstance() {
+		return instance;
+	}
 
-	public BookInsertDelete() {
-		setLayout(new BorderLayout(0, 0));
-		
-		BookGroup book = new BookGroup();
-		allMachMiddleGroup();
+	private BookInsertDelete() {
+		setLayout(null);
+
+		bookcodeInfo = new String();
 		setLayout(null);
 		
-		bookcodeInfo = new String();
-		
 		JScrollPane tableScroll = new JScrollPane();
-		tableScroll.setBounds(12, 41, 470, 326);
+		tableScroll.setBounds(12, 66, 470, 326);
 		add(tableScroll);
 		
-		radioDelete = new JRadioButton("보유도서제거");
-		radioInsert = new JRadioButton("새로운도서생성");
-		radioArray  = new JRadioButton[]{radioDelete, radioInsert};
-		btnClickEvent = new JButton("제거");
-		btnClickEvent.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(btnClickEvent.getText() == "제거") {
-					Book book = new Book();
-					book.setBookCode(bookcodeInfo);
-					
-					if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
-						JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
-						return;
-					}
-					// history내의 정보 변화는 나중에
-					
-					System.out.println("bookCodeDelete Check : " + book.getBookCode());
-					
-					BookService.getInstance().deleteBook(book);
-					searchTable.setModel(createTableModel());
-					setVisible(true);
-				}
-				if(btnClickEvent.getText() == "변경") {
-					Book book = new Book();
-					book.setBookCode(bookcodeInfo);
-					
-					if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
-						JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
-						return;
-					}
-					
-					Publisher pb = new Publisher();
-					pb.setPublicName(tfPublisher.getText());
-
-					book.setBookName(tfBookName.getText());
-					book.setAuthor(tfAuthor.getText());
-					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
-					book.setPrice(Integer.parseInt(tfPrice.getText()));
-					book.setAmount(Integer.parseInt(tfBookCount.getText()));
-
-					BookService.getInstance().updateBook(book);
-					searchTable.setModel(createTableModel());
-					setVisible(true);
-				}
-				if(btnClickEvent.getText() == "도서추가") {
-					
-				}
-			}
-		});
-		
-		radioDelete.setBounds(434, 9, 110, 23);
-		radioDelete.setSelected(true);
-		
-		radioInsert.setBounds(545, 9, 132, 23);
-		radioInsert.setSelected(false);
-		radioInsert.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				radioSelectControl(radioInsert);
-				btnClickEvent.setText("도서추가");
-				tfFieldClearAndAdding();
-				setVisible(true);
-			}
-		});
-	
-		add(radioInsert);
-		
-		JLabel lbBigGroup = new JLabel("대분류");
-		lbBigGroup.setBounds(484, 42, 57, 15);
-		add(lbBigGroup);
-		
-		JLabel lbMiddleGroup = new JLabel("중분류");
-		lbMiddleGroup.setBounds(483, 67, 43, 15);
-		add(lbMiddleGroup);
-		
-		JLabel lbAuthor = new JLabel("저자");
-		lbAuthor.setBounds(502, 104, 42, 15);
-		add(lbAuthor);
-		
-		JLabel lbPrice = new JLabel("가격");
-		lbPrice.setBounds(502, 135, 36, 15);
-		add(lbPrice);
-		
-		JLabel lbPublisher = new JLabel("출판사");
-		lbPublisher.setBounds(500, 160, 58, 15);
-		add(lbPublisher);
-		
-		JLabel lbBookName = new JLabel("책제목");
-		lbBookName.setBounds(499, 200, 42, 15);
-		add(lbBookName);
-		
-		JLabel lbBookCount = new JLabel("수량");
-		lbBookCount.setBounds(501, 225, 57, 15);
-		add(lbBookCount);
-		
-		comboBigGroup = new JComboBox();
-		comboBigGroup.setBounds(555, 39, 65, 21);
-//		comboBigGroup.setModel(bigGroupModel);
-		comboBigGroup.setModel(createComboModel(book));
-		comboBigGroup.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BookGroup middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
-				comboMiddleGroup.setModel(createComboModel(middlebook));
-				setVisible(true);
-			}
-		});
-		add(comboBigGroup);
-		
-		comboMiddleGroup = new JComboBox();
-		comboMiddleGroup.setBounds(555, 64, 65, 21);
-		BookGroup middlebook = new BookGroup();
-		middlebook = bigGroupLists.get(comboBigGroup.getSelectedIndex());
-		
-		comboMiddleGroup.setModel(createComboModel(middlebook));
-		add(comboMiddleGroup);
-		
-		tfAuthor = new JTextField();
-		tfAuthor.setBounds(557, 101, 116, 21);
-		add(tfAuthor);
-		tfAuthor.setColumns(10);
-		
-		tfPrice = new JTextField();
-		tfPrice.setBounds(557, 132, 116, 21);
-		add(tfPrice);
-		tfPrice.setColumns(10);
-		
-		tfPublisher = new JTextField();
-		tfPublisher.setBounds(555, 157, 116, 21);
-		add(tfPublisher);
-		tfPublisher.setColumns(10);
-		
-		tfBookName = new JTextField();
-		tfBookName.setBounds(561, 197, 116, 21);
-		add(tfBookName);
-		tfBookName.setColumns(10);
-		
-		tfBookCount = new JTextField();
-		tfBookCount.setBounds(561, 222, 116, 21);
-		add(tfBookCount);
-		tfBookCount.setColumns(10);
-		
-		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
-		
-		tfFieldNotUsing();
-		
-		radioDelete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				radioSelectControl(radioDelete);
-				btnClickEvent.setText("제거");
-				tfFieldNotUsing();
-			}
-		});
-		add(radioDelete);
-		
-		
 		searchTable = new JTable();
-		searchTable.addMouseListener(new MouseAdapter() {
-
+		JPopupMenu searchPopupMenu = new JPopupMenu();
+		JMenuItem addPopup = new JMenuItem("새로운도서추가");
+		JMenuItem upDatePopup = new JMenuItem("변경");
+		JMenuItem deletePopup = new JMenuItem("삭제");
+	
+		searchTable.setComponentPopupMenu(searchPopupMenu);
+		searchTable.setModel(createTableModel());
+		tableScroll.setViewportView(searchTable);
+		
+		tfSearch = new JTextField();
+		tfSearch.setBounds(113, 23, 219, 21);
+		add(tfSearch);
+		tfSearch.setColumns(10);
+		
+		comboSearch = new JComboBox();
+		comboSearch.setToolTipText("");
+		comboSearch.setBounds(12, 23, 97, 21);
+		comboSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboSearch.getSelectedItem()=="전체보기") {
+					searchTable.setModel(createTableModel());
+					searchTable.setVisible(true);
+					setVisible(true);
+				}
+			}
+		});
+		comboSearch.setModel(searchComboModel);
+		add(comboSearch);
+		
+		JButton btnSearch = new JButton("검색");
+		btnSearch.setBounds(344, 22, 65, 23);
+		btnSearch.addActionListener(new ActionListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
+			public void actionPerformed(ActionEvent e) {
+				loadDataEach();
+			}
+		});
+		add(btnSearch);
+		
+		JScrollPane readingScroll = new JScrollPane();
+		readingScroll.setBounds(504, 66, 257, 326);
+		
+		
+		readingTable = new JTable();
+		readingTable.setModel(createReadingTableModel());
+		
+		JPopupMenu readingTablePopup = new JPopupMenu();
+		JMenuItem readingInsertItem = new JMenuItem("신청도서추가");
+		JMenuItem readingDeleteItem = new JMenuItem("신청도서거절");
+		
+		
+		readingInsertItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTextField[] field = ManagerInserDeletePopUp.getInstance().getTfArrays();		
+				String[] readingTableData = new String[readingTable.getColumnCount()];
+				
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청도서추가");
+				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("신청도서를 추가 합니다.");
+				
+				for(int i = 0; i < readingTable.getColumnCount(); i++) {
+					readingTableData[i] = (String)readingTable.getValueAt(readingTable.getSelectedRow(), i);
+				}
+				
+				field[0].setText(readingTableData[0]);
+				field[1].setText(readingTableData[1]);
+				field[2].setText(readingTableData[2]);
+				
+				mIDfram.setVisible(true);
+			}
+		});
+		
+		readingDeleteItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] readingTableData = new String[readingTable.getColumnCount()];
+				
+				for(int i = 0; i < readingTable.getColumnCount(); i++) {
+					readingTableData[i] = (String)readingTable.getValueAt(readingTable.getSelectedRow(), i);
+				}
+				
+				int checkVal = JOptionPane.showConfirmDialog(null, "신청 도서를 받지 않겠습니까? \n <신청 도서 내용> \n"+
+						"책 제목 : " +readingTableData[0]+"\n"+
+						"저자 : " + readingTableData[1]+"\n"+
+						"출판사 : " + readingTableData[2]
+						,"신청도서 삭제 경고", JOptionPane.YES_NO_OPTION,  JOptionPane.WARNING_MESSAGE);
+				
+				if(checkVal == 0) {
+					Reading reading = new Reading();
+					reading.setBookName(readingTableData[0]);
+					refreshReadingTable(reading);
+				}
+			}
+		});
+		
+		readingTablePopup.add(readingInsertItem);
+		readingTablePopup.add(readingDeleteItem);
+		readingTable.setComponentPopupMenu(readingTablePopup);
+		readingScroll.setViewportView(readingTable);
+		add(readingScroll);
+		
+		upDatePopup.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 				int bigIndex = 0;
 				int middleIndex = 0;
 				bookcodeInfo = searchTable.getValueAt(searchTable.getSelectedRow(), 0).toString();
@@ -260,107 +180,118 @@ public class BookInsertDelete extends JPanel {
 					}
 				}
 				
-				comboBigGroup.setSelectedIndex(bigIndex);
+				ManagerInserDeletePopUp.getInstance().getComboBigGroup().setSelectedIndex(bigIndex);
 				
-				for(int a = 0; a < middleMap.get(bigGroupCode).length; a++) {
-					if(middleMap.get(bigGroupCode)[a].getMiddleGroup().equals(middleGroupCode)) {
+				for(int a = 0; a < ManagerInserDeletePopUp.getInstance().getMiddleMap().get(bigGroupCode).length; a++) {
+					if(ManagerInserDeletePopUp.getInstance().getMiddleMap().get(bigGroupCode)[a].getMiddleGroup().equals(middleGroupCode)) {
 						middleIndex = a;
 					}
 				}
 				
-				comboMiddleGroup.setSelectedIndex(middleIndex);
+				ManagerInserDeletePopUp.getInstance().getComboMiddleGroup().setSelectedIndex(middleIndex);
 				
-				for(int i= 0; i < tfArrays.length; i++) {
-					tfArrays[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
+				for(int i= 0; i < ManagerInserDeletePopUp.getInstance().getTfArrays().length; i++) {
+					ManagerInserDeletePopUp.getInstance().getTfArrays()[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
 //					private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
 				}
-				btnClickEvent.setText("제거");
-				tfFieldNotUsing();
-				radioDelete.setSelected(true);
-				radioSelectControl(radioDelete);
-			}
-		});
-		JPopupMenu popupMenu = new JPopupMenu();
-		JMenuItem menuItem = new JMenuItem("변경");
-		popupMenu.add(menuItem);
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tfArrays[tfArrays.length-1].setEnabled(true);
-				btnClickEvent.setText("변경");
+				ManagerInserDeletePopUp.getInstance().tfFieldNotUsing();
+	
+				ManagerInserDeletePopUp.getInstance().getTfArrays()[ManagerInserDeletePopUp.getInstance().getTfArrays().length-1].setEnabled(true);
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("변경");
+				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("도서의 수량을 변경합니다.");
+				mIDfram.setVisible(true);
 				setVisible(true);
 			}
 		});
-		searchTable.setComponentPopupMenu(popupMenu);
-		searchTable.setModel(createTableModel());
-		tableScroll.setViewportView(searchTable);
 		
-		tfSearch = new JTextField();
-		tfSearch.setBounds(121, 10, 219, 21);
-		add(tfSearch);
-		tfSearch.setColumns(10);
-		
-		comboSearch = new JComboBox();
-		comboSearch.setToolTipText("");
-		comboSearch.setBounds(12, 10, 97, 21);
-		comboSearch.setModel(searchComboModel);
-		add(comboSearch);
-		
-		JButton btnSearch = new JButton("검색");
-		btnSearch.setBounds(344, 8, 65, 23);
-		btnSearch.addActionListener(new ActionListener() {
+		deletePopup.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loadDataEach();
+				
+				bookcodeInfo = searchTable.getValueAt(searchTable.getSelectedRow(), 0).toString();
+				Book book = new Book();
+				book.setBookCode(bookcodeInfo);
+
+				if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
+					JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
+					return;
+				}
+				
+				book = BookService.getInstance().selectBookByCode(book);
+				
+				int checkVal = JOptionPane.showConfirmDialog(null, "정말 삭제 하시겠습니까? \n <상세 정보> \n"+
+																	"책 코드 : " + book.getBookCode()+"\n"+
+																	"책 제목 : " +book.getBookName()+"\n"+
+																	"저자 : " + book.getAuthor()+"\n"+
+																	"출판사 : " + book.getPublicName()
+																	,"도서 삭제 경고", JOptionPane.YES_NO_OPTION,  JOptionPane.WARNING_MESSAGE);
+				if(checkVal == 0) {
+					BookService.getInstance().deleteBook(book);
+					refreshSearchTable();
+				}
 			}
 		});
-		add(btnSearch);
 		
+		addPopup.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
+				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
+				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
+				mIDfram.setVisible(true);
+				setVisible(true);
+			}
+		});
 		
-		btnClickEvent.setBounds(571, 253, 97, 23);
-		add(btnClickEvent);
+		searchPopupMenu.add(addPopup);
+		searchPopupMenu.add(upDatePopup);
+		searchPopupMenu.add(deletePopup);
 
+		setVisible(true);
+		
 	}
 
-	private DefaultTableModel createTableModel() {
+	public DefaultTableModel createTableModel() {
 		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
 		return searchTableModel;
 	}
 	
-	public DefaultComboBoxModel createComboModel(BookGroup bookgroup) {
-		bigGroupLists = BookGroupService.getInstance().findAllBookBigGroup();
-		
-		if(bookgroup.getBigGroup() == null) {
-			String[] comboLists = new String[bigGroupLists.size()];
-			
-			for(int i = 0; i < bigGroupLists.size(); i++) {
-				comboLists[i] = bigGroupLists.get(i).getBookBigGroupName();
-			}
-			
-			bigGroupModel = new DefaultComboBoxModel<>(comboLists);
-			return bigGroupModel;
-		}
-		
-		BookGroup[] middleMapArray = middleMap.get(bookgroup.getBigGroup());
-		String[] middleComboLists = new String[middleMapArray.length];
+	public void refreshSearchTable() {
+		searchTable.setModel(createTableModel());
+		searchTable.setVisible(true);
+	}
 	
-		for(int i = 0; i < middleMapArray.length; i++) {
-			middleComboLists[i] = middleMapArray[i].getBookMiddleGroupName();
-		}
-		middleGroupModel = new DefaultComboBoxModel<>(middleComboLists);
-		return middleGroupModel;
+	public void refreshReadingTable(Reading reading) {
+		ReadingService.getInstance().deleteByName(reading);
+		readingTable.setModel(createReadingTableModel());
+		readingTable.setVisible(true);
 	}
 	
 	public Object[][] getDataAll() {
 		List<Book> lists = BookService.getInstance().selectBookByAll();
 
-		Object[][] data = new Object[lists.size()][];
+		Object[][] datas = new Object[lists.size()][];
 		for (int i = 0; i < lists.size(); i++) {
-			data[i] = lists.get(i).toArray();
+			datas[i] = lists.get(i).toArray();
 		}
-		return data;
+		return datas;
+	}
+	
+	public Object[][] getReadingDataAll(){
+		List<Reading> lists = ReadingService.getInstance().findselectByAll();
+
+		Object[][] datas = new Object[lists.size()][];
+		for (int i = 0; i < lists.size(); i++) {
+			datas[i] = lists.get(i).modelData();
+		}
+		return datas;
+	}
+	
+	public DefaultTableModel createReadingTableModel() {
+		DefaultTableModel searchTableModel = new DefaultTableModel(getReadingDataAll(), readingTableTitle);
+		return searchTableModel;
 	}
 	
 	public List<Book> searchItem() {
@@ -407,67 +338,19 @@ public class BookInsertDelete extends JPanel {
 		DefaultTableModel model = new DefaultTableModel(getDataEach(), searchTableTitle);
 		searchTable.setModel(model);
 	}
-	
-	public void allMachMiddleGroup() {
-		BookGroup bookGroup = new BookGroup();
-		
-		middleMap = new HashMap<>();
 
-		List<BookGroup> middlelist = BookGroupService.getInstance().findAllMiddleGroup(bookGroup);
-		List<BookGroup> biglist = BookGroupService.getInstance().findAllBookBigGroup();
-		
-		BookGroup[][] bookTwoArray = new BookGroup[biglist.size()][10];
-		
-		int index = 0;
-		int TwoArrayindex = 0;	
-		
-		
-		for(int n = 0; n < middlelist.size(); n++) {
-			if(TwoArrayindex == 10) {
-				TwoArrayindex = 0; 
-			}
-			if(bookTwoArray[index][0] == null) {
-				bookTwoArray[index][0] = middlelist.get(n);
-				TwoArrayindex++; 
-				continue;
-			}
-			
-			if(bookTwoArray[index][0].getBookMiddleGroupName().equals(biglist.get(index).getBookBigGroupName())){
-				bookTwoArray[index][TwoArrayindex] = middlelist.get(n); 
-				TwoArrayindex++; 
-				if(n % 10 == 9) {
-					middleMap.put(biglist.get(index).getBigGroup(), bookTwoArray[index]);
-					index++;
-					continue;
-				}
-				continue;
-			}
-		}
+	public JTable getSearchTable() {
+		return searchTable;
 	}
-	public void radioSelectControl(JRadioButton jrBtn) {
-		if(jrBtn.isSelected() == true) {
-			for(JRadioButton jj : radioArray) {
-				jj.setSelected(false);
-			}
-			jrBtn.setSelected(true);
-		}
-		else {
-			for(JRadioButton jj : radioArray) {
-				if(jj != jrBtn) {
-					jj.setSelected(true);
-				}
-			}
-		}
+	
+	public void mIDFrameClose() {
+		mIDfram.setVisible(false);
 	}
-	public void tfFieldNotUsing() {
-		for(int i = 0 ; i < tfArrays.length; i++) {
-			tfArrays[i].setEnabled(false);
-		}
+
+	public String getBookcodeInfo() {
+		return bookcodeInfo;
 	}
-	public void tfFieldClearAndAdding() {
-		for(int i = 0 ; i < tfArrays.length; i++) {
-			tfArrays[i].setText("");
-			tfArrays[i].setEnabled(true);
-		}
-	}
+
+
 }
+

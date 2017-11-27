@@ -1,45 +1,22 @@
 package kr.or.dgit.library_project.ui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Font;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
 import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 import kr.or.dgit.library_project.view.ManegerUserInfo;
-import java.awt.BorderLayout;
-
 
 public class Manager extends JFrame {
 
 	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Manager frame = new Manager();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public Manager() {
 		setResizable(false);
@@ -50,14 +27,21 @@ public class Manager extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
-		
+
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
 		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
 
-		BookInsertDelete insertDeletePanel = new BookInsertDelete();
+		JLabel lblNewLabel = new JLabel("회원정보");
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(12, 281, 94, 30);
+		// panel_18.add(lblNewLabel);
+
+		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
+
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 

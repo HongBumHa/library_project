@@ -16,4 +16,7 @@ public interface BookDao {
 	int deleteBook(Book book);
 	
 	List<Book> selectByRank();
+	
+	List<Book> selectByWhereBookData(Book book);
+	List<Book> selectByBigMiddleGroupCode(Book book);
 }

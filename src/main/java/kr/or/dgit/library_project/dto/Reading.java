@@ -31,6 +31,11 @@ public class Reading {
 		this.author = author;
 		this.publicName = publicName;
 	}
+	
+	public Object[] modelData() {
+		return new Object[] {bookName, author, publicName};
+	}
+	
 	public Reading() {
 		
 	}

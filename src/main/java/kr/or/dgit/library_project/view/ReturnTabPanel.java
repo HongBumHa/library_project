@@ -38,11 +38,26 @@ public class ReturnTabPanel extends JPanel {
 	private JTextField tfDelayDay;
 	private JTable RentalDataTable;
 	private Users userId;
-	private Object[] sts = new String[] { "도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수" };
-	private JTextField[] tfFields;
 
-	public ReturnTabPanel() {
+	private Object[] sts = new String[] {
+			"도서코드", "도서명", "저 자", "출판사", "가 격", "연체 일수"
+		};
+	private JTextField[] tfFields;
+	
+	private static final ReturnTabPanel instance = new ReturnTabPanel();
+	private RentalView rentalView;
+
+
+
+
+	public static ReturnTabPanel getInstance() {
+		return instance;
+	}
+	
+
+	private ReturnTabPanel() {
 		setLayout(null);
+
 		userId = MainUi.getUsers();
 
 		JPanel returnTabInfo = new JPanel();
@@ -157,7 +172,9 @@ public class ReturnTabPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		RentalDataTable = new JTable();
 
-		RentalView rentalView = new RentalView();
+		
+		rentalView = new RentalView();
+
 		rentalView.setUserId(userId.getUserId());
 
 		tfFields = new JTextField[] { tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay };
@@ -188,12 +205,20 @@ public class ReturnTabPanel extends JPanel {
 				RentalBookService rtBookService = new RentalBookService();
 				rtBookService.deleteDataByWhereRentalBook(rtBook);
 
+
 				RentalDataTable.setModel(createTableModel(rentalView));
 				setAlignWidth();
 				RentalDataTable.setVisible(true);
+
+				
+				reloadTableView();
+
 				refreshTextField();
 
 				UserInfoView.getInstance().settingTableView();
+				int res = RentalBookPanel.getInstance().rentBookCountById();
+				RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
+				RentalBookPanel.getInstance().loadDataAll();
 				scrollPane.setViewportView(RentalDataTable);
 			}
 		});
@@ -237,6 +262,7 @@ public class ReturnTabPanel extends JPanel {
 		}
 	}
 	
+
 	public void setAlignWidth() {
 		setAlign(SwingConstants.CENTER,0,1,2,3,4,5);
 		setCellWidth(70, 300, 100, 100, 70, 50);
@@ -260,5 +286,11 @@ public class ReturnTabPanel extends JPanel {
 		for(int i=0; i<idx.length;i++){
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
 		}
+	}
+
+	public void reloadTableView() {
+		RentalDataTable.setModel(createTableModel(rentalView));
+		RentalDataTable.setVisible(true);
+
 	}
 }
