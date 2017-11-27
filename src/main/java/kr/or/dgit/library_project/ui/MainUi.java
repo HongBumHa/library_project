@@ -24,6 +24,7 @@ import kr.or.dgit.library_project.common.JTextFieldBlockComponent;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.view.MemberApp;
+import kr.or.dgit.library_project.view.UserpresentView;
 
 @SuppressWarnings("serial")
 public class MainUi extends JFrame {
@@ -58,7 +59,7 @@ public class MainUi extends JFrame {
 		setResizable(false);
 		setTitle("Library System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 702, 485);
+		setBounds(100, 100, 692, 473);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -107,6 +108,7 @@ public class MainUi extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MemberApp frame = MemberApp.getInstance();
+				frame.clear();
 				frame.setVisible(true);
 			}
 		});
@@ -123,17 +125,15 @@ public class MainUi extends JFrame {
 	private void checkId() {
 		String id = panel.getTextField().getText();
 		String pw = passwordField.getText();
-		int rank = 0;
+		String rank = null;
 		String resId = null;
 		String resPw = null;
 		List<Users> lists = service.findUsersByAll();
 		for (Users u : lists) {
 
 			if (id.equals(u.getUserId())) {
-
 				resId = u.getUserId();
 				if (pw.equals(u.getUserPw())) {
-
 					resPw = u.getUserPw();
 					rank = u.getRankCode();
 					break;
@@ -148,24 +148,38 @@ public class MainUi extends JFrame {
 			JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요");
 		} else {
 			users = service.findUsersByNo(new Users(id));
-			switch (rank) {
-			case 1:
-				JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
-				Manager managerUi = new Manager();
-				managerUi.setVisible(true);
-				break;
-			case 2:
-				JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
-				UserInfo uinfo = new UserInfo();
-				uinfo.setVisible(true);
-				break;
-			case 3:
-				JOptionPane.showMessageDialog(null, "블랙리스트입니다");
-				break;
-			}
 
+
+			if (users.getUserLeave().equals("N")) {
+				JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
+				return;
+
+			}
 		}
+
+		switch (rank) {
+		case "1":
+			JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
+			Manager managerUi = new Manager();
+			managerUi.setVisible(true);
+			setVisible(false);
+			break;
+		case "2":
+			JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
+			UserInfo uinfo = new UserInfo();
+			uinfo.setVisible(true);
+			setVisible(false);
+			break;
+		case "3":
+			JOptionPane.showMessageDialog(null, "블랙리스트입니다");
+			break;
+		}
+
 	}
+
+
+
+
 	public static Users getUsers() {
 		return users;
 	}

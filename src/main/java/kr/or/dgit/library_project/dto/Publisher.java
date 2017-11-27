@@ -35,4 +35,10 @@ public class Publisher {
 		return String.format("Publisher [publicCode=%s, publicName=%s]", publicCode, publicName);
 	}
 
+
+	public Publisher(String publicCode) {
+		super();
+		this.publicCode = publicCode;
+	}
+
 }

@@ -6,6 +6,8 @@ import java.util.Date;
 
 import com.mysql.jdbc.TimeUtil;
 
+import kr.or.dgit.library_project.service.PublisherService;
+
 public class RentalView {
 	private String bookCode;
 	private String bookName;
@@ -24,9 +26,11 @@ public Object[] toArrayReturn() {
 		if(diffTime < 0) {
 			delaytime = Math.abs(diffTime/(1000*60*60*24));
 		}
-		
+		String reslut_price = String.format("%, d",price);
 		return new Object[]{bookCode, bookName,author, 
-						publicName, price, delaytime};
+						PublisherService.getInstance().selectPublisherByCodeName(new Publisher(publicName)).getPublicName(),
+						reslut_price, delaytime};
+//		publicName
 	}
 	
 	public String getBookCode() {
@@ -85,14 +89,16 @@ public Object[] toArrayReturn() {
 	}
 	@Override
 	public String toString() {
+		String reslut_price = String.format("%, d",price);
 		return String.format(
 				"%s, %s, %s, %s, %s, %s, %s, %s, %s",
-				bookCode, bookName, userId, userName, author, publicName, price, rentalDay, returnDay);
+				bookCode, bookName, userId, userName, author, publicName, reslut_price, rentalDay, returnDay);
 	}
 	
 	public Object[] toArray() {
+		String reslut_price = String.format("%, d",price);
 		SimpleDateFormat ss = new SimpleDateFormat("yyyy-MM-dd");
-		return new Object[] {bookCode, bookName, userId, userName, author, publicName, price, ss.format(rentalDay),ss.format(returnDay)};
+		return new Object[] {bookCode, bookName, userId, userName, author, publicName, reslut_price, ss.format(rentalDay),ss.format(returnDay)};
 	}
 	
 	public RentalView() {

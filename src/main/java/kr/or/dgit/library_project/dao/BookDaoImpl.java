@@ -84,4 +84,5 @@ public class BookDaoImpl implements BookDao {
 		log.debug("selectByBigMiddleGroupCode()");
 		return sqlSession.selectList(namespace+"selectByBigMiddleGroupCode", book);
 	}
+
 }

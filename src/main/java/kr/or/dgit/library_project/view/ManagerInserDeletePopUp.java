@@ -207,7 +207,10 @@ public class ManagerInserDeletePopUp extends JPanel {
 					//
 //					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
 					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());			
-					book.setPrice(Integer.parseInt(tfPrice.getText()));
+					
+					System.out.println(tfPrice.getText().replaceAll(" ", ""));
+					
+					book.setPrice(Integer.parseInt(tfPrice.getText().replaceAll(" ", "")));
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 
 					BookService.getInstance().updateBook(book);

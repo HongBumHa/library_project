@@ -23,19 +23,20 @@ public class UserInfo extends JFrame {
 
 	private JPanel contentPane;
 	public UserInfo() {
+		setResizable(false);
+		setTitle("DGIT LIBRARY USER MODE");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 826, 575);
+		setBounds(100, 100, 868, 579);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(5, 5, 980, 534);
 		contentPane.add(tabbedPane);
 
-		RentalBookPanel rentalBookTab = new RentalBookPanel();
+		RentalBookPanel rentalBookTab = RentalBookPanel.getInstance();
 		rentalBookTab.setLayout(null);
 		tabbedPane.addTab("대 여", null, rentalBookTab, null);
 
@@ -50,8 +51,8 @@ public class UserInfo extends JFrame {
 		testing.setLayout(null);
 		tabbedPane.addTab("회원정보", null, testing, null);
 		
-		UserpresentView 유저현황 = new UserpresentView();
-		tabbedPane.addTab("New tab", null, 유저현황, null);
+		UserpresentView 유저현황 = UserpresentView.getInstance();
+		tabbedPane.addTab("현황 보기", null, 유저현황, null);
 
 	}	
 }

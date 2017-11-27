@@ -1,15 +1,12 @@
 package kr.or.dgit.library_project.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -35,7 +32,9 @@ public class ManagerPieChart extends JPanel {
 			sum+=countArr[i];
 		}
 		for(int i=0;i<10;i++) {
-			data.setValue(bookGroupName[i]+ratioCal(countArr[i], sum), countArr[i]);
+			if(countArr[i]!=0) {
+				data.setValue(bookGroupName[i]+ratioCal(countArr[i], sum), countArr[i]);
+			}
 		}
 
 		// create a chart...
@@ -61,8 +60,10 @@ public class ManagerPieChart extends JPanel {
 		int[] rentCount = new int[10];
 		for (int i = 0; i < bookArr.length; i++) {
 			book.setBookCode(bookArr[i]);
+
 			Book num = BookService.getInstance().selectBookForChart(book);
 			rentCount[i] = num.getAllRentalCount();
+
 		}
 
 		return rentCount;

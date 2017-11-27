@@ -1,6 +1,8 @@
 package kr.or.dgit.library_project.view;
 
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -18,7 +20,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
@@ -32,18 +38,17 @@ public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
 	private JTextField tfSearch;
 	private DefaultComboBoxModel searchComboModel = new DefaultComboBoxModel<>(
-			new String[] {"전체보기", "도서코드", "도서명", "저 자", "출판사"}
-			);
-	
+			new String[] { "전체보기", "도서코드", "도서명", "저 자", "출판사" });
+
 	private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
-	private String[] readingTableTitle = new String[] {"도서명", "저자", "출판사"};
+	private String[] readingTableTitle = new String[] { "도서명", "저자", "출판사" };
 	private JComboBox comboSearch;
 	private String bookcodeInfo;
-	private JTable readingTable;	
+	private JTable readingTable;
 	private JTextField publisherJT;
 	private ManagerInserDeletePopupFrame mIDfram = ManagerInserDeletePopupFrame.getInstance();
-	private static BookInsertDelete instance = new BookInsertDelete();	
-	
+	private static BookInsertDelete instance = new BookInsertDelete();
+
 	public static BookInsertDelete getInstance() {
 		return instance;
 	}
@@ -66,6 +71,9 @@ public class BookInsertDelete extends JPanel {
 	
 		searchTable.setComponentPopupMenu(searchPopupMenu);
 		searchTable.setModel(createTableModel());
+		searchTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		searchTable.getColumnModel().getColumn(1).setPreferredWidth(230);
+//		sizeColumnsToFit(searchTable, 0);
 		tableScroll.setViewportView(searchTable);
 		
 		tfSearch = new JTextField();
@@ -95,6 +103,7 @@ public class BookInsertDelete extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadDataEach();
+				tfSearch.setText("");
 			}
 		});
 		add(btnSearch);
@@ -118,7 +127,6 @@ public class BookInsertDelete extends JPanel {
 				JTextField[] field = ManagerInserDeletePopUp.getInstance().getTfArrays();		
 				String[] readingTableData = new String[readingTable.getColumnCount()];
 				
-				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
 				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청도서추가");
 				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("신청도서를 추가 합니다.");
 				
@@ -129,8 +137,10 @@ public class BookInsertDelete extends JPanel {
 				field[0].setText(readingTableData[0]);
 				field[1].setText(readingTableData[1]);
 				publisherJT = ((JTextField)(ManagerInserDeletePopUp.getInstance().getPublisherCombo().getEditor().getEditorComponent()));
-
-				System.out.println("정보 확인"+ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]));
+				field[3].setText("");
+				field[4].setText("");
+				
+//				System.out.println("정보 확인"+ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]));
 				
 				
 				if(ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]) == 1) {
@@ -223,6 +233,10 @@ public class BookInsertDelete extends JPanel {
 						ManagerInserDeletePopUp.getInstance().publicComboSelected(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
 						continue;
 					}
+					if(i == 3) {
+						ManagerInserDeletePopUp.getInstance().getTfArrays()[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString().replace(",", ""));
+						continue;
+					}
 					ManagerInserDeletePopUp.getInstance().getTfArrays()[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
 //					private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
 				}
@@ -288,18 +302,18 @@ public class BookInsertDelete extends JPanel {
 		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
 		return searchTableModel;
 	}
-	
+
 	public void refreshSearchTable() {
 		searchTable.setModel(createTableModel());
 		searchTable.setVisible(true);
 	}
-	
+
 	public void refreshReadingTable(Reading reading) {
 		ReadingService.getInstance().deleteByName(reading);
 		readingTable.setModel(createReadingTableModel());
 		readingTable.setVisible(true);
 	}
-	
+
 	public Object[][] getDataAll() {
 		List<Book> lists = BookService.getInstance().selectBookByAll();
 
@@ -309,8 +323,8 @@ public class BookInsertDelete extends JPanel {
 		}
 		return datas;
 	}
-	
-	public Object[][] getReadingDataAll(){
+
+	public Object[][] getReadingDataAll() {
 		List<Reading> lists = ReadingService.getInstance().findselectByAll();
 
 		Object[][] datas = new Object[lists.size()][];
@@ -319,42 +333,42 @@ public class BookInsertDelete extends JPanel {
 		}
 		return datas;
 	}
-	
+
 	public DefaultTableModel createReadingTableModel() {
 		DefaultTableModel searchTableModel = new DefaultTableModel(getReadingDataAll(), readingTableTitle);
 		return searchTableModel;
 	}
-	
+
 	public List<Book> searchItem() {
-		String searchBy =(String) comboSearch.getSelectedItem();
+		String searchBy = (String) comboSearch.getSelectedItem();
 		String item = tfSearch.getText();
 		List<Book> lists = null;
-		Map<String, Object> map=new HashMap<String, Object>();
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		if (searchBy.equals("도서코드")) {
-			map.put("bookCode", "%"+item+"%");
+			map.put("bookCode", "%" + item + "%");
 			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
 		if (searchBy.equals("도서명")) {
-			map.put("bookName", "%"+item+"%");
+			map.put("bookName", "%" + item + "%");
 			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
 		if (searchBy.equals("저 자")) {
-			map.put("author", "%"+item+"%");
+			map.put("author", "%" + item + "%");
 			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
 		if (searchBy.equals("출판사")) {
 
-			map.put("publicName", "%"+item+"%");
+			map.put("publicName", "%" + item + "%");
 			lists = BookService.getInstance().selectBookBySomething(map);
 			return lists;
 		}
 		return lists;
 	}
-	
+
 	public Object[][] getDataEach() {
 		List<Book> lists = searchItem();
 
@@ -364,7 +378,7 @@ public class BookInsertDelete extends JPanel {
 		}
 		return data;
 	}
-	
+
 	public void loadDataEach() {
 		DefaultTableModel model = new DefaultTableModel(getDataEach(), searchTableTitle);
 		searchTable.setModel(model);
@@ -373,7 +387,7 @@ public class BookInsertDelete extends JPanel {
 	public JTable getSearchTable() {
 		return searchTable;
 	}
-	
+
 	public void mIDFrameClose() {
 		mIDfram.setVisible(false);
 	}
