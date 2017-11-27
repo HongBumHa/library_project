@@ -315,6 +315,8 @@ public class UserInfoView extends JPanel {
 		tfAddr.setText(u.getUserAddr());
 		tfUserTel.setText(u.getUserTel());
 		tfUserEamil.setText(u.getUserEmail());
+		tfUserPw.setText("");
+		tfUserPwCh.setText("");
 	}
 
 	public UserInfoView(String str) {
@@ -393,7 +395,6 @@ public class UserInfoView extends JPanel {
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = historyTable.getColumnModel();
-		System.out.println(Arrays.toString(width));
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}
