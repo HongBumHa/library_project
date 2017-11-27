@@ -79,7 +79,7 @@ public class MemberApp extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel pAddr = new JPanel();
-		pAddr.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pAddr.setBorder(null);
 		pAddr.setBounds(30, 311, 399, 62);
 		contentPane.add(pAddr);
 		pAddr.setLayout(null);
@@ -129,7 +129,7 @@ public class MemberApp extends JFrame {
 		pAddr.add(btnNewButton);
 
 		JPanel pId = new JPanel();
-		pId.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pId.setBorder(null);
 		pId.setBounds(30, 44, 295, 30);
 		contentPane.add(pId);
 		pId.setLayout(new GridLayout(0, 2, 0, 0));
@@ -144,7 +144,7 @@ public class MemberApp extends JFrame {
 		tfId.setColumns(10);
 
 		JPanel pPw = new JPanel();
-		pPw.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pPw.setBorder(null);
 		pPw.setBounds(30, 129, 295, 30);
 		contentPane.add(pPw);
 		pPw.setLayout(new GridLayout(0, 2, 0, 0));
@@ -156,7 +156,7 @@ public class MemberApp extends JFrame {
 		pPw.add(tfPw);
 
 		JPanel pName = new JPanel();
-		pName.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pName.setBorder(null);
 		pName.setBounds(30, 87, 295, 30);
 		contentPane.add(pName);
 		pName.setLayout(new GridLayout(0, 2, 0, 0));
@@ -169,7 +169,7 @@ public class MemberApp extends JFrame {
 		pName.add(tfName);
 
 		JPanel pPwch = new JPanel();
-		pPwch.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		pPwch.setBorder(null);
 		pPwch.setBounds(30, 170, 295, 30);
 		contentPane.add(pPwch);
 		pPwch.setLayout(new GridLayout(0, 2, 0, 0));
@@ -182,7 +182,7 @@ public class MemberApp extends JFrame {
 		pPwch.add(tfPwch);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		panel.setBorder(null);
 		panel.setBounds(30, 212, 374, 40);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -228,7 +228,8 @@ public class MemberApp extends JFrame {
 		contentPane.add(lblNewLabel_1);
 
 		JButton btnAdd = new JButton("회원가입");
-		btnAdd.setBackground(new Color(106, 90, 205));
+		btnAdd.setBorder(null);
+		btnAdd.setBackground(Color.LIGHT_GRAY);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (insertUser()) {
@@ -237,16 +238,17 @@ public class MemberApp extends JFrame {
 
 			}
 		});
-		btnAdd.setBounds(371, 392, 97, 30);
+		btnAdd.setBounds(255, 392, 97, 30);
 		contentPane.add(btnAdd);
 
 		JButton button = new JButton("취 소");
+		button.setBackground(Color.LIGHT_GRAY);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 			}
 		});
-		button.setBounds(262, 392, 97, 30);
+		button.setBounds(364, 392, 97, 30);
 		contentPane.add(button);
 
 		JLabel pwCh = new JLabel("비밀번호가 불일치합니다");
@@ -261,7 +263,7 @@ public class MemberApp extends JFrame {
 		contentPane.add(pwChCh);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new LineBorder(new Color(0, 139, 139), 1, true));
+		panel_1.setBorder(null);
 		panel_1.setLayout(null);
 		panel_1.setBounds(30, 261, 374, 40);
 		contentPane.add(panel_1);
@@ -288,6 +290,41 @@ public class MemberApp extends JFrame {
 		lblIdCh.setForeground(new Color(0, 255, 0));
 		lblIdCh.setBounds(184, 28, 146, 15);
 		contentPane.add(lblIdCh);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		lblNewLabel_2.setBounds(24, 52, 4, 15);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_3.setBounds(24, 96, 4, 15);
+		contentPane.add(label_3);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_5.setBounds(24, 137, 4, 15);
+		contentPane.add(label_5);
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_6.setBounds(24, 178, 4, 15);
+		contentPane.add(label_6);
+		
+		JLabel label_7 = new JLabel("");
+		label_7.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_7.setBounds(24, 225, 4, 15);
+		contentPane.add(label_7);
+		
+		JLabel label_8 = new JLabel("");
+		label_8.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_8.setBounds(24, 275, 4, 15);
+		contentPane.add(label_8);
+		
+		JLabel label_9 = new JLabel("");
+		label_9.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_9.setBounds(24, 323, 4, 15);
+		contentPane.add(label_9);
 
 		tfPw.addKeyListener(new KeyAdapter() {
 
