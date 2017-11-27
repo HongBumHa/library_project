@@ -298,7 +298,7 @@ public class ManagerRentalBook extends JPanel {
 	
 	public void setAlignWidth() {
 		setAlign(SwingConstants.CENTER,0,1,2,3,4,5,6,7,8);
-		setCellWidth(100, 300, 80, 80, 100, 150, 100, 100, 100);
+		setCellWidth(100, 300, 80, 80, 110, 130, 85, 100, 100);
 	}
 	
 	public void setCellWidth(int...width) {
