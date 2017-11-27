@@ -346,15 +346,10 @@ public class MemberApp extends JFrame {
 			JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다");
 			return false;
 		}
-		
-		p = Pattern.compile("^[a-zA-Z0-9]{5,15}$");
-		m = p.matcher(tfEmail1.getText());
+	
 		
 		if(tfEmail1.getText().length()==0 || tfEmail2.getText().length() ==0) {
 			JOptionPane.showMessageDialog(null, "이메일을 입력하세요");
-			return false;
-		}else if(!m.find()) {
-			JOptionPane.showMessageDialog(null, "이메일아이디가 잘못입력되었습니다.");
 			return false;
 		}
 		p = Pattern.compile("^[0-9]{3,4}$");
@@ -378,7 +373,7 @@ public class MemberApp extends JFrame {
 		Users u = new Users();
 		u.setUserId(tfId.getText());
 		u.setDelayDay(0);
-		u.setRankCode(2);
+		u.setRankCode("2");
 		u.setUserEmail(email);
 		u.setUserTel(tel);
 		u.setUserAddr(tfUserAddr.getText());
@@ -429,8 +424,8 @@ public class MemberApp extends JFrame {
 
 	protected void idCheck(String text) {
 		lblIdCh.setText("");
-		if(text.length() <= 7) {
-			JOptionPane.showMessageDialog(null, "8자이상 입력하세요.");
+		if(text.length() <= 4) {
+			JOptionPane.showMessageDialog(null, "4자이상 입력하세요.");
 			return;
 		}
 		List<Users> lists= UsersService.getInstance().findUsersByAll();

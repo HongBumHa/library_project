@@ -19,9 +19,9 @@ import kr.or.dgit.library_project.ui.MainUi;
 import javax.swing.ImageIcon;
 
 public class UserpresentView extends JPanel {
-	private JLabel lblToteint;
-	private JLabel lblRentalint;
-	private JLabel lblReturnint;
+	private static JLabel lblToteint;
+	private static JLabel lblRentalint;
+	private static JLabel lblReturnint;
 
 	public UserpresentView() {
 		setLayout(null);
@@ -85,12 +85,13 @@ public class UserpresentView extends JPanel {
 		add(lblNewLabel_1);
 		setting();
 	}
-	public void setting() {
+	public static void setting() {
 		Users u = MainUi.getUsers();
 		HistoryView h = HistoryViewService.getInstance().findUserReturnCount(u);
 		RentalBook r = RentalBookService.getInstance().findselectByUserRentalbookCount(u);
 		int total = h.getPrice() + Integer.parseInt(r.getUserId());
-		lblRentalint.setText(r.getUserId()+"권");
+		lblRentalint.setText(r.getUserId()+
+				"권");
 		lblToteint.setText(total + "권");
 		lblReturnint.setText(h.getPrice()+"권");
 	}

@@ -127,8 +127,8 @@ public class UserinfoHistoryViewFrame extends JFrame {
 		lblBookcodeText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 0));
 		lblBookNameText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 1));
 		lblpulbicText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 3));
-		lblReturnText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 5));
-		lblRentelText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 6));
+		lblReturnText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 6));
+		lblRentelText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 5));
 		lblpriceText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 4));
 		lblahcText.setText((String)UserInfoView.getInstance().getHistoryTable().getValueAt(index, 2));
 	}

@@ -8,7 +8,7 @@ public class Users {
 	private String userTel;
 	private String userEmail;
 	private int delayDay;
-	private int rankCode;
+	private String rankCode;
 	private String userLeave;
 
 	public Users() {
@@ -70,11 +70,11 @@ public class Users {
 		this.delayDay = delayDay;
 	}
 
-	public int getRankCode() {
+	public String getRankCode() {
 		return rankCode;
 	}
 
-	public void setRankCode(int rankCode) {
+	public void setRankCode(String rankCode) {
 		this.rankCode = rankCode;
 	}
 
@@ -109,7 +109,7 @@ public class Users {
 	}
 
 	public Users(String userId, String userName, String userPw, String userAddr, String userTel, String userEmail,
-			int delayDay, int rankCode, String userLeave) {
+			int delayDay, String rankCode, String userLeave) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userPw = userPw;
@@ -125,6 +125,6 @@ public class Users {
 		this.delayDay = delayDay;
 	}
 	public Object[] toArray() {
-		return new Object[] {userId,userName,userTel,userAddr,userEmail,userLeave};
+		return new Object[] {userId,userName,userTel,userAddr,userEmail,rankCode,userLeave};
 	}
 }

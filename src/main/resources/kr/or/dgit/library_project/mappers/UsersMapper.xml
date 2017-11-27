@@ -73,13 +73,16 @@
 
 
 	<sql id="selectUserListSql">
-		select
-		user_id,user_name,user_addr,user_tel,user_email,user_leave from users
+		select 
+		user_id,user_name,user_addr,user_tel,user_email,user_leave, r.rank_name 
+		from users u, userrank r 
+		
 	</sql>
 	<sql id="whereSql2">
 		<where>
+			u.rank_code = r.rank_code
 			<if test="userId != null">
-				user_id like #{userId}
+				and user_id like #{userId}
 			</if>
 			<if test="userAddr != null">
 				and user_addr like #{userAddr}
@@ -105,6 +108,8 @@
 		<result property="userTel" column="user_tel" />
 		<result property="userEmail" column="user_email" />
 		<result property="userLeave" column="user_leave" />
+		<result property="userLeave" column="user_leave" />
+		<result property="rankCode" column="rank_name" />
 	</resultMap>
 	<select id="selectByUserList" parameterType="map" resultMap="UserListResult">
 		<include refid="selectUserListSql" />

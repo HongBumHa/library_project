@@ -32,6 +32,7 @@ import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
 import javax.swing.BoxLayout;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {
@@ -53,82 +54,87 @@ public class ManegerUserInfo extends JPanel {
 	private static JTextField tfDoro;
 	private static JComboBox<String> cmbSido;
 	private DefaultComboBoxModel<String> sidoModel;
+	private JComboBox<String> cmbRank;
 	public ManegerUserInfo() {
 		setLayout(null);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
 		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_9.setBounds(73, 81, 648, 165);
+		panel_9.setBounds(9, 55, 713, 197);
 		add(panel_9);
 		
 		JPanel pId = new JPanel();
+		pId.setBorder(new LineBorder(Color.DARK_GRAY));
 		pId.setLayout(null);
-		pId.setBounds(19, 6, 190, 31);
+		pId.setBounds(73, 21, 182, 31);
 		panel_9.add(pId);
 		
 		JLabel lblId = new JLabel("아이디");
-		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblId.setHorizontalAlignment(SwingConstants.LEFT);
 		lblId.setBounds(4, 8, 47, 15);
 		pId.add(lblId);
 		
 		tfId = new JTextField();
 		tfId.setColumns(10);
-		tfId.setBounds(63, 5, 116, 21);
+		tfId.setBounds(58, 5, 116, 21);
 		pId.add(tfId);
 		
 		JPanel pName = new JPanel();
+		pName.setBorder(new LineBorder(Color.DARK_GRAY));
 		pName.setLayout(null);
-		pName.setBounds(19, 47, 190, 31);
+		pName.setBounds(255, 21, 137, 31);
 		panel_9.add(pName);
 		
 		JLabel lblName = new JLabel("이 름");
-		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setBounds(5, 7, 40, 15);
+		lblName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblName.setBounds(3, 9, 36, 15);
 		pName.add(lblName);
 		
 		tfName = new JTextField();
 		tfName.setColumns(10);
-		tfName.setBounds(62, 4, 116, 21);
+		tfName.setBounds(41, 6, 86, 21);
 		pName.add(tfName);
 		
 		JPanel pTel = new JPanel();
+		pTel.setBorder(new LineBorder(Color.DARK_GRAY));
 		pTel.setLayout(null);
-		pTel.setBounds(221, 47, 295, 31);
+		pTel.setBounds(73, 54, 182, 31);
 		panel_9.add(pTel);
 		
 		JLabel lblTel = new JLabel("전화번호");
-		lblTel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTel.setBounds(3, 7, 65, 15);
+		lblTel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTel.setBounds(3, 7, 54, 15);
 		pTel.add(lblTel);
 		
 		tfTel = new JTextField();
 		tfTel.setColumns(10);
-		tfTel.setBounds(68, 4, 206, 21);
+		tfTel.setBounds(57, 4, 116, 21);
 		pTel.add(tfTel);
 		
 		JPanel pAddr = new JPanel();
+		pAddr.setBorder(new LineBorder(Color.DARK_GRAY));
 		pAddr.setLayout(null);
-		pAddr.setBounds(19, 86, 497, 69);
+		pAddr.setBounds(73, 87, 497, 69);
 		panel_9.add(pAddr);
 		
 		JLabel lblAddr = new JLabel("주 소");
-		lblAddr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddr.setBounds(5, 21, 44, 15);
+		lblAddr.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAddr.setBounds(4, 26, 44, 15);
 		pAddr.add(lblAddr);
 		
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		cmbSido = new JComboBox<String>(sidoModel);
-		cmbSido.setBounds(130, 9, 99, 21);
+		cmbSido.setBounds(118, 13, 128, 21);
 		pAddr.add(cmbSido);
 		
 		tfAddr = new JTextField();
 		tfAddr.setColumns(10);
-		tfAddr.setBounds(68, 40, 406, 21);
+		tfAddr.setBounds(118, 39, 352, 21);
 		pAddr.add(tfAddr);
 		
 		tfDoro = new JTextField();
-		tfDoro.setBounds(245, 9, 145, 21);
+		tfDoro.setBounds(248, 13, 145, 21);
 		pAddr.add(tfDoro);
 		tfDoro.setColumns(10);
 		
@@ -139,35 +145,53 @@ public class ManegerUserInfo extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		btnAddr.setBounds(394, 7, 76, 23);
+		btnAddr.setBounds(394, 13, 76, 23);
 		pAddr.add(btnAddr);
 		
 		JPanel pEmail = new JPanel();
+		pEmail.setBorder(new LineBorder(Color.DARK_GRAY));
 		pEmail.setLayout(null);
-		pEmail.setBounds(221, 6, 295, 31);
+		pEmail.setBounds(255, 54, 315, 31);
 		panel_9.add(pEmail);
 		
 		JLabel lblEmail = new JLabel("이메일");
-		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmail.setBounds(4, 8, 57, 15);
+		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEmail.setBounds(4, 8, 51, 15);
 		pEmail.add(lblEmail);
 		
 		tfEmail = new JTextField();
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(67, 5, 205, 21);
+		tfEmail.setBounds(41, 5, 205, 21);
 		pEmail.add(tfEmail);
 		
 		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(545, 70, 97, 23);
+		btnUpdate.setBounds(592, 40, 97, 23);
 		panel_9.add(btnUpdate);
 		
 		JButton btnClear = new JButton("확 인");
-		btnClear.setBounds(545, 100, 97, 23);
+		btnClear.setBounds(592, 77, 97, 23);
 		panel_9.add(btnClear);
 		
 		JButton btnDel = new JButton("회원탈퇴");
-		btnDel.setBounds(545, 130, 97, 23);
+		btnDel.setBounds(592, 114, 97, 23);
 		panel_9.add(btnDel);
+		
+		JPanel pRank = new JPanel();
+		pRank.setBorder(new LineBorder(Color.DARK_GRAY));
+		pRank.setLayout(null);
+		pRank.setBounds(392, 21, 178, 31);
+		panel_9.add(pRank);
+		
+		JLabel lblRank = new JLabel("등 급");
+		lblRank.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRank.setBounds(5, 7, 40, 15);
+		pRank.add(lblRank);
+		
+		cmbRank = new JComboBox();
+		cmbRank.setModel(new DefaultComboBoxModel<String>(new String[] {"관리자","회원","블랙리스트"}));
+		cmbRank.setBounds(44, 4, 109, 21);
+		
+		pRank.add(cmbRank);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
@@ -192,7 +216,7 @@ public class ManegerUserInfo extends JPanel {
 		
 		
 		JPanel pSerach = new JPanel();
-		pSerach.setBounds(89, 36, 499, 30);
+		pSerach.setBounds(90, 15, 499, 30);
 		add(pSerach);
 		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
 		cmbSearch = new JComboBox<String>();
@@ -208,7 +232,7 @@ public class ManegerUserInfo extends JPanel {
 		pSerach.add(btnsearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(15, 278, 758, 282);
+		scrollPane.setBounds(9, 278, 777, 282);
 		add(scrollPane);
 		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames()){
 			public boolean isCellEditable(int i, int c) {
@@ -223,7 +247,7 @@ public class ManegerUserInfo extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("유저리스트");
 		lblNewLabel_1.setFont(new Font("맑은 고딕", Font.BOLD, 16));
-		lblNewLabel_1.setBounds(15, 247, 86, 25);
+		lblNewLabel_1.setBounds(11, 252, 86, 25);
 		add(lblNewLabel_1);
 		
 		btnsearch.addActionListener(new ActionListener() {
@@ -270,7 +294,7 @@ public class ManegerUserInfo extends JPanel {
 		String userEmail = tfEmail.getText();
 		String userPw = u.getUserPw();
 		int delayDay = 0;
-		int rankCode = 2;
+		String rankCode = "2";
 		String userLeave = "Y";
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
@@ -288,7 +312,7 @@ public class ManegerUserInfo extends JPanel {
 
 	private String[] getColumnNames() {
 		return new String[] {
-				"아이디", "이 름", "전화번호", "주 소", "이메일","탈퇴여부"
+				"아이디", "이 름", "전화번호", "주 소","이메일","등급","탈퇴여부"
 			};
 	}
 	private Object[][] searchData(){
@@ -300,7 +324,8 @@ public class ManegerUserInfo extends JPanel {
 		return datas;
 	}
 	private Object[][] getData() {
-		List<Users> lists = UsersService.getInstance().findUsersByAll();
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Users> lists = UsersService.getInstance().findSelectByUserList(map);
 		Object[][] datas = new Object[lists.size()][];
 		for(int i =0; i < lists.size(); i++) {
 			datas[i] = lists.get(i).toArray();
@@ -345,10 +370,8 @@ public class ManegerUserInfo extends JPanel {
 		item.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
+			public void actionPerformed(ActionEvent e) {			
 				selectTable();
-				
 			}
 		});
 		popUpMenu.add(item);
@@ -362,11 +385,12 @@ public class ManegerUserInfo extends JPanel {
 		tfTel.setText((String)table.getValueAt(selectedIndex, 2));
 		tfAddr.setText((String)table.getValueAt(selectedIndex, 3));
 		tfEmail.setText((String)table.getValueAt(selectedIndex, 4));
+		cmbRank.setSelectedItem((String)table.getValueAt(selectedIndex, 5));
 	}
 
-public void setAlignWidth() {
-		setAlign(SwingConstants.CENTER, 0, 1,2,3,4,5);
-		setCellWidth(70, 70, 100, 330, 150, 60);
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER, 0, 1,2,3,4,5,6);
+		setCellWidth(70, 70, 100, 300, 150,70, 50);
 	}
 	
 	public void setCellWidth(int...width) {

@@ -24,6 +24,7 @@ import kr.or.dgit.library_project.common.JTextFieldBlockComponent;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.view.MemberApp;
+import kr.or.dgit.library_project.view.UserpresentView;
 
 @SuppressWarnings("serial")
 public class MainUi extends JFrame {
@@ -124,7 +125,7 @@ public class MainUi extends JFrame {
 	private void checkId() {
 		String id = panel.getTextField().getText();
 		String pw = passwordField.getText();
-		int rank = 0;
+		String rank = null;
 		String resId = null;
 		String resPw = null;
 		List<Users> lists = service.findUsersByAll();
@@ -155,21 +156,21 @@ public class MainUi extends JFrame {
 				return;
 			}
 		}
-
+		
 		switch (rank) {
-		case 1:
+		case "1":
 			JOptionPane.showMessageDialog(null, id + " 관리자님 환영합니다.");
 			Manager managerUi = new Manager();
 			managerUi.setVisible(true);
 			setVisible(false);
 			break;
-		case 2:
+		case "2":
 			JOptionPane.showMessageDialog(null, id + "님 환영합니다.");
 			UserInfo uinfo = new UserInfo();
 			uinfo.setVisible(true);
 			setVisible(false);
 			break;
-		case 3:
+		case "3":
 			JOptionPane.showMessageDialog(null, "블랙리스트입니다");
 			break;
 		}
