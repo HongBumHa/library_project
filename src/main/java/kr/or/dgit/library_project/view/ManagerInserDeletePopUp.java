@@ -100,11 +100,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 		add(tfPrice);
 		tfPrice.setColumns(11);
 		
-//		tfPublisher = new JTextField();
-//		tfPublisher.setBounds(139, 175, 127, 21);
-//		add(tfPublisher);
-//		tfPublisher.setColumns(11);
-		
 		List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
 		String[] pubArray = new String[pubList.size()];
 		
@@ -165,27 +160,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				// 필요하다면 경고 메세지 말고 새로운 프레임이 뜨게 할 수 있음
-				/*if(btnClickEvent.getText() == "제거") {
-					Book book = new Book();
-					book.setBookCode(BookInsertDelete.getInstance().getBookcodeInfo());
-					
-					if(RentalViewService.getInstance().findByBookDataRentalView(book) != null) {
-						JOptionPane.showMessageDialog(null, "아직 반납되지 않은 도서가 존재합니다.");
-						return;
-					}
-					// history내의 정보 변화는 나중에
-					
-					System.out.println("bookCodeDelete Check : " + book.getBookCode());
-					
-					BookService.getInstance().deleteBook(book);
-					for(int i = 0 ; i < tfArrays.length; i++) {
-						tfArrays[i].setText("");
-					}
-					BookInsertDelete.getInstance().refreshSearchTable();
-					BookInsertDelete.getInstance().mIDFrameClose();
-				}*/
 				if(btnClickEvent.getText() == "변경") {
 					Book book = new Book();
 					book.setBookCode(BookInsertDelete.getInstance().getBookcodeInfo());
@@ -424,6 +398,10 @@ public class ManagerInserDeletePopUp extends JPanel {
 
 		List<BookGroup> middlelist = BookGroupService.getInstance().findAllMiddleGroup(bookGroup);
 		List<BookGroup> biglist = BookGroupService.getInstance().findAllBookBigGroup();
+		
+		System.out.println("middle size " +middlelist.size());
+		System.out.println("bigList size " +biglist.size());
+		
 		
 		BookGroup[][] bookTwoArray = new BookGroup[biglist.size()][10];
 		

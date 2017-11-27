@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +21,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
@@ -48,6 +51,7 @@ public class BookInsertDelete extends JPanel {
 	private JTextField publisherJT;
 	private ManagerInserDeletePopupFrame mIDfram = ManagerInserDeletePopupFrame.getInstance();
 	private static BookInsertDelete instance = new BookInsertDelete();
+	private JScrollPane tableScroll;
 
 	public static BookInsertDelete getInstance() {
 		return instance;
@@ -59,7 +63,7 @@ public class BookInsertDelete extends JPanel {
 		bookcodeInfo = new String();
 		setLayout(null);
 		
-		JScrollPane tableScroll = new JScrollPane();
+		tableScroll = new JScrollPane();
 		tableScroll.setBounds(12, 75, 470, 326);
 		add(tableScroll);
 		
@@ -70,9 +74,10 @@ public class BookInsertDelete extends JPanel {
 		JMenuItem deletePopup = new JMenuItem("삭제");
 	
 		searchTable.setComponentPopupMenu(searchPopupMenu);
-		searchTable.setModel(createTableModel());
-		searchTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		searchTable.getColumnModel().getColumn(1).setPreferredWidth(230);
+//		searchTable.setModel(createTableModel());
+//		searchTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		searchTable.getColumnModel().getColumn(1).setPreferredWidth(230);
+		refreshSearchTable();
 //		sizeColumnsToFit(searchTable, 0);
 		tableScroll.setViewportView(searchTable);
 		
@@ -87,8 +92,7 @@ public class BookInsertDelete extends JPanel {
 		comboSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboSearch.getSelectedItem()=="전체보기") {
-					searchTable.setModel(createTableModel());
-					searchTable.setVisible(true);
+					refreshSearchTable();
 					setVisible(true);
 				}
 			}
@@ -305,7 +309,11 @@ public class BookInsertDelete extends JPanel {
 
 	public void refreshSearchTable() {
 		searchTable.setModel(createTableModel());
+		setAlignWidth();
 		searchTable.setVisible(true);
+//		tableScroll
+		tableScroll.setViewportView(searchTable);
+		tableScroll.setVisible(true);
 	}
 
 	public void refreshReadingTable(Reading reading) {
@@ -394,5 +402,29 @@ public class BookInsertDelete extends JPanel {
 
 	public String getBookcodeInfo() {
 		return bookcodeInfo;
+	}
+	public void setAlignWidth() {
+		setAlign(SwingConstants.LEFT,0,1,2,3,4,5);
+		setCellWidth(70, 330, 80, 100, 40, 60);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = searchTable.getColumnModel();
+		System.out.println(Arrays.toString(width));
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = searchTable.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
 	}
 }
