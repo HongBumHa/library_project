@@ -362,7 +362,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 			bigGroupModel = new DefaultComboBoxModel<>(comboLists);
 			return bigGroupModel;
 		}
-
 		BookGroup[] middleMapArray = middleMap.get(bookgroup.getBigGroup());
 		String[] middleComboLists = new String[middleMapArray.length];
 
@@ -405,9 +404,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 		List<BookGroup> middlelist = BookGroupService.getInstance().findAllMiddleGroup(bookGroup);
 		List<BookGroup> biglist = BookGroupService.getInstance().findAllBookBigGroup();
 
-		System.out.println("middle size " + middlelist.size());
-		System.out.println("bigList size " + biglist.size());
-
 		BookGroup[][] bookTwoArray = new BookGroup[biglist.size()][10];
 
 		int index = 0;
@@ -422,7 +418,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 				TwoArrayindex++;
 				continue;
 			}
-
+			
+			
 			if (bookTwoArray[index][0].getBookMiddleGroupName().equals(biglist.get(index).getBookBigGroupName())) {
 				bookTwoArray[index][TwoArrayindex] = middlelist.get(n);
 				TwoArrayindex++;
