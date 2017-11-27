@@ -1,5 +1,7 @@
 package kr.or.dgit.library_project.dto;
 
+import java.util.Date;
+
 public class Users {
 	private String userId;
 	private String userName;
@@ -10,6 +12,14 @@ public class Users {
 	private int delayDay;
 	private String rankCode;
 	private String userLeave;
+	private Date delay;
+	public Date getDelay() {
+		return delay;
+	}
+
+	public void setDelay(Date delay) {
+		this.delay = delay;
+	}
 
 	public Users() {
 	}
