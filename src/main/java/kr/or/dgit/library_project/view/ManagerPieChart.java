@@ -32,7 +32,9 @@ public class ManagerPieChart extends JPanel {
 			sum+=countArr[i];
 		}
 		for(int i=0;i<10;i++) {
-			data.setValue(bookGroupName[i]+ratioCal(countArr[i], sum), countArr[i]);
+			if(countArr[i]!=0) {
+				data.setValue(bookGroupName[i]+ratioCal(countArr[i], sum), countArr[i]);
+			}
 		}
 
 		// create a chart...

@@ -55,6 +55,7 @@ public class ManagerRentalBook extends JPanel {
 		comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				tfSearch.setText("");
 				if(comboBox.getSelectedItem().equals("전체보기")) {
 					if(radioRent.isSelected()==true) {
 						loadDataRent();
@@ -179,7 +180,11 @@ public class ManagerRentalBook extends JPanel {
 	}
 	
 	public void loadDataReturn() {
-		DefaultTableModel model = new DefaultTableModel(getDataReturn(), getReturnColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataReturn(), getReturnColumnNames()){
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
 		setAlignWidth();
 	}
@@ -197,14 +202,20 @@ public class ManagerRentalBook extends JPanel {
 	//콤보박스 선택에 따른 검색(loadDataEach)
 	public void loadDataEach() {
 		if(radioRent.isSelected()==true) {
-			DefaultTableModel model = new DefaultTableModel(getDataRentEach(), getRentColumnNames());
+			DefaultTableModel model = new DefaultTableModel(getDataRentEach(), getRentColumnNames()){
+				public boolean isCellEditable(int i, int c) {
+					return false;
+				}
+			};
 			table.setModel(model);
-			tfSearch.setText("");
 		}
 		if(radioReturn.isSelected()==true) {
-			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getReturnColumnNames());
+			DefaultTableModel model = new DefaultTableModel(getDataReturnEach(), getReturnColumnNames()){
+				public boolean isCellEditable(int i, int c) {
+					return false;
+				}
+			};
 			table.setModel(model);
-			tfSearch.setText("");
 		}
 		setAlignWidth();
 	}

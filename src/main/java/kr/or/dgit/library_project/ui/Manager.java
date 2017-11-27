@@ -32,7 +32,7 @@ public class Manager extends JFrame {
 		contentPane.add(tabbedPane);
 
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
-		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
+		tabbedPane.addTab("현황관리", null, rentReturn, null);
 
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
@@ -40,10 +40,10 @@ public class Manager extends JFrame {
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		// panel_18.add(lblNewLabel);
 
-		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
+		/*BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
 
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
-		insertDeletePanel.setLayout(null);
+		insertDeletePanel.setLayout(null);*/
 
 		ManegerUserInfo panel = new ManegerUserInfo();
 		tabbedPane.addTab("회원정보", null, panel, null);

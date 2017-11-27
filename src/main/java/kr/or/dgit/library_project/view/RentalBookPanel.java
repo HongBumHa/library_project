@@ -68,6 +68,7 @@ public class RentalBookPanel extends JPanel {
 		comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				tfSearch.setText("");
 				if (comboBox.getSelectedItem() == "전체보기") {
 					loadDataAll();
 				}
