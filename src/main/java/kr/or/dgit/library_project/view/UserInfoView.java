@@ -73,7 +73,7 @@ public class UserInfoView extends JPanel {
 		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(213, 26, 594, 227);
+		pUserInfo.setBounds(50, 6, 722, 206);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 
@@ -208,9 +208,55 @@ public class UserInfoView extends JPanel {
 		tfUserPwCh.setBounds(88, 5, 215, 21);
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
+		
+				JButton btnLeave = new JButton("회원탈퇴");
+				btnLeave.setBounds(620, 51, 90, 23);
+				pUserInfo.add(btnLeave);
+				
+						JButton btnUpdate = new JButton("수 정");
+						btnUpdate.setBounds(620, 102, 90, 23);
+						pUserInfo.add(btnUpdate);
+						
+								JButton btnCancel = new JButton("취 소");
+								btnCancel.setBounds(620, 152, 90, 23);
+								pUserInfo.add(btnCancel);
+								btnCancel.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										clearTf();
+									}
+								});
+						btnUpdate.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								if (tfUserPw.getText().length() <= 7) {
+									JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
+									return;
+								}
+								if (!checkTf()) {
+									JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
+								}
+								if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
+									userUpdatae();
+									JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+								} else {
+									JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+								}
+							}
+						});
+				btnLeave.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+						if (i == 0) {
+							u.setUserLeave("N");
+							JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+							UsersService.getInstance().findupdateUsers(u);
+							setVisible(false);
+						}
+					}
+				});
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(6, 291, 801, 246);
+		scrollPane_1.setBounds(6, 250, 801, 246);
 		add(scrollPane_1);
 
 		historyTable = new JTable();
@@ -227,59 +273,8 @@ public class UserInfoView extends JPanel {
 		settingTableView();
 
 		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(12, 258, 115, 23);
+		btnNewButton_2.setBounds(12, 222, 115, 23);
 		add(btnNewButton_2);
-
-		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(717, 258, 90, 23);
-		add(btnUpdate);
-
-		JButton btnCancel = new JButton("취 소");
-		btnCancel.setBounds(615, 258, 90, 23);
-		add(btnCancel);
-
-		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.setBounds(509, 258, 90, 23);
-		add(btnLeave);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\userimg1.jpeg"));
-		lblNewLabel.setBounds(20, 21, 190, 221);
-		add(lblNewLabel);
-		btnLeave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-				if (i == 0) {
-					u.setUserLeave("N");
-					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
-					UsersService.getInstance().findupdateUsers(u);
-					setVisible(false);
-				}
-			}
-		});
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clearTf();
-			}
-		});
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tfUserPw.getText().length() <= 7) {
-					JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
-					return;
-				}
-				if (!checkTf()) {
-					JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
-				}
-				if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
-					userUpdatae();
-					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
-				} else {
-					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
-				}
-			}
-		});
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
