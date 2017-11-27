@@ -1,11 +1,13 @@
 package kr.or.dgit.library_project.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.dgit.library_project.view.BookInsertDelete;
@@ -34,7 +36,17 @@ public class Manager extends JFrame {
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
 		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
 
-		BookInsertDelete insertDeletePanel = new BookInsertDelete();
+
+		JLabel lblNewLabel = new JLabel("회원정보");
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(12, 281, 94, 30);
+//		panel_18.add(lblNewLabel);
+		
+
+
+		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
+
 		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
 		insertDeletePanel.setLayout(null);
 
