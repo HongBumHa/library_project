@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,10 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import org.jfree.chart.JFreeChart;
-
 import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.service.RentalBookService;
+import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.ui.MainUi;
 
 public class RentBookInfoView extends JFrame {
@@ -142,6 +143,7 @@ public class RentBookInfoView extends JFrame {
 		panel_1.add(btnCancel);
 		
 		addBookInfo();
+		
 	}
 	
 	private void addBookInfo() {
@@ -174,6 +176,22 @@ public class RentBookInfoView extends JFrame {
 	
 	private void rentBook() {
 		RentalBook rb=new RentalBook(bCode, MainUi.getUsers().getUserId());
+		
+		if(MainUi.getUsers().getDelayDay()!=0) {
+			Date d = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			JOptionPane.showMessageDialog(null,MainUi.getUsers().getDelay());
+			int i = d.compareTo(MainUi.getUsers().getDelay());
+			System.out.println(i);
+			if(i <=0) {
+				MainUi.getUsers().setDelayDay(-i);
+				JOptionPane.showMessageDialog(null,MainUi.getUsers().getDelayDay()+"일 동안 대여가 불가능합니다.",null,JOptionPane.WARNING_MESSAGE);
+				return;
+			}else {
+				MainUi.getUsers().setDelayDay(0);
+				UsersService.getInstance().findupdateUsers(MainUi.getUsers());
+			}
+		}
 		try {
 			int rent=RentalBookService.getInstance().insertDataRentalBook(rb);
 			if(rent < 0) {
