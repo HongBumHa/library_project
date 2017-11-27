@@ -221,7 +221,7 @@ public class ManegerUserInfo extends JPanel {
 			}
 		});
 		JPanel pSerach = new JPanel();
-		pSerach.setBounds(90, 15, 499, 30);
+		pSerach.setBounds(159, 13, 499, 30);
 		add(pSerach);
 		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
 		cmbSearch = new JComboBox<String>();
