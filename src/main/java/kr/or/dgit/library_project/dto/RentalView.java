@@ -6,6 +6,8 @@ import java.util.Date;
 
 import com.mysql.jdbc.TimeUtil;
 
+import kr.or.dgit.library_project.service.PublisherService;
+
 public class RentalView {
 	private String bookCode;
 	private String bookName;
@@ -26,7 +28,9 @@ public Object[] toArrayReturn() {
 		}
 		String reslut_price = String.format("%, d",price);
 		return new Object[]{bookCode, bookName,author, 
-						publicName, reslut_price, delaytime};
+						PublisherService.getInstance().selectPublisherByCodeName(new Publisher(publicName)).getPublicName(),
+						reslut_price, delaytime};
+//		publicName
 	}
 	
 	public String getBookCode() {

@@ -46,6 +46,7 @@ public class ReturnTabPanel extends JPanel {
 	
 	private static final ReturnTabPanel instance = new ReturnTabPanel();
 	private RentalView rentalView;
+	private JScrollPane scrollPane;
 
 
 
@@ -169,10 +170,8 @@ public class ReturnTabPanel extends JPanel {
 		lbTitle.setBounds(22, 5, 105, 28);
 		returnTabInfo.add(lbTitle);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		RentalDataTable = new JTable();
-
-		
 		rentalView = new RentalView();
 
 		rentalView.setUserId(userId.getUserId());
@@ -180,7 +179,7 @@ public class ReturnTabPanel extends JPanel {
 		tfFields = new JTextField[] { tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay };
 
 		RentalDataTable.setModel(createTableModel(rentalView));
-		setAlignWidth();
+		settingTableView();
 		RentalDataTable.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -211,10 +210,8 @@ public class ReturnTabPanel extends JPanel {
 				RentalDataTable.setVisible(true);
 			
 				reloadTableView();
+				settingTableView();
 
-				refreshTextField();
-
-				UserInfoView.getInstance().settingTableView();
 				int res = RentalBookPanel.getInstance().rentBookCountById();
 				RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
 				RentalBookPanel.getInstance().loadDataAll();
@@ -224,6 +221,8 @@ public class ReturnTabPanel extends JPanel {
 				scrollPane.setViewportView(RentalDataTable);
 			}
 		});
+		
+		
 		returnTabButton.add(btReturn);
 
 		btCancel.addActionListener(new ActionListener() {
@@ -267,7 +266,7 @@ public class ReturnTabPanel extends JPanel {
 
 	public void setAlignWidth() {
 		setAlign(SwingConstants.CENTER,0,1,2,3,4,5);
-		setCellWidth(70, 300, 100, 100, 70, 50);
+		setCellWidth(70, 330, 80, 100, 40, 60);
 	}
 	
 	public void setCellWidth(int...width) {
@@ -293,6 +292,12 @@ public class ReturnTabPanel extends JPanel {
 	public void reloadTableView() {
 		RentalDataTable.setModel(createTableModel(rentalView));
 		RentalDataTable.setVisible(true);
-
+	}
+	public void settingTableView() {
+		RentalDataTable.setModel(createTableModel(rentalView));
+		setAlignWidth();
+		RentalDataTable.setVisible(true);
+		scrollPane.setViewportView(RentalDataTable);
+		scrollPane.setVisible(true);
 	}
 }

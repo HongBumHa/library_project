@@ -40,13 +40,20 @@ public class Manager extends JFrame {
 		lblNewLabel.setBounds(12, 281, 94, 30);
 		// panel_18.add(lblNewLabel);
 
-		/*BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
-
-		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
-		insertDeletePanel.setLayout(null);*/
+//		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
+//
+//		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
+//		insertDeletePanel.setLayout(null);
 
 		ManegerUserInfo panel = new ManegerUserInfo();
 		tabbedPane.addTab("회원정보", null, panel, null);
+		
+		JPanel panel_1 = new JPanel();		
+		tabbedPane.addTab("New tab", null, panel_1, null);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		BookInsertDelete panel_2 = BookInsertDelete.getInstance();
+		panel_1.add(panel_2, BorderLayout.CENTER);
 
 	}
 }
