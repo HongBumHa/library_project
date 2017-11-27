@@ -290,7 +290,6 @@ public class RentalBookPanel extends JPanel {
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = table.getColumnModel();
-		System.out.println(Arrays.toString(width));
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}

@@ -33,6 +33,8 @@ import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {
@@ -244,6 +246,14 @@ public class ManegerUserInfo extends JPanel {
 			}
 		};
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2) {
+					selectTable();
+				}
+			}
+		});
 		table.setModel(tableModel);
 		setAlignWidth();
 		scrollPane.setViewportView(table);
@@ -290,6 +300,10 @@ public class ManegerUserInfo extends JPanel {
 	}
 
 	protected void userUpdatae() {
+		if(!isCheck()){
+			JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요",null,JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		String userId = tfId.getText();
 		Users u = UsersService.getInstance().findUsersByNo(new Users(userId));
 		String userName = tfName.getText();
@@ -298,10 +312,41 @@ public class ManegerUserInfo extends JPanel {
 		String userEmail = tfEmail.getText();
 		String userPw = u.getUserPw();
 		int delayDay = 0;
-		String rankCode = "2";
+		String rankCode = null;
+		String rankName = (String)cmbRank.getSelectedItem();
+		switch(rankName) {
+		case "관리자": rankCode = "1";
+			break;
+		case "회원": rankCode = "2";
+		break;
+		case "블랙리스트": rankCode = "3";
+		break;
+		}
 		String userLeave = "Y";
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
+		JOptionPane.showMessageDialog(null, user.getUserName()+"님 정보가 수정되었습니다.");
+		tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
+		table.setModel(tableModel);
+		setAlignWidth();
+	}
+
+	private boolean isCheck() {
+		String userName = tfName.getText();
+		String userAddr = tfAddr.getText();
+		String userTel = tfTel.getText();
+		String userEmail = tfEmail.getText();
+		String userId = tfId.getText();
+		if(userName.equals("")||userAddr.equals("")||userTel.equals("")||userEmail.equals("")||userId.equals("")) {
+			
+			return false;
+		}
+		return true;
+		
 	}
 
 	protected void clear() {
@@ -352,7 +397,9 @@ public class ManegerUserInfo extends JPanel {
 				return false;
 			}
 		};
+		
 		table.setModel(tableModel);
+		setAlignWidth();
 
 	}
 
@@ -387,7 +434,7 @@ public class ManegerUserInfo extends JPanel {
 			@Override
 
 			public void actionPerformed(ActionEvent e) {			
-
+				
 				selectTable();
 
 			}
@@ -417,7 +464,7 @@ public class ManegerUserInfo extends JPanel {
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = table.getColumnModel();
-		System.out.println(Arrays.toString(width));
+		
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}
