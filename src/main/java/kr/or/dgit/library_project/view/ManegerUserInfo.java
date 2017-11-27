@@ -279,15 +279,6 @@ public class ManegerUserInfo extends JPanel {
 		lblNewLabel_1.setBounds(11, 252, 86, 25);
 		add(lblNewLabel_1);
 
-		cmbSearch = new JComboBox<String>();
-		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
-		pSerach.add(cmbSearch);
-
-		tfSearch = new JTextField();
-		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		tfSearch.setColumns(10);
-		pSerach.add(tfSearch);
-
 		btnsearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
