@@ -65,14 +65,14 @@ public class ManegerUserInfo extends JPanel {
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
-		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_9.setBounds(9, 55, 713, 197);
+		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		panel_9.setBounds(39, 82, 732, 153);
 		add(panel_9);
 
 		JPanel pId = new JPanel();
-		pId.setBorder(new LineBorder(Color.DARK_GRAY));
+		pId.setBorder(null);
 		pId.setLayout(null);
-		pId.setBounds(73, 21, 182, 31);
+		pId.setBounds(28, 10, 182, 31);
 		panel_9.add(pId);
 
 		JLabel lblId = new JLabel("아이디");
@@ -86,9 +86,9 @@ public class ManegerUserInfo extends JPanel {
 		pId.add(tfId);
 
 		JPanel pName = new JPanel();
-		pName.setBorder(new LineBorder(Color.DARK_GRAY));
+		pName.setBorder(null);
 		pName.setLayout(null);
-		pName.setBounds(255, 21, 137, 31);
+		pName.setBounds(222, 10, 137, 31);
 		panel_9.add(pName);
 
 		JLabel lblName = new JLabel("이 름");
@@ -102,9 +102,9 @@ public class ManegerUserInfo extends JPanel {
 		pName.add(tfName);
 
 		JPanel pTel = new JPanel();
-		pTel.setBorder(new LineBorder(Color.DARK_GRAY));
+		pTel.setBorder(null);
 		pTel.setLayout(null);
-		pTel.setBounds(73, 54, 182, 31);
+		pTel.setBounds(28, 43, 182, 31);
 		panel_9.add(pTel);
 
 		JLabel lblTel = new JLabel("전화번호");
@@ -118,28 +118,28 @@ public class ManegerUserInfo extends JPanel {
 		pTel.add(tfTel);
 
 		JPanel pAddr = new JPanel();
-		pAddr.setBorder(new LineBorder(Color.DARK_GRAY));
+		pAddr.setBorder(null);
 		pAddr.setLayout(null);
-		pAddr.setBounds(73, 87, 497, 69);
+		pAddr.setBounds(28, 76, 497, 69);
 		panel_9.add(pAddr);
 
 		JLabel lblAddr = new JLabel("주 소");
 		lblAddr.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddr.setBounds(4, 26, 44, 15);
+		lblAddr.setBounds(12, 26, 44, 15);
 		pAddr.add(lblAddr);
 
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		cmbSido = new JComboBox<String>(sidoModel);
-		cmbSido.setBounds(118, 13, 128, 21);
+		cmbSido.setBounds(60, 12, 128, 21);
 		pAddr.add(cmbSido);
 
 		tfAddr = new JTextField();
 		tfAddr.setColumns(10);
-		tfAddr.setBounds(118, 39, 352, 21);
+		tfAddr.setBounds(60, 38, 352, 21);
 		pAddr.add(tfAddr);
 
 		tfDoro = new JTextField();
-		tfDoro.setBounds(248, 13, 145, 21);
+		tfDoro.setBounds(190, 12, 145, 21);
 		pAddr.add(tfDoro);
 		tfDoro.setColumns(10);
 
@@ -150,13 +150,13 @@ public class ManegerUserInfo extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		btnAddr.setBounds(394, 13, 76, 23);
+		btnAddr.setBounds(336, 12, 76, 23);
 		pAddr.add(btnAddr);
 
 		JPanel pEmail = new JPanel();
-		pEmail.setBorder(new LineBorder(Color.DARK_GRAY));
+		pEmail.setBorder(null);
 		pEmail.setLayout(null);
-		pEmail.setBounds(255, 54, 315, 31);
+		pEmail.setBounds(222, 43, 263, 31);
 		panel_9.add(pEmail);
 
 		JLabel lblEmail = new JLabel("이메일");
@@ -166,74 +166,58 @@ public class ManegerUserInfo extends JPanel {
 
 		tfEmail = new JTextField();
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(41, 5, 205, 21);
+		tfEmail.setBounds(55, 4, 205, 21);
 		pEmail.add(tfEmail);
-
-		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(592, 40, 97, 23);
-		panel_9.add(btnUpdate);
-
-		JButton btnClear = new JButton("확 인");
-		btnClear.setBounds(592, 77, 97, 23);
-		panel_9.add(btnClear);
-
-		JButton btnDel = new JButton("회원탈퇴");
-		btnDel.setBounds(592, 114, 97, 23);
-		panel_9.add(btnDel);
 		
 		JPanel pRank = new JPanel();
-		pRank.setBorder(new LineBorder(Color.DARK_GRAY));
+		pRank.setBorder(null);
 		pRank.setLayout(null);
-		pRank.setBounds(392, 21, 178, 31);
+		pRank.setBounds(371, 10, 157, 31);
 		panel_9.add(pRank);
 		
 		JLabel lblRank = new JLabel("등 급");
 		lblRank.setHorizontalAlignment(SwingConstants.LEFT);
-		lblRank.setBounds(5, 7, 40, 15);
+		lblRank.setBounds(3, 8, 40, 15);
 		pRank.add(lblRank);
 		
 		cmbRank = new JComboBox();
 		cmbRank.setModel(new DefaultComboBoxModel<String>(new String[] {"관리자","회원","블랙리스트"}));
-		cmbRank.setBounds(44, 4, 109, 21);
+		cmbRank.setBounds(44, 5, 109, 21);
 		
 		pRank.add(cmbRank);
-		btnDel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-				if (i == 0) {
-					deleteU();
-				} else {
-					JOptionPane.showInternalMessageDialog(null, "취소하셨습니다");
-				}
-			}
+		
+				JButton btnUpdate = new JButton("수 정");
+				btnUpdate.setBounds(584, 28, 97, 23);
+				panel_9.add(btnUpdate);
+				
+						JButton btnClear = new JButton("확 인");
+						btnClear.setBounds(584, 65, 97, 23);
+						panel_9.add(btnClear);
+						
+								JButton btnDel = new JButton("회원탈퇴");
+								btnDel.setBounds(584, 102, 97, 23);
+								panel_9.add(btnDel);
+								btnDel.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+										if (i == 0) {
+											deleteU();
+										} else {
+											JOptionPane.showInternalMessageDialog(null, "취소하셨습니다");
+										}
+									}
 
-		});
-		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clear();
-			}
-		});
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				userUpdatae();
-			}
-		});
-
-		JPanel pSerach = new JPanel();
-		pSerach.setBounds(90, 15, 499, 30);
-		add(pSerach);
-		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
-		cmbSearch = new JComboBox<String>();
-		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
-		pSerach.add(cmbSearch);
-
-		tfSearch = new JTextField();
-		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		tfSearch.setColumns(10);
-		pSerach.add(tfSearch);
-
-		JButton btnsearch = new JButton("검 색");
-		pSerach.add(btnsearch);
+								});
+						btnClear.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								clear();
+							}
+						});
+				btnUpdate.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						userUpdatae();
+					}
+				});
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(9, 278, 777, 282);
@@ -254,14 +238,30 @@ public class ManegerUserInfo extends JPanel {
 		lblNewLabel_1.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(11, 252, 86, 25);
 		add(lblNewLabel_1);
-
-		btnsearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
-				table.setModel(model);
-				setAlignWidth();
-			}
-		});
+								
+										JPanel pSerach = new JPanel();
+										pSerach.setBounds(203, 29, 499, 30);
+										add(pSerach);
+										pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
+										cmbSearch = new JComboBox<String>();
+										cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
+										pSerach.add(cmbSearch);
+										
+												tfSearch = new JTextField();
+												tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
+												tfSearch.setColumns(10);
+												pSerach.add(tfSearch);
+												
+														JButton btnsearch = new JButton("검 색");
+														pSerach.add(btnsearch);
+														
+																btnsearch.addActionListener(new ActionListener() {
+																	public void actionPerformed(ActionEvent e) {
+																		DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
+																		table.setModel(model);
+																		setAlignWidth();
+																	}
+																});
 	}
 
 	public static JComboBox<String> getCmbSido() {
