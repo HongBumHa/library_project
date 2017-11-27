@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +44,13 @@ public class ManagerInserDeletePopUp extends JPanel {
 	private HashMap<String, BookGroup[]> middleMap;
 	private JButton btnClickEvent;
 	
+	
+	//
+	private JComboBox publisherCombo; 
+	
 	private static ManagerInserDeletePopUp instance = new ManagerInserDeletePopUp();
 	private JLabel lbChangeTitle;
+	private JButton testBtn;
 		
 	public static ManagerInserDeletePopUp getInstance() {
 		return instance;
@@ -73,7 +80,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 		JLabel lbPublisher = new JLabel("출판사");
 		lbPublisher.setBounds(64, 178, 47, 15);
 		add(lbPublisher);
-		
+	
 		JLabel lbBookName = new JLabel("책제목");
 		lbBookName.setBounds(64, 116, 47, 15);
 		add(lbBookName);
@@ -92,10 +99,24 @@ public class ManagerInserDeletePopUp extends JPanel {
 		add(tfPrice);
 		tfPrice.setColumns(11);
 		
-		tfPublisher = new JTextField();
-		tfPublisher.setBounds(139, 175, 127, 21);
-		add(tfPublisher);
-		tfPublisher.setColumns(11);
+//		tfPublisher = new JTextField();
+//		tfPublisher.setBounds(139, 175, 127, 21);
+//		add(tfPublisher);
+//		tfPublisher.setColumns(11);
+		
+		
+		List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
+		String[] pubArray = new String[pubList.size()];
+		
+		for(int n = 0; n < pubList.size(); n++ ) {
+			pubArray[n] = pubList.get(n).getPublicName();
+		}
+
+		publisherCombo = new JComboBox(pubArray);
+		ComboAgent agent = new ComboAgent(publisherCombo);
+		publisherCombo.setEditable(true);
+		publisherCombo.setBounds(139, 175, 127, 21);
+		add(publisherCombo);
 		
 		tfBookName = new JTextField();
 		tfBookName.setBounds(139, 113, 127, 21);
@@ -107,7 +128,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 		add(tfBookCount);
 		tfBookCount.setColumns(11);
 		
-		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
+//		tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice, tfBookCount};
+		tfArrays = new JTextField[]{tfBookName, tfAuthor,new JTextField() , tfPrice, tfBookCount};
 			
 		comboBigGroup = new JComboBox();
 		comboBigGroup.setPreferredSize(new Dimension(60, 21));
@@ -134,7 +156,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 		add(comboMiddleGroup);
 		
 		btnClickEvent = new JButton("btnClickEvent");
-		btnClickEvent.setBounds(92, 265, 112, 23);
+		btnClickEvent.setBounds(49, 267, 127, 23);
 		
 		
 		btnClickEvent.addActionListener(new ActionListener() {
@@ -172,11 +194,17 @@ public class ManagerInserDeletePopUp extends JPanel {
 					}
 					
 					Publisher pb = new Publisher();
-					pb.setPublicName(tfPublisher.getText());
+					
+					//
+//					pb.setPublicName(tfPublisher.getText());
+					pb.setPublicName(publisherCombo.getSelectedItem().toString());
 
 					book.setBookName(tfBookName.getText());
 					book.setAuthor(tfAuthor.getText());
-					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
+					
+					//
+//					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
+					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());			
 					book.setPrice(Integer.parseInt(tfPrice.getText()));
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 
@@ -189,7 +217,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 					Book book = new Book();
 					book.setAuthor(tfAuthor.getText());
 					Publisher publisher = new Publisher();
-					publisher.setPublicName(tfPublisher.getText());
+//					publisher.setPublicName(tfPublisher.getText());
+					publisher.setPublicName(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText().replaceAll(" ", ""));
 					
 					System.out.println("name " + tfBookName.getText());
 					book.setBookName(tfBookName.getText());
@@ -216,9 +245,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					book.setBookCode(makeLastCode);
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 					book.setPrice(Integer.parseInt(tfPrice.getText()));
-					
 					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(publisher).getPublicCode());
-					
 					BookService.getInstance().insertBook(book);
 					
 					BookInsertDelete.getInstance().refreshSearchTable();
@@ -237,7 +264,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 					
 					
 					Publisher pb = new Publisher();
-					pb.setPublicName(tfPublisher.getText());
+//					pb.setPublicName(tfPublisher.getText());
+					pb.setPublicName(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText().replaceAll(" ", ""));
 					
 					if(PublisherService.getInstance().selectPublisherByCodeName(pb) == null) {
 						createNewPubliser(pb);
@@ -265,10 +293,33 @@ public class ManagerInserDeletePopUp extends JPanel {
 		
 		lbChangeTitle = new JLabel("ChangeTitle");
 		lbChangeTitle.setFont(new Font("굴림", Font.BOLD, 14));
-		lbChangeTitle.setBounds(12, 10, 112, 15);
+		lbChangeTitle.setBounds(12, 10, 224, 15);
 		add(lbChangeTitle);
 		
+		JButton btnCancel = new JButton("취소");
+		btnCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int val = JOptionPane.showConfirmDialog(null, "취소하시겠습니까?", "취소",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if(val == 0) {
+					BookInsertDelete.getInstance().mIDFrameClose();
+				}
+			}
+		});
+		btnCancel.setBounds(181, 267, 97, 23);
+		add(btnCancel);	
 		
+		testBtn = new JButton("test");
+		testBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText());
+			}
+		});
+		testBtn.setBounds(318, 230, 97, 23);
+		add(testBtn);
 	}
 	public DefaultComboBoxModel createComboModel(BookGroup bookgroup) {
 		bigGroupLists = BookGroupService.getInstance().findAllBookBigGroup();
@@ -290,6 +341,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 		for(int i = 0; i < middleMapArray.length; i++) {
 			middleComboLists[i] = middleMapArray[i].getBookMiddleGroupName();
 		}
+		
 		middleGroupModel = new DefaultComboBoxModel<>(middleComboLists);
 		return middleGroupModel;
 	}
@@ -418,5 +470,64 @@ public class ManagerInserDeletePopUp extends JPanel {
 		
 		return GroupInfo+bookLastCode;
 	}
+	
+	public JComboBox getPublisherCombo() {
+		return publisherCombo;
+	}
+	
+	public void publicComboSelected(String publisherName) {
+		for(int index = 0; index < publisherCombo.getItemCount(); index++) {
+			String item = publisherCombo.getItemAt(index).toString();
+			if(item.equals(publisherName) == true) {
+				publisherCombo.setSelectedIndex(index);
+				break;
+			}
+		}
+	}
+
+	class ComboAgent extends KeyAdapter
+    {
+        JComboBox combo;
+        JTextField editor;
+        
+        public ComboAgent(JComboBox box)
+        {
+            combo = box;
+            editor = (JTextField)combo.getEditor().getEditorComponent();
+            editor.addKeyListener(this);
+        }
+        
+        public void keyReleased(KeyEvent e)
+        {
+            char ch = e.getKeyChar();
+            
+            if(ch == KeyEvent.CHAR_UNDEFINED || Character.isISOControl(ch))
+                return;
+            
+            int pos = editor.getCaretPosition();
+            String str = editor.getText();
+            
+            if(str.length() == 0)
+                return;
+            
+            for(int k=0; k<combo.getItemCount(); k++)
+            {
+                String iteml = combo.getItemAt(k).toString().toLowerCase();
+                String item = combo.getItemAt(k).toString();
+                // 조건 비교.. 입력한 문자열이 리스트에 있는 아이템의 첫머리로 일치하는지..
+                if( item.startsWith(str) || iteml.startsWith(str) ||
+                    item.startsWith(str.toLowerCase()) ||
+                    iteml.startsWith(str.toLowerCase()) )
+                {
+                    // 일치한다면 field에 매치된 아이템을 셋팅하고
+                    // 자동으로 완성된 부분을 선택표시로 하여 강조한다.
+                    editor.setText(item);    
+                    editor.setCaretPosition(item.length());
+                    editor.moveCaretPosition(pos);
+                    break;
+                }
+            }
+        }
+    }
 	
 }

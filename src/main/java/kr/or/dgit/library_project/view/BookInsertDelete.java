@@ -25,6 +25,8 @@ import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
@@ -38,7 +40,7 @@ public class BookInsertDelete extends JPanel {
 	private JComboBox comboSearch;
 	private String bookcodeInfo;
 	private JTable readingTable;	
-	private ManagerInserDeletePopupFrame mIDfram = new ManagerInserDeletePopupFrame();;
+	private ManagerInserDeletePopupFrame mIDfram = new ManagerInserDeletePopupFrame();
 	private static BookInsertDelete instance = new BookInsertDelete();	
 	
 	public static BookInsertDelete getInstance() {
@@ -52,7 +54,7 @@ public class BookInsertDelete extends JPanel {
 		setLayout(null);
 		
 		JScrollPane tableScroll = new JScrollPane();
-		tableScroll.setBounds(12, 66, 470, 326);
+		tableScroll.setBounds(12, 75, 470, 326);
 		add(tableScroll);
 		
 		searchTable = new JTable();
@@ -97,7 +99,7 @@ public class BookInsertDelete extends JPanel {
 		add(btnSearch);
 		
 		JScrollPane readingScroll = new JScrollPane();
-		readingScroll.setBounds(504, 66, 257, 326);
+		readingScroll.setBounds(494, 75, 257, 326);
 		
 		
 		readingTable = new JTable();
@@ -161,9 +163,25 @@ public class BookInsertDelete extends JPanel {
 		readingScroll.setViewportView(readingTable);
 		add(readingScroll);
 		
+		JLabel lbTitle1 = new JLabel("현재 보유중인 도서 목록");
+		lbTitle1.setFont(new Font("굴림", Font.BOLD, 13));
+		lbTitle1.setBounds(12, 54, 219, 15);
+		add(lbTitle1);
+		
+		JLabel lbTitle2 = new JLabel("현재 신청 도서 현황");
+		lbTitle2.setFont(new Font("굴림", Font.BOLD, 13));
+		lbTitle2.setBounds(494, 54, 176, 15);
+		add(lbTitle2);
+		
+		JLabel lbTitle3 = new JLabel("**추가 삭제는 각 테이블에서 오른쪽 마우스를 클릭하세요.");
+		lbTitle3.setBounds(421, 26, 330, 15);
+		add(lbTitle3);
+		
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
 				
 				int bigIndex = 0;
 				int middleIndex = 0;
@@ -191,13 +209,17 @@ public class BookInsertDelete extends JPanel {
 				
 				ManagerInserDeletePopUp.getInstance().getComboMiddleGroup().setSelectedIndex(middleIndex);
 				
+				// 추가내용 있음
 				for(int i= 0; i < ManagerInserDeletePopUp.getInstance().getTfArrays().length; i++) {
+					if(i == 2) {
+						ManagerInserDeletePopUp.getInstance().publicComboSelected(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
+						continue;
+					}
 					ManagerInserDeletePopUp.getInstance().getTfArrays()[i].setText(searchTable.getValueAt(searchTable.getSelectedRow(), i+1).toString());
 //					private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자", "출판사", "가격", "수량", "대여횟수" };
 				}
-				ManagerInserDeletePopUp.getInstance().tfFieldNotUsing();
+				
 	
-				ManagerInserDeletePopUp.getInstance().getTfArrays()[ManagerInserDeletePopUp.getInstance().getTfArrays().length-1].setEnabled(true);
 				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("변경");
 				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("도서의 수량을 변경합니다.");
 				mIDfram.setVisible(true);
@@ -351,5 +373,4 @@ public class BookInsertDelete extends JPanel {
 	public String getBookcodeInfo() {
 		return bookcodeInfo;
 	}
-	
 }

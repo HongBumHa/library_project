@@ -1,5 +1,6 @@
 package kr.or.dgit.library_project.test;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -36,16 +37,13 @@ public class TestingUi extends JFrame {
 	 */
 	public TestingUi() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 702, 485);
+		setBounds(100, 100, 800, 485);
+		
+		BookInsertDelete panel = BookInsertDelete.getInstance();
+		getContentPane().add(panel, BorderLayout.CENTER);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
-		
-		BookInsertDelete bookInDe = BookInsertDelete.getInstance();
-		bookInDe.setBounds(5, 5, 676, 437);
-		contentPane.add(bookInDe);
-		
-		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 	}
 	
 }
