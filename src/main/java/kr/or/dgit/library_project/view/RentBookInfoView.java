@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.jfree.chart.JFreeChart;
+
 import kr.or.dgit.library_project.dto.RentalBook;
 import kr.or.dgit.library_project.service.RentalBookService;
 import kr.or.dgit.library_project.ui.MainUi;
@@ -118,9 +120,10 @@ public class RentBookInfoView extends JFrame {
 					RentalBookPanel.getInstance().loadDataAll();
 					int res = RentalBookPanel.getInstance().rentBookCountById();
 					RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
-					
-					
 					UserpresentView.setting();
+					UserpresentView.getInstance().getcPanel().removeAll();
+					UserpresentView.getInstance().getcPanel().setChart(UserpresentView.getInstance().getpChart().callPieChart());
+
 				}else {
 					RentalBookPanel.getInstance().loadDataEach();
 					RentalBookPanel.getInstance().rentBookCountById();

@@ -115,7 +115,6 @@ public class BookInsertDelete extends JPanel {
 				JTextField[] field = ManagerInserDeletePopUp.getInstance().getTfArrays();		
 				String[] readingTableData = new String[readingTable.getColumnCount()];
 				
-				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
 				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청도서추가");
 				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("신청도서를 추가 합니다.");
 				
@@ -351,5 +350,7 @@ public class BookInsertDelete extends JPanel {
 	public String getBookcodeInfo() {
 		return bookcodeInfo;
 	}
-	
+
+
 }
+

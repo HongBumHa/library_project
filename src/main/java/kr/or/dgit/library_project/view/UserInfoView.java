@@ -227,7 +227,7 @@ public class UserInfoView extends JPanel {
 		settingTableView();
 
 		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(6, 258, 115, 23);
+		btnNewButton_2.setBounds(12, 258, 115, 23);
 		add(btnNewButton_2);
 
 		JButton btnUpdate = new JButton("수 정");
@@ -241,10 +241,10 @@ public class UserInfoView extends JPanel {
 		JButton btnLeave = new JButton("회원탈퇴");
 		btnLeave.setBounds(509, 258, 90, 23);
 		add(btnLeave);
-
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\userimg.png"));
-		lblNewLabel.setBounds(6, 33, 204, 202);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\userimg1.jpeg"));
+		lblNewLabel.setBounds(20, 21, 190, 221);
 		add(lblNewLabel);
 		btnLeave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -385,7 +385,7 @@ public class UserInfoView extends JPanel {
 		String userEmail = tfUserEamil.getText();
 		String userPw = tfUserPw.getText();
 		int delayDay = 0;
-		int rankCode = 2;
+		String rankCode = "2";
 		String userLeave = "Y";
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);

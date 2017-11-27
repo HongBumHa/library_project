@@ -1,12 +1,12 @@
 package kr.or.dgit.library_project.dto;
 
 public class UserRank {
-	private int rankCode;
+	private String rankCode;
 	private String rankName;
-	public int getRankCode() {
+	public String getRankCode() {
 		return rankCode;
 	}
-	public void setRankCode(int rankCode) {
+	public void setRankCode(String rankCode) {
 		this.rankCode = rankCode;
 	}
 	public String getRankName() {
@@ -19,7 +19,7 @@ public class UserRank {
 	public String toString() {
 		return "UserRank [rankCode=" + rankCode + ", rankName=" + rankName + "]";
 	}
-	public UserRank(int rankCode, String rankName) {
+	public UserRank(String rankCode, String rankName) {
 		this.rankCode = rankCode;
 		this.rankName = rankName;
 	}
