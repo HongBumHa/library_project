@@ -14,11 +14,9 @@ import kr.or.dgit.library_project.view.BookInsertDelete;
 import kr.or.dgit.library_project.view.ManagerRentalBook;
 import kr.or.dgit.library_project.view.ManegerUserInfo;
 
-
 public class Manager extends JFrame {
 
 	private JPanel contentPane;
-
 
 	public Manager() {
 		setResizable(false);
@@ -29,21 +27,18 @@ public class Manager extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
-		
+
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
 		tabbedPane.addTab("대여/반납관리", null, rentReturn, null);
-
 
 		JLabel lblNewLabel = new JLabel("회원정보");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
-//		panel_18.add(lblNewLabel);
-		
-
+		// panel_18.add(lblNewLabel);
 
 		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
 

@@ -216,6 +216,9 @@ public class ReturnTabPanel extends JPanel {
 				refreshTextField();
 
 				UserInfoView.getInstance().settingTableView();
+				int res = RentalBookPanel.getInstance().rentBookCountById();
+				RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
+				RentalBookPanel.getInstance().loadDataAll();
 				scrollPane.setViewportView(RentalDataTable);
 			}
 		});
