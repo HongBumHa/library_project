@@ -226,7 +226,21 @@ public class ManegerUserInfo extends JPanel {
 		add(pSerach);
 		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
 		cmbSearch = new JComboBox<String>();
-		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
+		cmbSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cmbSearch.getSelectedItem().equals("전체보기")) {
+					tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+						public boolean isCellEditable(int i, int c) {
+							return false;
+						}
+					};
+					tfSearch.setText("");
+					table.setModel(tableModel);
+					setAlignWidth();
+				}
+			}
+		});
+		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "전체보기","아이디", "이름", "전화번호", "이메일" }));
 		pSerach.add(cmbSearch);
 
 		tfSearch = new JTextField();
@@ -326,7 +340,7 @@ public class ManegerUserInfo extends JPanel {
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
 		JOptionPane.showMessageDialog(null, user.getUserName()+"님 정보가 수정되었습니다.");
-		tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+		tableModel = new DefaultTableModel(searchData(), getColumnNames()) {
 			public boolean isCellEditable(int i, int c) {
 				return false;
 			}
