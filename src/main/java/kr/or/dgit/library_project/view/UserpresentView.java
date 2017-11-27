@@ -19,11 +19,35 @@ import kr.or.dgit.library_project.ui.MainUi;
 import javax.swing.ImageIcon;
 
 public class UserpresentView extends JPanel {
+	private static final UserpresentView instance = new UserpresentView();
 	private static JLabel lblToteint;
 	private static JLabel lblRentalint;
 	private static JLabel lblReturnint;
-
-	public UserpresentView() {
+	private JFreeChart jChart;
+	private ChartPanel cPanel;
+	private UserChart pChart;
+	public UserChart getpChart() {
+		return pChart;
+	}
+	public void setpChart(UserChart pChart) {
+		this.pChart = pChart;
+	}
+	public JFreeChart getjChart() {
+		return jChart;
+	}
+	public void setjChart(JFreeChart jChart) {
+		this.jChart = jChart;
+	}
+	public ChartPanel getcPanel() {
+		return cPanel;
+	}
+	public static UserpresentView getInstance() {
+		return instance;
+	}
+	public void setcPanel(ChartPanel cPanel) {
+		this.cPanel = cPanel;
+	}
+	private UserpresentView() {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -73,9 +97,9 @@ public class UserpresentView extends JPanel {
 		lblReturnint.setBounds(329, 23, 41, 15);
 		panel_1.add(lblReturnint);
 		
-		UserChart panel_2 = new UserChart();
-		JFreeChart jChart = panel_2.callPieChart();
-		ChartPanel cPanel = new ChartPanel(jChart);
+		pChart = new UserChart();
+		jChart = pChart.callPieChart();
+		cPanel = new ChartPanel(jChart);
 		cPanel.setBounds(11, 137, 394, 311);
 		panel.add(cPanel);
 		

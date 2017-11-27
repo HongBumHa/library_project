@@ -209,8 +209,7 @@ public class ReturnTabPanel extends JPanel {
 				RentalDataTable.setModel(createTableModel(rentalView));
 				setAlignWidth();
 				RentalDataTable.setVisible(true);
-
-				
+			
 				reloadTableView();
 
 				refreshTextField();
@@ -219,6 +218,9 @@ public class ReturnTabPanel extends JPanel {
 				int res = RentalBookPanel.getInstance().rentBookCountById();
 				RentalBookPanel.getInstance().getLblRent().setText("대여: " + res + " 권");
 				RentalBookPanel.getInstance().loadDataAll();
+				UserpresentView.getInstance().getcPanel().removeAll();
+				UserpresentView.getInstance().getcPanel().setChart(UserpresentView.getInstance().getpChart().callPieChart());
+				UserpresentView.setting();
 				scrollPane.setViewportView(RentalDataTable);
 			}
 		});

@@ -51,7 +51,7 @@ public class UserInfo extends JFrame {
 		testing.setLayout(null);
 		tabbedPane.addTab("회원정보", null, testing, null);
 		
-		UserpresentView 유저현황 = new UserpresentView();
+		UserpresentView 유저현황 = UserpresentView.getInstance();
 		tabbedPane.addTab("현황 보기", null, 유저현황, null);
 
 	}	

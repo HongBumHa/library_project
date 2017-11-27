@@ -284,7 +284,7 @@ public class MemberApp extends JFrame {
 		tfEmail2.setBounds(233, 10, 129, 21);
 		panel_1.add(tfEmail2);
 
-		lblIdCh = new JLabel("8자리이상입력해주세요");
+		lblIdCh = new JLabel("4자리이상입력해주세요");
 		lblIdCh.setForeground(new Color(0, 255, 0));
 		lblIdCh.setBounds(184, 28, 146, 15);
 		contentPane.add(lblIdCh);
@@ -326,7 +326,7 @@ public class MemberApp extends JFrame {
 	protected boolean insertUser() {	
 		
 		if(idRes!=1) {
-			JOptionPane.showMessageDialog(null, "중복검사를 하세요");
+			JOptionPane.showMessageDialog(null, "중복검사를 하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
@@ -335,28 +335,28 @@ public class MemberApp extends JFrame {
 		Matcher m = p.matcher(tfName.getText());
 		if(tfName.getText().length() ==0) {
 
-			JOptionPane.showMessageDialog(null, "이름을 입력하세요");
+			JOptionPane.showMessageDialog(null, "이름을 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}else if(!m.find()) {
-			JOptionPane.showMessageDialog(null, "이름을 2~5자 한글로 입력하세요");
+			JOptionPane.showMessageDialog(null, "이름을 2~5자 한글로 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		
 		if(pwRes!=1) {
 
-			JOptionPane.showMessageDialog(null, "비밀번호를 8자이상입력하세요");
+			JOptionPane.showMessageDialog(null, "비밀번호를 8자이상입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		if (pwChRes != 1) {
-			JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다");
+			JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		
 		if(tfEmail1.getText().length()==0 || tfEmail2.getText().length() ==0) {
 
-			JOptionPane.showMessageDialog(null, "이메일을 입력하세요");
+			JOptionPane.showMessageDialog(null, "이메일을 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
@@ -366,19 +366,19 @@ public class MemberApp extends JFrame {
 		Matcher m2 = p.matcher(tfTel2.getText());
 		if(tfTel1.getText().length() ==0 ||tfTel2.getText().length() ==0) {
 
-			JOptionPane.showMessageDialog(null, "전화번호를 입력하세요");
+			JOptionPane.showMessageDialog(null, "전화번호를 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 
 			return false;
 		}else if(!m.find() ||!m2.find()){
 
-			JOptionPane.showMessageDialog(null, "다시 전화번호를 입력하세요");
+			JOptionPane.showMessageDialog(null, "다시 전화번호를 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 
 		
 		if(tfUserAddr.getText().length() == 0) {
 
-			JOptionPane.showMessageDialog(null, "주소를 입력하세요");
+			JOptionPane.showMessageDialog(null, "주소를 입력하세요",null,JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		String email = tfEmail1.getText() + "@" + tfEmail2.getText();
@@ -395,7 +395,7 @@ public class MemberApp extends JFrame {
 		u.setUserPw(tfPw.getText());
 		int i = UsersService.getInstance().findinsertUser(u);
 		if (i == -1) {
-			JOptionPane.showMessageDialog(null, "정보를 다시 입력해주세요");
+			JOptionPane.showMessageDialog(null, "정보를 다시 입력해주세요",null,JOptionPane.WARNING_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null, "축하합니다 회원가입이 되었습니다.");
 		}
@@ -438,8 +438,8 @@ public class MemberApp extends JFrame {
 	protected void idCheck(String text) {
 		lblIdCh.setText("");
 
-		if(text.length() <= 4) {
-			JOptionPane.showMessageDialog(null, "4자이상 입력하세요.");
+		if(text.length() <= 3) {
+			JOptionPane.showMessageDialog(null, "4자이상 입력하세요.",null,JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
@@ -456,7 +456,7 @@ public class MemberApp extends JFrame {
 			JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
 			idRes = 1;
 		} else {
-			JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
+			JOptionPane.showMessageDialog(null, "중복된 아이디입니다.",null,JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
