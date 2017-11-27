@@ -220,6 +220,35 @@ public class ManegerUserInfo extends JPanel {
 				userUpdatae();
 			}
 		});
+		JPanel pSerach = new JPanel();
+		pSerach.setBounds(90, 15, 499, 30);
+		add(pSerach);
+		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
+		cmbSearch = new JComboBox<String>();
+		cmbSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cmbSearch.getSelectedItem().equals("전체보기")) {
+					tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+						public boolean isCellEditable(int i, int c) {
+							return false;
+						}
+					};
+					tfSearch.setText("");
+					table.setModel(tableModel);
+					setAlignWidth();
+				}
+			}
+		});
+		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "전체보기","아이디", "이름", "전화번호", "이메일" }));
+		pSerach.add(cmbSearch);
+
+		tfSearch = new JTextField();
+		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		tfSearch.setColumns(10);
+		pSerach.add(tfSearch);
+
+		JButton btnsearch = new JButton("검 색");
+		pSerach.add(btnsearch);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(9, 278, 777, 282);
@@ -249,21 +278,7 @@ public class ManegerUserInfo extends JPanel {
 		lblNewLabel_1.setBounds(11, 252, 86, 25);
 		add(lblNewLabel_1);
 
-		JPanel pSerach = new JPanel();
-		pSerach.setBounds(140, 28, 499, 30);
-		add(pSerach);
-		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
-		cmbSearch = new JComboBox<String>();
-		cmbSearch.setModel(new DefaultComboBoxModel<String>(new String[] { "아이디", "이름", "전화번호", "이메일" }));
-		pSerach.add(cmbSearch);
-
-		tfSearch = new JTextField();
-		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		tfSearch.setColumns(10);
-		pSerach.add(tfSearch);
-
-		JButton btnsearch = new JButton("검 색");
-		pSerach.add(btnsearch);
+		
 
 		btnsearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -326,7 +341,7 @@ public class ManegerUserInfo extends JPanel {
 		Users user = new Users(userId, userName, userPw, userAddr, userTel, userEmail, delayDay, rankCode, userLeave);
 		UsersService.getInstance().findupdateUsers(user);
 		JOptionPane.showMessageDialog(null, user.getUserName()+"님 정보가 수정되었습니다.");
-		tableModel = new DefaultTableModel(getData(), getColumnNames()) {
+		tableModel = new DefaultTableModel(searchData(), getColumnNames()) {
 			public boolean isCellEditable(int i, int c) {
 				return false;
 			}
