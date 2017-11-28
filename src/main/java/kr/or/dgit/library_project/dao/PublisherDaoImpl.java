@@ -59,5 +59,5 @@ public class PublisherDaoImpl implements PublisherDao {
 		return sqlSession.delete(namespace+"deletePublisher", publisher);
 	}
 
-	
+
 }
