@@ -151,7 +151,6 @@ public class MainUi extends JFrame {
 			if (users.getUserLeave().equals("N")) {
 				JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
 				return;
-
 			}
 		}
 
