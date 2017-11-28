@@ -50,12 +50,10 @@ public class BookGroup {
 	}
 
 	public BookGroup(String bigGroup) {
-		super();
 		this.bigGroup = bigGroup;
 	}
 
 	public BookGroup(String bigGroup, String middleGroup) {
-		super();
 		this.bigGroup = bigGroup;
 		this.middleGroup = middleGroup;
 	}
