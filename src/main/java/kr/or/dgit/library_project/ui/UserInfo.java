@@ -49,16 +49,12 @@ public class UserInfo extends JFrame {
 		tabbedPane.addTab("대 여", null, rentalBookTab, null);
 		rentalBookTab.setLayout(null);
 
-sdafsadfdsa
+
 		
 		ReturnTabPanel returnTab = new ReturnTabPanel();
 		tabbedPane.addTab("반 납", null, returnTab, null);
 		
 		returnTab.setLayout(null);
-		
-		dsafsdfsdafdsaf
-		
-
 		returnTab.setLayout(new BorderLayout(0, 0));
 
 		
