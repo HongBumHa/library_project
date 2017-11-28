@@ -116,7 +116,7 @@ public class MainUi extends JFrame {
 		contentPane.add(btnNewButton_2);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\DGIT3-16\\Desktop\\2.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon(MainUi.class.getResource("/kr/or/dgit/library_project/files/2.jpg")));
 		lblNewLabel_1.setBounds(0, 0, 686, 446);
 		contentPane.add(lblNewLabel_1);
 	}
