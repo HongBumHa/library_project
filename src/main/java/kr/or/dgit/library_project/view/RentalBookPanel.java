@@ -71,6 +71,9 @@ public class RentalBookPanel extends JPanel {
 				tfSearch.setText("");
 				if (comboBox.getSelectedItem() == "전체보기") {
 					loadDataAll();
+					tfSearch.setEditable(false);
+				}else {
+					tfSearch.setEditable(true);
 				}
 			}
 		});
@@ -79,6 +82,7 @@ public class RentalBookPanel extends JPanel {
 		pSearch.add(comboBox);
 
 		tfSearch = new JTextField();
+		tfSearch.setEditable(false);
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
 		tfSearch.setBounds(117, 10, 221, 25);

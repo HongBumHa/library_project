@@ -257,14 +257,18 @@ public class ManegerUserInfo extends JPanel {
 		cmbSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (cmbSearch.getSelectedItem().equals("전체보기")) {
+					tfSearch.setEditable(false);
 					tableModel = new DefaultTableModel(getData(), getColumnNames()) {
 						public boolean isCellEditable(int i, int c) {
 							return false;
 						}
 					};
-					tfSearch.setText("");
+					clear();
 					table.setModel(tableModel);
 					setAlignWidth();
+				}
+				else {
+					tfSearch.setEditable(true);
 				}
 			}
 		});
@@ -272,6 +276,8 @@ public class ManegerUserInfo extends JPanel {
 		pSerach.add(cmbSearch);
 
 		tfSearch = new JTextField();
+		tfSearch.setEditable(false);
+		
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
 		pSerach.add(tfSearch);
@@ -309,7 +315,11 @@ public class ManegerUserInfo extends JPanel {
 
 		btnsearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames());
+				DefaultTableModel model = new DefaultTableModel(searchData(), getColumnNames()){
+					public boolean isCellEditable(int i, int c) {
+						return false;
+					}
+				};
 				table.setModel(model);
 				setAlignWidth();
 			}

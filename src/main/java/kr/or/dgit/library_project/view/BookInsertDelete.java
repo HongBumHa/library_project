@@ -71,6 +71,7 @@ public class BookInsertDelete extends JPanel {
 		tableScroll.setViewportView(searchTable);
 
 		tfSearch = new JTextField();
+		tfSearch.setEditable(false);
 		tfSearch.setBounds(237, 23, 228, 21);
 		add(tfSearch);
 		tfSearch.setColumns(10);
@@ -83,6 +84,9 @@ public class BookInsertDelete extends JPanel {
 				if (comboSearch.getSelectedItem() == "전체보기") {
 					refreshSearchTable();
 					setVisible(true);
+					tfSearch.setEditable(false);
+				}else {
+					tfSearch.setEditable(true);
 				}
 			}
 		});

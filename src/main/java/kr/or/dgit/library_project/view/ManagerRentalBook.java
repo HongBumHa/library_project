@@ -57,12 +57,16 @@ public class ManagerRentalBook extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				tfSearch.setText("");
 				if(comboBox.getSelectedItem().equals("전체보기")) {
+					tfSearch.setEditable(false);
 					if(radioRent.isSelected()==true) {
 						loadDataRent();
+						
 					}
 					if(radioReturn.isSelected()==true) {
 						loadDataReturn();
 					}
+				}else {
+					tfSearch.setEditable(true);
 				}
 			}
 		});
@@ -71,6 +75,7 @@ public class ManagerRentalBook extends JPanel {
 		panel.add(comboBox);
 		
 		tfSearch = new JTextField();
+		tfSearch.setEditable(false);
 		tfSearch.setColumns(10);
 		tfSearch.setBounds(179, 9, 213, 21);
 		panel.add(tfSearch);
