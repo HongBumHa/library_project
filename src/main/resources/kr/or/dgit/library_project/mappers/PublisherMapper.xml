@@ -13,6 +13,7 @@
 		update publisher set public_name=#{publicName}
 	</sql>
 	
+	
 	<sql id="deleteSql">
 		delete from publisher
 	</sql>
