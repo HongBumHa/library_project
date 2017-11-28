@@ -6,8 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -44,6 +47,7 @@ public class BestBookView extends JFrame {
 		DefaultTableModel tableModel = new DefaultTableModel(getData(),getColumnNames());
 		table = new JTable();
 		table.setModel(tableModel);
+		setAlignWidth();
 		scrollPane.setViewportView(table);
 	}
 	private String[] getColumnNames() {
@@ -78,5 +82,29 @@ public class BestBookView extends JFrame {
 		
 		}
 		return datas;
+	}
+	
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER,0,1,2,3,4,5);
+		setCellWidth(30, 260, 80, 80, 30, 70);
+	}
+	
+	public void setCellWidth(int...width) {
+		TableColumnModel cModel = table.getColumnModel();
+		for(int i=0; i<width.length; i++){
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+	
+	public void setAlign(int align, int...idx) {
+		//0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+		
+		TableColumnModel cModel = table.getColumnModel();
+		// idx = [0,2]
+		for(int i=0; i<idx.length;i++){
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
 	}
 }

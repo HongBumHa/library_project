@@ -78,6 +78,9 @@ public class ManagerRentalBook extends JPanel {
 		JButton btnSearch = new JButton("검색");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedItem().equals("전체보기")) {
+					
+				}else
 				loadDataEach();
 			}
 		});

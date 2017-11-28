@@ -174,7 +174,7 @@ public class BookInsertDelete extends JPanel {
 		lbTitle1.setBounds(12, 62, 219, 15);
 		add(lbTitle1);
 
-		JLabel lbTitle2 = new JLabel("현재 신청 도서 현황");
+		JLabel lbTitle2 = new JLabel("도서 신청 현황");
 		lbTitle2.setFont(new Font("굴림", Font.BOLD, 13));
 		lbTitle2.setBounds(12, 430, 176, 15);
 		add(lbTitle2);
@@ -287,7 +287,11 @@ public class BookInsertDelete extends JPanel {
 	}
 
 	public DefaultTableModel createTableModel() {
-		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle);
+		DefaultTableModel searchTableModel = new DefaultTableModel(getDataAll(), searchTableTitle){
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		return searchTableModel;
 	}
 
@@ -327,7 +331,11 @@ public class BookInsertDelete extends JPanel {
 	}
 
 	public DefaultTableModel createReadingTableModel() {
-		DefaultTableModel searchTableModel = new DefaultTableModel(getReadingDataAll(), readingTableTitle);
+		DefaultTableModel searchTableModel = new DefaultTableModel(getReadingDataAll(), readingTableTitle){
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		return searchTableModel;
 	}
 
@@ -374,6 +382,7 @@ public class BookInsertDelete extends JPanel {
 	public void loadDataEach() {
 		DefaultTableModel model = new DefaultTableModel(getDataEach(), searchTableTitle);
 		searchTable.setModel(model);
+		setAlignWidth();
 	}
 
 	public JTable getSearchTable() {

@@ -21,7 +21,7 @@ public class Manager extends JFrame {
 	public Manager() {
 		setTitle("관리자 모드");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 820, 657);
+		setBounds(100, 100, 806, 657);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -31,19 +31,18 @@ public class Manager extends JFrame {
 		contentPane.add(tabbedPane);
 
 		ManagerRentalBook rentReturn = new ManagerRentalBook();
-		tabbedPane.addTab("현황관리", null, rentReturn, null);
+		tabbedPane.addTab("도서현황", null, rentReturn, null);
 
-		JLabel lblNewLabel = new JLabel("회원정보");
+		JLabel lblNewLabel = new JLabel("회원관리");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
 
-		ManegerUserInfo panel = new ManegerUserInfo();
-		tabbedPane.addTab("회원정보", null, panel, null);
-		
 		BookInsertDelete panel_1 = BookInsertDelete.getInstance();
-		tabbedPane.addTab("도서정보", null, panel_1, null);
+		tabbedPane.addTab("도서관리", null, panel_1, null);
 		panel_1.setLayout(new BorderLayout(0, 0));
-
+		
+		ManegerUserInfo panel = new ManegerUserInfo();
+		tabbedPane.addTab("회원관리", null, panel, null);
 	}
 }

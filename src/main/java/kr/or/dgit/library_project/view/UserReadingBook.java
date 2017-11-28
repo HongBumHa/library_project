@@ -72,6 +72,9 @@ public class UserReadingBook extends JPanel {
 				int res = insertReading();
 				if(res != -1) {
 					JOptionPane.showMessageDialog(null, "도서 신청되었습니다.");
+					tfAuthor.setText("");
+					tfBookName.setText("");
+					tfPublicName.setText("");
 				}else {
 					JOptionPane.showMessageDialog(null, "다시 입력해주세요.");
 				}
