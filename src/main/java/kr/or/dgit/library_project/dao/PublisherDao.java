@@ -10,4 +10,5 @@ public interface PublisherDao {
 	int insertPublisher(Publisher publisher);
 	int updatePublisher(Publisher publisher);
 	int deletePublisher(Publisher publisher);
+	
 }
