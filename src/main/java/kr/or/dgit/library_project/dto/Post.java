@@ -8,6 +8,11 @@ public class Post {
 	private String building1;
 	private String building2;
 
+	public Post(String sido, String doro) {
+		this.sido = sido;
+		this.doro = doro;
+	}
+
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -56,15 +61,23 @@ public class Post {
 		this.building2 = building2;
 	}
 
-	public Post() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	public Post() {}
+	
 	@Override
 	public String toString() {
-		return String.format("Post [zipCode=%s, sido=%s, sigungu=%s, doro=%s, building1=%s, building2=%s]", zipCode,
+		return String.format("%s %s %s %s %s",
 				sido, sigungu, doro, building1, building2);
 	}
+	
+	public Post(String sido, String sigungu, String doro, String building1, String building2) {
+		this.sido = sido;
+		this.sigungu = sigungu;
+		this.doro = doro;
+		this.building1 = building1;
+		this.building2 = building2;
+	}
 
+	public Object[] toArray() {
+		return new Object[]{zipCode,sido,sigungu,doro,building1,building2};
+	}
 }

@@ -1,164 +1,188 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.Book;
+import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.service.BookService;
-import javax.swing.JPopupMenu;
+import kr.or.dgit.library_project.service.RentalViewService;
+import kr.or.dgit.library_project.ui.MainUi;
 
 public class RentalBookPanel extends JPanel {
+	private static final RentalBookPanel instance = new RentalBookPanel();
 
 	private JPanel contentPane;
 	private JTextField tfSearch;
-	private JTextField tfBookCode;
-	private JTextField tfBookName;
-	private JTextField tfAuthor;
-	private JTextField tfPublisher;
-	private JTextField tfPrice;
-	private JTextField tfRentCount;
-	private JTable table;
-	private JComboBox comboBox;
+	public static JTable table;
+	public JComboBox comboBox;
+	public JLabel lblRent;
+	public JPanel pUserRentInfo;
 
-	public RentalBookPanel() {
+	public JLabel getLblRent() {
+		return lblRent;
+	}
+
+	public void setLblRent(JLabel lblRent) {
+		this.lblRent = lblRent;
+	}
+
+	public static RentalBookPanel getInstance() {
+		return instance;
+	}
+
+	private RentalBookPanel() {
 		setLayout(null);
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(228, 10, 767, 54);
+		pSearch.setBounds(220, 10, 466, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedItem()=="전체보기") {
+				tfSearch.setText("");
+				if (comboBox.getSelectedItem() == "전체보기") {
 					loadDataAll();
 				}
 			}
 		});
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"전체보기", "도서코드", "도서명", "저 자", "출판사"}));
-		comboBox.setBounds(33, 10, 93, 25);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "전체보기", "도서코드", "도서명", "저 자", "출판사" }));
+		comboBox.setBounds(12, 10, 93, 25);
 		pSearch.add(comboBox);
 
 		tfSearch = new JTextField();
 		tfSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		tfSearch.setColumns(10);
-		tfSearch.setBounds(158, 10, 421, 25);
+		tfSearch.setBounds(117, 10, 221, 25);
 		pSearch.add(tfSearch);
 
-		JButton btnSearch = new JButton("search");
+		JButton btnSearch = new JButton("검 색");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				loadDataEach();
-
+				if (comboBox.getSelectedItem().equals("전체보기")) {
+					return;
+				} else
+					loadDataEach();
 			}
 		});
-		btnSearch.setBounds(627, 11, 93, 23);
+		btnSearch.setBounds(350, 11, 93, 23);
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(225, 85, 770, 418);
+		scrollPane.setBounds(12, 74, 793, 418);
 		add(scrollPane);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					if (checkRent() == true) {
+						RentBookInfoView rbiv = new RentBookInfoView();
+						rbiv.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "대여 불가능 도서입니다.");
+					}
+				}
+			}
+		});
+		addPopupMenu();
+
 		loadDataAll();
 		scrollPane.setViewportView(table);
 
-		JPanel pUserRentInfo = new JPanel();
+		pUserRentInfo = new JPanel();
 		pUserRentInfo.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pUserRentInfo.setBounds(12, 10, 195, 54);
+		pUserRentInfo.setBounds(12, 10, 181, 54);
 		add(pUserRentInfo);
 		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JLabel lblUserName = new JLabel("xxx회원님의 대여 현황");
+		JLabel lblUserName = new JLabel(MainUi.getUsers().getUserId() + "님의 대여 현황");
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblUserName);
 
-		JLabel lblRent = new JLabel("대여: 5권");
+		lblRent = new JLabel("대여: " + rentBookCountById() + " 권");
 		lblRent.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserRentInfo.add(lblRent);
 
-		JLabel lblReturn = new JLabel("미반납: 1권");
-		lblReturn.setHorizontalAlignment(SwingConstants.CENTER);
-		pUserRentInfo.add(lblReturn);
+		JButton btnReading = new JButton("도서신청");
+		btnReading.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReadingVIew frame = new ReadingVIew();
+				frame.setVisible(true);
+			}
+		});
+		btnReading.setBounds(708, 10, 97, 23);
+		add(btnReading);
 
-		JPanel pBookInfo = new JPanel();
-		pBookInfo.setBounds(12, 99, 195, 363);
-		add(pBookInfo);
-		pBookInfo.setLayout(new GridLayout(0, 1, 0, 0));
+		JButton btnBestBook = new JButton("인기도서");
+		btnBestBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BestBookView frame = new BestBookView();
+				frame.setVisible(true);
+			}
+		});
+		btnBestBook.setBounds(708, 43, 97, 23);
+		add(btnBestBook);
+	}
 
-		JLabel lblBookCode = new JLabel(" 도서코드");
-		pBookInfo.add(lblBookCode);
+	private void addPopupMenu() {
+		JPopupMenu popupMenu = new JPopupMenu();
+		JMenuItem menuItem = new JMenuItem("대여하기");
+		popupMenu.add(menuItem);
+		table.setComponentPopupMenu(popupMenu);
+		menuItem.addActionListener(new ActionListener() {
 
-		tfBookCode = new JTextField();
-		tfBookCode.setColumns(10);
-		pBookInfo.add(tfBookCode);
-
-		JLabel lblBookName = new JLabel(" 도서명");
-		pBookInfo.add(lblBookName);
-
-		tfBookName = new JTextField();
-		tfBookName.setColumns(10);
-		pBookInfo.add(tfBookName);
-
-		JLabel lblAuthor = new JLabel(" 저 자");
-		pBookInfo.add(lblAuthor);
-
-		tfAuthor = new JTextField();
-		tfAuthor.setColumns(10);
-		pBookInfo.add(tfAuthor);
-
-		JLabel lblPublisher = new JLabel(" 출판사");
-		pBookInfo.add(lblPublisher);
-
-		tfPublisher = new JTextField();
-		tfPublisher.setColumns(10);
-		pBookInfo.add(tfPublisher);
-
-		JLabel lblPrice = new JLabel(" 가격");
-		pBookInfo.add(lblPrice);
-
-		tfPrice = new JTextField();
-		tfPrice.setColumns(10);
-		pBookInfo.add(tfPrice);
-
-		JLabel lblRentCount = new JLabel(" 총대여횟수");
-		pBookInfo.add(lblRentCount);
-
-		tfRentCount = new JTextField();
-		tfRentCount.setColumns(10);
-		pBookInfo.add(tfRentCount);
-
-		JPanel pBtn = new JPanel();
-		pBtn.setBounds(24, 472, 171, 31);
-		add(pBtn);
-		pBtn.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JButton btnOk = new JButton("확인");
-		pBtn.add(btnOk);
-
-		JButton btnCancel = new JButton("취소");
-		pBtn.add(btnCancel);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkRent() == true) {
+					RentBookInfoView rbiv = new RentBookInfoView();
+					rbiv.setVisible(true);
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "대여 불가능 도서입니다.");
+				}
+			}
+		});
 	}
 
 	public void loadDataAll() {
-		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataAll(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
+		table.setVisible(true);
+		setAlignWidth();
 	}
 
 	public String[] getColumnNames() {
@@ -176,8 +200,13 @@ public class RentalBookPanel extends JPanel {
 	}
 
 	public void loadDataEach() {
-		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames());
+		DefaultTableModel model = new DefaultTableModel(getDataEach(), getColumnNames()) {
+			public boolean isCellEditable(int i, int c) {
+				return false;
+			}
+		};
 		table.setModel(model);
+		setAlignWidth();
 	}
 
 	public Object[][] getDataEach() {
@@ -191,31 +220,92 @@ public class RentalBookPanel extends JPanel {
 	}
 
 	public List<Book> searchItem() {
-		String searchBy =(String) comboBox.getSelectedItem();
+		String searchBy = (String) comboBox.getSelectedItem();
 		String item = tfSearch.getText();
 		List<Book> lists = null;
-		Book book = new Book();
-		
-		if (searchBy == "도서코드") {
-			book.setBookCode(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
-			return lists;
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if (searchBy.equals("도서코드")) {
+			map.put("bookCode", "%" + item + "%");
 		}
-		if (searchBy == "도서명") {
-			book.setBookName(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
-			return lists;
+		if (searchBy.equals("도서명")) {
+			map.put("bookName", "%" + item + "%");
 		}
-		if (searchBy == "저 자") {
-			book.setAuthor(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
-			return lists;
+		if (searchBy.equals("저 자")) {
+			map.put("author", "%" + item + "%");
 		}
-		if (searchBy == "출판사") {
-			book.setPublicName(item);
-			lists = BookService.getInstance().selectBookBySomething(book);
-			return lists;
+		if (searchBy.equals("출판사")) {
+			map.put("publicName", "%" + item + "%");
 		}
+		lists = BookService.getInstance().selectBookBySomething(map);
 		return lists;
 	}
+
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+
+	public boolean checkRent() {
+		int selectedIndex = table.getSelectedRow();
+		boolean result;
+
+		int bAmount = (int) table.getValueAt(selectedIndex, 5);
+		if (bAmount <= 0) {
+			result = false;
+		} else
+			result = true;
+
+		return result;
+	}
+
+	public int rentBookCountById() {
+		String userId = MainUi.getUsers().getUserId();
+		RentalView rv = new RentalView();
+		rv.setUserId(userId);
+		List<RentalView> lists = RentalViewService.getInstance().findByWhereRentalView(rv);
+		int count = lists.size();
+
+		return count;
+	}
+
+	public void setAlignWidth() {
+		setAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
+		setCellWidth(70, 300, 100, 100, 70, 30, 55);
+	}
+
+	public void setCellWidth(int... width) {
+		TableColumnModel cModel = table.getColumnModel();
+		for (int i = 0; i < width.length; i++) {
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+
+	public void setAlign(int align, int... idx) {
+		// 0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+
+		TableColumnModel cModel = table.getColumnModel();
+		// idx = [0,2]
+		for (int i = 0; i < idx.length; i++) {
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+
 }

@@ -5,13 +5,13 @@
 		select big_group, book_big_group_name
 		from book_big_group
 	</sql>
-	
-	
+
+
 	<sql id="selectAllMiddleGroup">
-		select middle_group, book_middle_group_name 
-		from book_middle_group 
+		select middle_group, book_middle_group_name
+		from book_middle_group
 	</sql>
-	
+
 	<sql id="whereBigGroupNo">
 		<where>
 			<if test="bigGroup != null">
@@ -19,34 +19,37 @@
 			</if>
 		</where>
 	</sql>
-	
+
 	<sql id="whereMiddleGroupNo">
 		<where>
 			<if test="bigGroup != null">
 				and big_group = #{bigGroup}
 			</if>
-			<if test = "middleGroup != null">
+			<if test="middleGroup != null">
 				and middle_group = #{middleGroup}
 			</if>
 		</where>
 	</sql>
-	
+
 	<select id="selectAllBookBigGroup" resultType="BookGroup">
-		<include refid="selectAllBigGroup"/>
+		<include refid="selectAllBigGroup" />
 	</select>
-	
-	<select id="selectAllMiddleGroup" parameterType="BookGroup" resultType="BookGroup">
-		<include refid="selectAllMiddleGroup"/>
-		<include refid="whereBigGroupNo"/>
+
+	<select id="selectAllMiddleGroup" parameterType="BookGroup"
+		resultType="BookGroup">
+		<include refid="selectAllMiddleGroup" />
+		<include refid="whereBigGroupNo" />
 	</select>
-	
-	<select id = "selectByNoBigGroup" parameterType="BookGroup" resultType="BookGroup">
-		<include refid="selectAllBigGroup"/>
-		<include refid="whereBigGroupNo"/>
+
+	<select id="selectByNoBigGroup" parameterType="BookGroup"
+		resultType="BookGroup">
+		<include refid="selectAllBigGroup" />
+		<include refid="whereBigGroupNo" />
 	</select>
-	
-	<select id="selectByNoMiddleGroup" parameterType="BookGroup" resultType="BookGroup">
-		<include refid="selectAllMiddleGroup"/>
-		<include refid="whereMiddleGroupNo"/>
+
+	<select id="selectByNoMiddleGroup" parameterType="BookGroup"
+		resultType="BookGroup">
+		<include refid="selectAllMiddleGroup" />
+		<include refid="whereMiddleGroupNo" />
 	</select>
 </mapper>

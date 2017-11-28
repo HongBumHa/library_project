@@ -9,7 +9,7 @@ public class RentalBook {
 	private String bookCode;
 	private String userId;
 	private Date returnDay;
-
+	
 	public Date getRentalDay() {
 		return rentalDay;
 	}
@@ -60,5 +60,10 @@ public class RentalBook {
 	         return null;
 	     }
 	  }
+
+	public RentalBook(String bookCode, String userId) {
+		this.bookCode = bookCode;
+		this.userId = userId;
+	}
 
 }

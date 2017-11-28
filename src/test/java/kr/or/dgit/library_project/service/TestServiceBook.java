@@ -21,7 +21,23 @@ public class TestServiceBook {
 	public static void tearDownAfterClass() throws Exception {
 		bookService=null;
 	}
-
+	
+	/*@Test
+	public void testBookGroupRow() {
+		Book book=new Book();
+		book.setBookCode("%A0%");
+		Book test=bookService.selectBookGroupRow(book);
+		Assert.assertNotNull(test);
+	}*/
+	
+	/*@Test
+	public void testchart() {
+		Book book=new Book();
+		book.setBookCode("%A0%");
+		Book test=bookService.selectBookForChart(book);
+		Assert.assertNotNull(test);
+	}*/
+	
 	/*@Test
 	public void testSelectBookByAll() {
 		List<Book> lists=bookService.selectBookByAll();
