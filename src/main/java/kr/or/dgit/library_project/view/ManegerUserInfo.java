@@ -68,7 +68,7 @@ public class ManegerUserInfo extends JPanel {
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
 		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_9.setBounds(26, 82, 732, 153);
+		panel_9.setBounds(26, 70, 732, 153);
 		add(panel_9);
 
 		JPanel pId = new JPanel();
@@ -202,17 +202,17 @@ public class ManegerUserInfo extends JPanel {
 		
 		JLabel label = new JLabel("");
 		label.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-		label.setBounds(25, 17, 3, 18);
+		label.setBounds(25, 16, 3, 18);
 		panel_9.add(label);
 		
 		JLabel label_1 = new JLabel("");
 		label_1.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-		label_1.setBounds(25, 47, 3, 18);
+		label_1.setBounds(25, 49, 3, 18);
 		panel_9.add(label_1);
 		
 		JLabel label_2 = new JLabel("");
 		label_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-		label_2.setBounds(24, 100, 3, 18);
+		label_2.setBounds(25, 101, 3, 18);
 		panel_9.add(label_2);
 		
 		JLabel label_3 = new JLabel("");
@@ -222,7 +222,7 @@ public class ManegerUserInfo extends JPanel {
 		
 		JLabel label_4 = new JLabel("");
 		label_4.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-		label_4.setBounds(219, 48, 3, 18);
+		label_4.setBounds(219, 50, 3, 18);
 		panel_9.add(label_4);
 		
 		JLabel label_5 = new JLabel("");
@@ -252,7 +252,7 @@ public class ManegerUserInfo extends JPanel {
 		});
 
 		JPanel pSerach = new JPanel();
-		pSerach.setBounds(85, 35, 499, 25);
+		pSerach.setBounds(155, 24, 499, 25);
 		add(pSerach);
 		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
 		cmbSearch = new JComboBox<String>();

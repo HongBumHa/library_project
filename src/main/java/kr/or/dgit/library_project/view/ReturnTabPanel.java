@@ -235,7 +235,7 @@ public class ReturnTabPanel extends JPanel {
 
 		returnTabButton.add(btCancel);
 
-		scrollPane.setBounds(6, 251, 780, 250);
+		scrollPane.setBounds(13, 251, 780, 250);
 		add(scrollPane);
 		scrollPane.setViewportView(RentalDataTable);
 	}

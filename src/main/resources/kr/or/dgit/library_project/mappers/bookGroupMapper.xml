@@ -9,7 +9,8 @@
 
 	<sql id="selectAllMiddleGroup">
 		select middle_group, book_middle_group_name
-		from book_middle_group
+		from
+		book_middle_group
 	</sql>
 
 	<sql id="whereBigGroupNo">

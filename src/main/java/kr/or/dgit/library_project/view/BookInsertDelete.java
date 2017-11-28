@@ -64,7 +64,7 @@ public class BookInsertDelete extends JPanel {
 		setLayout(null);
 
 		tableScroll = new JScrollPane();
-		tableScroll.setBounds(4, 75, 770, 326);
+		tableScroll.setBounds(2, 83, 764, 326);
 		add(tableScroll);
 
 		searchTable = new JTable();
@@ -82,13 +82,13 @@ public class BookInsertDelete extends JPanel {
 		tableScroll.setViewportView(searchTable);
 
 		tfSearch = new JTextField();
-		tfSearch.setBounds(113, 23, 219, 21);
+		tfSearch.setBounds(237, 23, 228, 21);
 		add(tfSearch);
 		tfSearch.setColumns(10);
 
 		comboSearch = new JComboBox();
 		comboSearch.setToolTipText("");
-		comboSearch.setBounds(12, 23, 97, 21);
+		comboSearch.setBounds(136, 23, 97, 21);
 		comboSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboSearch.getSelectedItem() == "전체보기") {
@@ -101,7 +101,7 @@ public class BookInsertDelete extends JPanel {
 		add(comboSearch);
 
 		JButton btnSearch = new JButton("검색");
-		btnSearch.setBounds(344, 22, 65, 23);
+		btnSearch.setBounds(468, 22, 65, 23);
 		btnSearch.addActionListener(new ActionListener() {
 
 			@Override
@@ -113,14 +113,16 @@ public class BookInsertDelete extends JPanel {
 		add(btnSearch);
 
 		JScrollPane readingScroll = new JScrollPane();
-		readingScroll.setBounds(12, 455, 770, 114);
+		readingScroll.setBounds(2, 456, 480, 114);
 
 		readingTable = new JTable();
 		readingTable.setModel(createReadingTableModel());
+		setAlignWidthReadingT();
+		
 
 		JPopupMenu readingTablePopup = new JPopupMenu();
-		JMenuItem readingInsertItem = new JMenuItem("신청도서추가");
-		JMenuItem readingDeleteItem = new JMenuItem("신청도서거절");
+		JMenuItem readingInsertItem = new JMenuItem("신청 도서 추가");
+		JMenuItem readingDeleteItem = new JMenuItem("신청 도서 거절");
 
 		readingInsertItem.addActionListener(new ActionListener() {
 
@@ -129,7 +131,7 @@ public class BookInsertDelete extends JPanel {
 				JTextField[] field = ManagerInserDeletePopUp.getInstance().getTfArrays();
 				String[] readingTableData = new String[readingTable.getColumnCount()];
 
-				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청도서추가");
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("신청 도서 추가");
 				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("신청도서를 추가 합니다.");
 
 				for (int i = 0; i < readingTable.getColumnCount(); i++) {
@@ -185,7 +187,7 @@ public class BookInsertDelete extends JPanel {
 
 		JLabel lbTitle1 = new JLabel("보유 도서 목록");
 		lbTitle1.setFont(new Font("굴림", Font.BOLD, 13));
-		lbTitle1.setBounds(12, 54, 219, 15);
+		lbTitle1.setBounds(12, 62, 219, 15);
 		add(lbTitle1);
 
 		JLabel lbTitle2 = new JLabel("현재 신청 도서 현황");
@@ -193,13 +195,13 @@ public class BookInsertDelete extends JPanel {
 		lbTitle2.setBounds(12, 430, 176, 15);
 		add(lbTitle2);
 		
-		JButton btnAdd = new JButton("도서 추가");
+		JButton btnAdd = new JButton("신규 도서 추가");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//도서 신청 프레임 연결하기
 			}
 		});
-		btnAdd.setBounds(603, 42, 97, 23);
+		btnAdd.setBounds(607, 22, 121, 23);
 		add(btnAdd);
 
 		upDatePopup.addActionListener(new ActionListener() {
@@ -326,6 +328,7 @@ public class BookInsertDelete extends JPanel {
 	public void refreshReadingTable(Reading reading) {
 		ReadingService.getInstance().deleteByName(reading);
 		readingTable.setModel(createReadingTableModel());
+		
 		readingTable.setVisible(true);
 	}
 
@@ -412,13 +415,12 @@ public class BookInsertDelete extends JPanel {
 	}
 
 	public void setAlignWidth() {
-		setAlign(SwingConstants.LEFT, 0, 1, 2, 3, 4, 5);
-		setCellWidth(70, 330, 80, 100, 40, 60);
+		setAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
+		setCellWidth(70, 300, 90, 90, 60, 30, 50);
 	}
 
 	public void setCellWidth(int... width) {
 		TableColumnModel cModel = searchTable.getColumnModel();
-		System.out.println(Arrays.toString(width));
 		for (int i = 0; i < width.length; i++) {
 			cModel.getColumn(i).setPreferredWidth(width[i]);
 		}
@@ -430,6 +432,29 @@ public class BookInsertDelete extends JPanel {
 		dtcr.setHorizontalAlignment(align);
 
 		TableColumnModel cModel = searchTable.getColumnModel();
+		// idx = [0,2]
+		for (int i = 0; i < idx.length; i++) {
+			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
+		}
+	}
+	public void setAlignWidthReadingT() {
+		setAlignReadingT(SwingConstants.CENTER, 0, 1, 2);
+		setCellWidthReadingT(280, 100, 100);
+	}
+
+	public void setCellWidthReadingT(int... width) {
+		TableColumnModel cModel = readingTable.getColumnModel();
+		for (int i = 0; i < width.length; i++) {
+			cModel.getColumn(i).setPreferredWidth(width[i]);
+		}
+	}
+
+	public void setAlignReadingT(int align, int... idx) {
+		// 0번 컬럼을 정렬(Left, Right, Center)
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(align);
+
+		TableColumnModel cModel = readingTable.getColumnModel();
 		// idx = [0,2]
 		for (int i = 0; i < idx.length; i++) {
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);

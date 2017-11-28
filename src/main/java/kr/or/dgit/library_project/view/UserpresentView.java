@@ -53,7 +53,7 @@ public class UserpresentView extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel.setBounds(12, 10, 416, 474);
+		panel.setBounds(5, 10, 416, 474);
 		add(panel);
 		panel.setLayout(null);
 		
