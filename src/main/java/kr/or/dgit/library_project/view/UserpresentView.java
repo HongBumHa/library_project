@@ -106,7 +106,7 @@ public class UserpresentView extends JPanel {
 		panel.add(cPanel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\bookimg.PNG"));
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\1234.jpg"));
 		lblNewLabel_1.setBounds(427, 10, 371, 477);
 		add(lblNewLabel_1);
 		setting();

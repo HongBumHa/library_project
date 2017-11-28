@@ -136,7 +136,7 @@
 	</delete>
 	
 	<sql id="selectByRankcountSql">
-		select * from book order by all_rentel_count desc
+		select price,book_name,author,p.public_name,amount,all_rentel_count from book,publisher p order by all_rentel_count desc;
 	</sql>
 	<select id="selectByRank" resultMap="BookResult">
 		<include refid="selectByRankcountSql"/>

@@ -41,8 +41,6 @@ public class UserInfo extends JFrame {
 		RentalBookPanel rentalBookTab = RentalBookPanel.getInstance();
 		rentalBookTab.setLayout(null);
 		tabbedPane.addTab("대 여", null, rentalBookTab, null);
-
-
 	
 		ReturnTabPanel returnTab =  ReturnTabPanel.getInstance();
 		returnTab.setLayout(null);

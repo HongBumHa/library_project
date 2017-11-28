@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -220,6 +221,12 @@ public class ReturnTabPanel extends JPanel {
 				UserpresentView.getInstance().getcPanel().setChart(UserpresentView.getInstance().getpChart().callPieChart());
 				UserpresentView.setting();
 				scrollPane.setViewportView(RentalDataTable);
+				
+				JOptionPane.showMessageDialog(null, "반납되었습니다.");
+				for (int i = 0; i < sts.length; i++) {
+					tfFields[i].setText("");
+				}
+				
 			}
 		});
 		
