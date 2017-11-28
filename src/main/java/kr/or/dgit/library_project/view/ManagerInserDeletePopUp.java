@@ -178,6 +178,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 
 					BookInsertDelete.getInstance().refreshSearchTable();
 					BookInsertDelete.getInstance().mIDFrameClose();
+					JOptionPane.showMessageDialog(null, "도서 정보가 변경되었습니다.");
 				}
 				if (btnClickEvent.getText() == "새로운도서추가") {
 					Book book = new Book();
@@ -219,6 +220,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 
 					BookInsertDelete.getInstance().refreshSearchTable();
 					BookInsertDelete.getInstance().mIDFrameClose();
+					JOptionPane.showMessageDialog(null, "도서가 추가되었습니다.");
 				}
 
 				if (btnClickEvent.getText() == "신청 도서 추가") {
@@ -262,6 +264,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					BookInsertDelete.getInstance().refreshSearchTable();
 					BookInsertDelete.getInstance().refreshReadingTable(reading);
 					BookInsertDelete.getInstance().mIDFrameClose();
+					JOptionPane.showMessageDialog(null, "신청도서가 추가되었습니다..");
 				}
 			}
 		});
