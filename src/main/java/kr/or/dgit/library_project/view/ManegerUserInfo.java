@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,10 +33,6 @@ import kr.or.dgit.library_project.dto.Post;
 import kr.or.dgit.library_project.dto.Users;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
-import javax.swing.BoxLayout;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class ManegerUserInfo extends JPanel {

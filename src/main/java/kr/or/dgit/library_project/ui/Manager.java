@@ -21,7 +21,7 @@ public class Manager extends JFrame {
 	public Manager() {
 		setTitle("관리자 모드");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 804, 657);
+		setBounds(100, 100, 820, 657);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
