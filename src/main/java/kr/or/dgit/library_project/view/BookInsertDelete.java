@@ -31,9 +31,11 @@ import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.library_project.dto.Book;
 import kr.or.dgit.library_project.dto.BookGroup;
+import kr.or.dgit.library_project.dto.Publisher;
 import kr.or.dgit.library_project.dto.Reading;
 import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
+import kr.or.dgit.library_project.service.PublisherService;
 import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
 
@@ -69,16 +71,12 @@ public class BookInsertDelete extends JPanel {
 
 		searchTable = new JTable();
 		JPopupMenu searchPopupMenu = new JPopupMenu();
-		JMenuItem addPopup = new JMenuItem("새로운도서추가");
+//		JMenuItem addPopup = new JMenuItem("새로운도서추가");
 		JMenuItem upDatePopup = new JMenuItem("변경");
 		JMenuItem deletePopup = new JMenuItem("삭제");
 
 		searchTable.setComponentPopupMenu(searchPopupMenu);
-		// searchTable.setModel(createTableModel());
-		// searchTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		// searchTable.getColumnModel().getColumn(1).setPreferredWidth(230);
 		refreshSearchTable();
-		// sizeColumnsToFit(searchTable, 0);
 		tableScroll.setViewportView(searchTable);
 
 		tfSearch = new JTextField();
@@ -142,10 +140,6 @@ public class BookInsertDelete extends JPanel {
 						.getEditorComponent()));
 				field[3].setText("");
 				field[4].setText("");
-
-				// System.out.println("정보
-				// 확인"+ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]));
-
 				if (ManagerInserDeletePopUp.getInstance().publicComboSelected(readingTableData[2]) == 1) {
 					publisherJT.setText(readingTableData[2]);
 				}
@@ -193,14 +187,26 @@ public class BookInsertDelete extends JPanel {
 		lbTitle2.setBounds(12, 430, 176, 15);
 		add(lbTitle2);
 		
-		JButton btnAdd = new JButton("도서 추가");
-		btnAdd.addActionListener(new ActionListener() {
+		JButton btnAddNewBook = new JButton("도서 추가");
+		btnAddNewBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//도서 신청 프레임 연결하기
 			}
 		});
-		btnAdd.setBounds(685, 42, 97, 23);
-		add(btnAdd);
+		btnAddNewBook.setBounds(685, 42, 97, 23);
+		btnAddNewBook.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
+				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
+				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
+				mIDfram.setVisible(true);
+				setVisible(true);
+			}
+		});
+		
+		add(btnAddNewBook);
 
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override
@@ -289,19 +295,19 @@ public class BookInsertDelete extends JPanel {
 			}
 		});
 
-		addPopup.addActionListener(new ActionListener() {
+//		addPopup.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
+//				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
+//				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
+//				mIDfram.setVisible(true);
+//				setVisible(true);
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
-				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
-				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
-				mIDfram.setVisible(true);
-				setVisible(true);
-			}
-		});
-
-		searchPopupMenu.add(addPopup);
+//		searchPopupMenu.add(addPopup);
 		searchPopupMenu.add(upDatePopup);
 		searchPopupMenu.add(deletePopup);
 
@@ -413,7 +419,7 @@ public class BookInsertDelete extends JPanel {
 
 	public void setAlignWidth() {
 		setAlign(SwingConstants.LEFT, 0, 1, 2, 3, 4, 5);
-		setCellWidth(70, 330, 80, 100, 40, 60);
+		setCellWidth(70, 330, 80, 100, 40, 40,40);
 	}
 
 	public void setCellWidth(int... width) {

@@ -334,7 +334,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 		// add(testBtn);
 	}
 
-	private void refreshPublicComboItem() {
+	public void refreshPublicComboItem() {
 		List<Publisher> pubList = PublisherService.getInstance().selectPublisherByAll();
 		String[] pubArray = new String[pubList.size()];
 
@@ -517,7 +517,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 		}
 		return 1;
 	}
-
+	
 	class ComboAgent extends KeyAdapter {
 		JComboBox combo;
 		JTextField editor;

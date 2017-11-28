@@ -21,7 +21,7 @@ public class RentalView {
 	
 public Object[] toArrayReturn() {
 		Date curdate = new Date();
-		long diffTime = rentalDay.getTime() - curdate.getTime();
+		long diffTime = returnDay.getTime() - curdate.getTime();
 		long delaytime = 0;
 		if(diffTime < 0) {
 			delaytime = Math.abs(diffTime/(1000*60*60*24));
