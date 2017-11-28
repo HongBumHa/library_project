@@ -142,13 +142,12 @@ public class MainUi extends JFrame {
 
 		if (resId == null) {
 			JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 다시 확인해주세요");
-
+			return;
 		} else if (resPw == null) {
 			JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요");
+			return;
 		} else {
 			users = service.findUsersByNo(new Users(id));
-
-
 			if (users.getUserLeave().equals("N")) {
 				JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
 				return;

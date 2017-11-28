@@ -180,7 +180,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					// book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
 					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
 
-					System.out.println(tfPrice.getText().replaceAll(" ", ""));
+					
 
 					book.setPrice(Integer.parseInt(tfPrice.getText().replaceAll(" ", "")));
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
@@ -198,7 +198,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					publisher.setPublicName(((JTextField) publisherCombo.getEditor().getEditorComponent()).getText()
 							.replaceAll(" ", ""));
 
-					System.out.println("name " + tfBookName.getText());
+					
 					book.setBookName(tfBookName.getText());
 
 					if (PublisherService.getInstance().selectPublisherByCodeName(publisher) != null) {
@@ -362,6 +362,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 			bigGroupModel = new DefaultComboBoxModel<>(comboLists);
 			return bigGroupModel;
 		}
+		
 		BookGroup[] middleMapArray = middleMap.get(bookgroup.getBigGroup());
 		String[] middleComboLists = new String[middleMapArray.length];
 
@@ -403,9 +404,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 
 		List<BookGroup> middlelist = BookGroupService.getInstance().findAllMiddleGroup(bookGroup);
 		List<BookGroup> biglist = BookGroupService.getInstance().findAllBookBigGroup();
-
 		BookGroup[][] bookTwoArray = new BookGroup[biglist.size()][10];
-
+		
 		int index = 0;
 		int TwoArrayindex = 0;
 
@@ -419,8 +419,9 @@ public class ManagerInserDeletePopUp extends JPanel {
 				continue;
 			}
 			
-			
-			if (bookTwoArray[index][0].getBookMiddleGroupName().equals(biglist.get(index).getBookBigGroupName())) {
+			String middleIndexFirstName = bookTwoArray[index][0].getBookMiddleGroupName().trim();
+			String bigGroupName = biglist.get(index).getBookBigGroupName().trim();
+			if (middleIndexFirstName.equals(bigGroupName)) {
 				bookTwoArray[index][TwoArrayindex] = middlelist.get(n);
 				TwoArrayindex++;
 				if (n % 10 == 9) {

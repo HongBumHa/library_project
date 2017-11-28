@@ -63,7 +63,7 @@ public class ReturnTabPanel extends JPanel {
 
 		JPanel returnTabInfo = new JPanel();
 		returnTabInfo.setLayout(null);
-		returnTabInfo.setBounds(168, 34, 455, 257);
+		returnTabInfo.setBounds(168, 2, 455, 257);
 		add(returnTabInfo);
 
 		JPanel returnTabTextField = new JPanel();
@@ -235,7 +235,7 @@ public class ReturnTabPanel extends JPanel {
 
 		returnTabButton.add(btCancel);
 
-		scrollPane.setBounds(33, 339, 743, 232);
+		scrollPane.setBounds(12, 262, 743, 250);
 		add(scrollPane);
 		scrollPane.setViewportView(RentalDataTable);
 	}

@@ -64,7 +64,7 @@ public class BookInsertDelete extends JPanel {
 		setLayout(null);
 
 		tableScroll = new JScrollPane();
-		tableScroll.setBounds(12, 75, 470, 326);
+		tableScroll.setBounds(12, 75, 770, 326);
 		add(tableScroll);
 
 		searchTable = new JTable();
@@ -113,7 +113,7 @@ public class BookInsertDelete extends JPanel {
 		add(btnSearch);
 
 		JScrollPane readingScroll = new JScrollPane();
-		readingScroll.setBounds(494, 75, 257, 326);
+		readingScroll.setBounds(12, 455, 770, 80);
 
 		readingTable = new JTable();
 		readingTable.setModel(createReadingTableModel());
@@ -190,12 +190,17 @@ public class BookInsertDelete extends JPanel {
 
 		JLabel lbTitle2 = new JLabel("현재 신청 도서 현황");
 		lbTitle2.setFont(new Font("굴림", Font.BOLD, 13));
-		lbTitle2.setBounds(494, 54, 176, 15);
+		lbTitle2.setBounds(12, 430, 176, 15);
 		add(lbTitle2);
-
-		JLabel lbTitle3 = new JLabel("**추가 삭제는 각 테이블에서 오른쪽 마우스를 클릭하세요.");
-		lbTitle3.setBounds(421, 26, 330, 15);
-		add(lbTitle3);
+		
+		JButton btnAdd = new JButton("도서 추가");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//도서 신청 프레임 연결하기
+			}
+		});
+		btnAdd.setBounds(685, 42, 97, 23);
+		add(btnAdd);
 
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override

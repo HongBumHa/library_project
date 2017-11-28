@@ -10,7 +10,7 @@
 	</select>
 	<sql id = "insertSql">
 		insert into rentalbook(rentalday, book_code, user_id, returnday)
-		values(curdate(), #{bookCode}, #{userId}, curdate()+3)
+		values(curdate(), #{bookCode}, #{userId}, adddate(curdate(),3))
 	</sql>
 	
 	<insert id="insertData" parameterType="RentalBook">

@@ -96,6 +96,9 @@ public class UserReadingBook extends JPanel {
 		String bookName = tfBookName.getText();
 		String author = tfAuthor.getText();
 		String publicName = tfPublicName.getText();
+		if(bookName.equals("")||author.equals("")||publicName.equals("")){
+			return -1;
+		}
 		Reading rBook = new Reading(bookName, author, publicName);
 		int res = ReadingService.getInstance().findinsert(rBook);
 		return res;
