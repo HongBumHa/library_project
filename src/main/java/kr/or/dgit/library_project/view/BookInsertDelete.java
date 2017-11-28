@@ -71,7 +71,6 @@ public class BookInsertDelete extends JPanel {
 
 		searchTable = new JTable();
 		JPopupMenu searchPopupMenu = new JPopupMenu();
-//		JMenuItem addPopup = new JMenuItem("새로운도서추가");
 		JMenuItem upDatePopup = new JMenuItem("변경");
 		JMenuItem deletePopup = new JMenuItem("삭제");
 
@@ -188,11 +187,6 @@ public class BookInsertDelete extends JPanel {
 		add(lbTitle2);
 		
 		JButton btnAddNewBook = new JButton("도서 추가");
-		btnAddNewBook.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//도서 신청 프레임 연결하기
-			}
-		});
 		btnAddNewBook.setBounds(685, 42, 97, 23);
 		btnAddNewBook.addActionListener(new ActionListener() {
 			
@@ -242,7 +236,6 @@ public class BookInsertDelete extends JPanel {
 
 				ManagerInserDeletePopUp.getInstance().getComboMiddleGroup().setSelectedIndex(middleIndex);
 
-				// 추가내용 있음
 				for (int i = 0; i < ManagerInserDeletePopUp.getInstance().getTfArrays().length; i++) {
 					if (i == 2) {
 						ManagerInserDeletePopUp.getInstance().publicComboSelected(
@@ -256,8 +249,6 @@ public class BookInsertDelete extends JPanel {
 					}
 					ManagerInserDeletePopUp.getInstance().getTfArrays()[i]
 							.setText(searchTable.getValueAt(searchTable.getSelectedRow(), i + 1).toString());
-					// private String[] searchTableTitle = new String[] { "도서코드", "도서명", "저자",
-					// "출판사", "가격", "수량", "대여횟수" };
 				}
 
 				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("변경");
@@ -294,20 +285,6 @@ public class BookInsertDelete extends JPanel {
 				}
 			}
 		});
-
-//		addPopup.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
-//				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
-//				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
-//				mIDfram.setVisible(true);
-//				setVisible(true);
-//			}
-//		});
-
-//		searchPopupMenu.add(addPopup);
 		searchPopupMenu.add(upDatePopup);
 		searchPopupMenu.add(deletePopup);
 
@@ -324,7 +301,6 @@ public class BookInsertDelete extends JPanel {
 		searchTable.setModel(createTableModel());
 		setAlignWidth();
 		searchTable.setVisible(true);
-		// tableScroll
 		tableScroll.setViewportView(searchTable);
 		tableScroll.setVisible(true);
 	}
@@ -431,12 +407,10 @@ public class BookInsertDelete extends JPanel {
 	}
 
 	public void setAlign(int align, int... idx) {
-		// 0번 컬럼을 정렬(Left, Right, Center)
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(align);
 
 		TableColumnModel cModel = searchTable.getColumnModel();
-		// idx = [0,2]
 		for (int i = 0; i < idx.length; i++) {
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
 		}

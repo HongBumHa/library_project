@@ -278,12 +278,10 @@ public class ReturnTabPanel extends JPanel {
 	}
 	
 	public void setAlign(int align, int...idx) {
-		//0번 컬럼을 정렬(Left, Right, Center)
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(align);
 		
 		TableColumnModel cModel = RentalDataTable.getColumnModel();
-		// idx = [0,2]
 		for(int i=0; i<idx.length;i++){
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
 		}

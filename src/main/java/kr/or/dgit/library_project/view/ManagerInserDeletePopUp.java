@@ -43,8 +43,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 	private HashMap<String, BookGroup[]> middleMap;
 	private JButton btnClickEvent;
 	private ManagerInserDeletePopupFrame popupFrame;
-
-	//
 	private JComboBox publisherCombo;
 
 	private static ManagerInserDeletePopUp instance = new ManagerInserDeletePopUp();
@@ -123,8 +121,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 		add(tfBookCount);
 		tfBookCount.setColumns(11);
 
-		// tfArrays = new JTextField[]{tfBookName, tfAuthor, tfPublisher, tfPrice,
-		// tfBookCount};
 		tfArrays = new JTextField[] { tfBookName, tfAuthor, new JTextField(), tfPrice, tfBookCount };
 
 		comboBigGroup = new JComboBox();
@@ -169,19 +165,12 @@ public class ManagerInserDeletePopUp extends JPanel {
 
 					Publisher pb = new Publisher();
 
-					//
-					// pb.setPublicName(tfPublisher.getText());
 					pb.setPublicName(publisherCombo.getSelectedItem().toString());
 
 					book.setBookName(tfBookName.getText());
 					book.setAuthor(tfAuthor.getText());
 
-					//
-					// book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
 					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
-
-					
-
 					book.setPrice(Integer.parseInt(tfPrice.getText().replaceAll(" ", "")));
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
 
@@ -194,7 +183,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 					Book book = new Book();
 					book.setAuthor(tfAuthor.getText());
 					Publisher publisher = new Publisher();
-					// publisher.setPublicName(tfPublisher.getText());
 					publisher.setPublicName(((JTextField) publisherCombo.getEditor().getEditorComponent()).getText()
 							.replaceAll(" ", ""));
 
@@ -252,7 +240,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 					}
 
 					Publisher pb = new Publisher();
-					// pb.setPublicName(tfPublisher.getText());
 					pb.setPublicName(((JTextField) publisherCombo.getEditor().getEditorComponent()).getText()
 							.replaceAll(" ", ""));
 
@@ -300,38 +287,6 @@ public class ManagerInserDeletePopUp extends JPanel {
 		});
 		btnCancel.setBounds(181, 267, 97, 23);
 		add(btnCancel);
-
-		// testBtn = new JButton("test");
-		// testBtn.addActionListener(new ActionListener() {
-		//
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		//
-		//
-		//
-		// Publisher pb = new Publisher();
-		// pb.setPublicName(((JTextField)publisherCombo.getEditor().getEditorComponent()).getText().replace("
-		// ", ""));
-		// if(PublisherService.getInstance().selectPublisherByCodeName(pb) == null) {
-		// createNewPubliser(pb);
-		// }
-		//
-		// List<Publisher> pubList =
-		// PublisherService.getInstance().selectPublisherByAll();
-		// String[] pubArray = new String[pubList.size()];
-		//
-		// for(int n = 0; n < pubList.size(); n++ ) {
-		// pubArray[n] = pubList.get(n).getPublicName();
-		// System.out.println(pubList.get(n).getPublicName());
-		// }
-		// publisherCombo.setModel(new DefaultComboBoxModel(pubArray));
-		// ComboAgent agent = new ComboAgent(publisherCombo);
-		// publisherCombo.setVisible(true);
-		// setVisible(true);
-		// }
-		// });
-		// testBtn.setBounds(318, 230, 97, 23);
-		// add(testBtn);
 	}
 
 	public void refreshPublicComboItem() {
@@ -544,11 +499,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 			for (int k = 0; k < combo.getItemCount(); k++) {
 				String iteml = combo.getItemAt(k).toString().toLowerCase();
 				String item = combo.getItemAt(k).toString();
-				// 조건 비교.. 입력한 문자열이 리스트에 있는 아이템의 첫머리로 일치하는지..
 				if (item.startsWith(str) || iteml.startsWith(str) || item.startsWith(str.toLowerCase())
 						|| iteml.startsWith(str.toLowerCase())) {
-					// 일치한다면 field에 매치된 아이템을 셋팅하고
-					// 자동으로 완성된 부분을 선택표시로 하여 강조한다.
 					editor.setText(item);
 					editor.setCaretPosition(item.length());
 					editor.moveCaretPosition(pos);
