@@ -221,7 +221,7 @@ public class ManagerInserDeletePopUp extends JPanel {
 					BookInsertDelete.getInstance().mIDFrameClose();
 				}
 
-				if (btnClickEvent.getText() == "신청도서추가") {
+				if (btnClickEvent.getText() == "신청 도서 추가") {
 					Book book = new Book();
 
 					for (int n = 0; n < tfArrays.length; n++) {

@@ -107,7 +107,6 @@ public class BookInsertDelete extends JPanel {
 		readingTable = new JTable();
 		readingTable.setModel(createReadingTableModel());
 		setAlignWidthReadingT();
-		
 
 		JPopupMenu readingTablePopup = new JPopupMenu();
 		JMenuItem readingInsertItem = new JMenuItem("신청 도서 추가");
@@ -179,35 +178,24 @@ public class BookInsertDelete extends JPanel {
 		lbTitle2.setFont(new Font("굴림", Font.BOLD, 13));
 		lbTitle2.setBounds(12, 430, 176, 15);
 		add(lbTitle2);
-		
-/*<<<<<<< HEAD
-		JButton btnAdd = new JButton("신규 도서 추가");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//도서 신청 프레임 연결하기
-=======*/
+
+		// 도서 신청 프레임 연결하기
+
 		JButton btnAddNewBook = new JButton("도서 추가");
-		btnAddNewBook.setBounds(685, 42, 97, 23);
+		btnAddNewBook.setBounds(648, 42, 97, 23);
 		btnAddNewBook.addActionListener(new ActionListener() {
-			
 			@Override
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
 				ManagerInserDeletePopUp.getInstance().getBtnClickEvent().setText("새로운도서추가");
 				ManagerInserDeletePopUp.getInstance().tfFieldClearAndAdding();
 				ManagerInserDeletePopUp.getInstance().getLbChangeTitle().setText("새로운 도서를 추가 합니다.");
 				mIDfram.setVisible(true);
 				setVisible(true);
-//>>>>>>> branch 'test1127' of https://github.com/HongBumHa/library_project.git
+
 			}
 		});
-/*<<<<<<< HEAD
-		btnAdd.setBounds(607, 22, 121, 23);
-		add(btnAdd);
-=======*/
-		
-		add(btnAddNewBook);
-//>>>>>>> branch 'test1127' of https://github.com/HongBumHa/library_project.git
 
+		add(btnAddNewBook);
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -314,7 +302,7 @@ public class BookInsertDelete extends JPanel {
 	public void refreshReadingTable(Reading reading) {
 		ReadingService.getInstance().deleteByName(reading);
 		readingTable.setModel(createReadingTableModel());
-		
+
 		readingTable.setVisible(true);
 	}
 
@@ -422,6 +410,7 @@ public class BookInsertDelete extends JPanel {
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
 		}
 	}
+
 	public void setAlignWidthReadingT() {
 		setAlignReadingT(SwingConstants.CENTER, 0, 1, 2);
 		setCellWidthReadingT(280, 100, 100);
