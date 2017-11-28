@@ -25,7 +25,7 @@ public class UserInfo extends JFrame {
 	public UserInfo() {
 		setResizable(false);
 		setTitle("DGIT LIBRARY USER MODE");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 868, 579);
 
 		contentPane = new JPanel();

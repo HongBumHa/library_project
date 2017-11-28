@@ -419,7 +419,7 @@ public class BookInsertDelete extends JPanel {
 
 	public void setAlignWidth() {
 		setAlign(SwingConstants.LEFT, 0, 1, 2, 3, 4, 5);
-		setCellWidth(70, 330, 80, 100, 40, 40,40);
+		setCellWidth(70, 330, 80, 100, 40, 30,50);
 	}
 
 	public void setCellWidth(int... width) {
