@@ -86,11 +86,11 @@ public class ManagerRentalBook extends JPanel {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setLayout(null);
-		panel_6.setBounds(12, 66, 759, 523);
+		panel_6.setBounds(5, 56, 759, 501);
 		add(panel_6);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 48, 759, 465);
+		scrollPane.setBounds(0, 48, 759, 447);
 		panel_6.add(scrollPane);
 		
 		table = new JTable();

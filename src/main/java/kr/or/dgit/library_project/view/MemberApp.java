@@ -90,7 +90,7 @@ public class MemberApp extends JFrame {
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		cmbUserAddr = new JComboBox<String>();
 		cmbUserAddr.setModel(sidoModel);
-		cmbUserAddr.setBounds(137, 8, 96, 21);
+		cmbUserAddr.setBounds(60, 10, 96, 21);
 		pAddr.add(cmbUserAddr);
 
 		tfDoro = new JTextField();
@@ -104,7 +104,7 @@ public class MemberApp extends JFrame {
 		tfDoro.setForeground(new Color(230, 230, 250));
 		tfDoro.setText("도로명");
 		tfDoro.setHorizontalAlignment(SwingConstants.CENTER);
-		tfDoro.setBounds(245, 7, 80, 24);
+		tfDoro.setBounds(168, 8, 128, 24);
 		pAddr.add(tfDoro);
 		tfDoro.setColumns(10);
 
@@ -125,7 +125,7 @@ public class MemberApp extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(328, 8, 67, 24);
+		btnNewButton.setBounds(308, 7, 67, 24);
 		pAddr.add(btnNewButton);
 
 		JPanel pId = new JPanel();

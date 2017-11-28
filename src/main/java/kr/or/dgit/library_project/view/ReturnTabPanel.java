@@ -63,13 +63,13 @@ public class ReturnTabPanel extends JPanel {
 
 		JPanel returnTabInfo = new JPanel();
 		returnTabInfo.setLayout(null);
-		returnTabInfo.setBounds(168, 2, 455, 257);
+		returnTabInfo.setBounds(168, 2, 455, 241);
 		add(returnTabInfo);
 
 		JPanel returnTabTextField = new JPanel();
 		returnTabTextField.setLayout(null);
 		returnTabTextField.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		returnTabTextField.setBounds(12, 39, 424, 167);
+		returnTabTextField.setBounds(12, 34, 424, 167);
 		returnTabInfo.add(returnTabTextField);
 
 		JLabel lbBookCode = new JLabel("도서코드");
@@ -152,22 +152,22 @@ public class ReturnTabPanel extends JPanel {
 
 		JPanel returnTabButton = new JPanel();
 		returnTabButton.setLayout(null);
-		returnTabButton.setBounds(12, 206, 424, 41);
+		returnTabButton.setBounds(12, 202, 424, 41);
 		returnTabInfo.add(returnTabButton);
 
 		JButton btReturn = new JButton("반 납");
 		btReturn.setFont(new Font("굴림", Font.BOLD, 13));
-		btReturn.setBounds(127, 5, 82, 36);
+		btReturn.setBounds(127, 3, 82, 36);
 
 		JButton btCancel = new JButton("취 소");
 
 		btCancel.setFont(new Font("굴림", Font.BOLD, 13));
-		btCancel.setBounds(214, 5, 82, 36);
+		btCancel.setBounds(214, 3, 82, 36);
 
 		JLabel lbTitle = new JLabel("도서 정보");
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setFont(new Font("굴림", Font.BOLD, 15));
-		lbTitle.setBounds(22, 5, 105, 28);
+		lbTitle.setBounds(22, 4, 105, 28);
 		returnTabInfo.add(lbTitle);
 
 		scrollPane = new JScrollPane();
@@ -235,7 +235,7 @@ public class ReturnTabPanel extends JPanel {
 
 		returnTabButton.add(btCancel);
 
-		scrollPane.setBounds(12, 262, 743, 250);
+		scrollPane.setBounds(6, 251, 780, 250);
 		add(scrollPane);
 		scrollPane.setViewportView(RentalDataTable);
 	}

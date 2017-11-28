@@ -37,6 +37,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class UserInfoView extends JPanel {
 	private JTable table;
@@ -73,71 +74,71 @@ public class UserInfoView extends JPanel {
 		u = MainUi.getUsers();
 		JPanel pUserInfo = new JPanel();
 		pUserInfo.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		pUserInfo.setBounds(213, 26, 594, 227);
+		pUserInfo.setBounds(52, 15, 728, 213);
 		add(pUserInfo);
 		pUserInfo.setLayout(null);
 
 		JPanel pUserId = new JPanel();
-		pUserId.setBounds(36, 10, 228, 31);
+		pUserId.setBounds(46, 9, 201, 31);
 		pUserInfo.add(pUserId);
 		pUserId.setLayout(null);
 
 		JLabel lblUserId = new JLabel("아이디");
-		lblUserId.setBounds(12, 8, 47, 15);
+		lblUserId.setBounds(0, 8, 47, 15);
 		lblUserId.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserId.add(lblUserId);
 
 		tfUserId = new JTextField(u.getUserId());
 		tfUserId.setEnabled(false);
-		tfUserId.setBounds(83, 5, 116, 21);
+		tfUserId.setBounds(65, 5, 126, 21);
 		pUserId.add(tfUserId);
 		tfUserId.setColumns(10);
 
 		JPanel pUserName = new JPanel();
-		pUserName.setBounds(36, 51, 228, 31);
+		pUserName.setBounds(46, 50, 201, 31);
 		pUserInfo.add(pUserName);
 		pUserName.setLayout(null);
 
 		JLabel lblUserName = new JLabel("이 름");
-		lblUserName.setBounds(12, 8, 40, 15);
+		lblUserName.setBounds(0, 8, 40, 15);
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserName.add(lblUserName);
 
 		tfUserName = new JTextField(u.getUserName());
-		tfUserName.setBounds(84, 5, 116, 21);
+		tfUserName.setBounds(66, 5, 126, 21);
 		tfUserName.setColumns(10);
 		pUserName.add(tfUserName);
 
 		JPanel pUserTel = new JPanel();
-		pUserTel.setBounds(36, 92, 228, 31);
+		pUserTel.setBounds(46, 91, 201, 31);
 		pUserInfo.add(pUserTel);
 		pUserTel.setLayout(null);
 
 		JLabel lblUserTel = new JLabel("전화번호");
-		lblUserTel.setBounds(5, 8, 65, 15);
+		lblUserTel.setBounds(0, 8, 59, 15);
 		lblUserTel.setHorizontalAlignment(SwingConstants.CENTER);
 		pUserTel.add(lblUserTel);
 
 		tfUserTel = new JTextField(u.getUserTel());
-		tfUserTel.setBounds(82, 5, 116, 21);
+		tfUserTel.setBounds(65, 5, 126, 21);
 		tfUserTel.setColumns(10);
 		pUserTel.add(tfUserTel);
 
 		JPanel pUserAddr = new JPanel();
-		pUserAddr.setBounds(36, 133, 548, 70);
+		pUserAddr.setBounds(46, 133, 538, 70);
 		pUserInfo.add(pUserAddr);
 		pUserAddr.setLayout(null);
 
 		JLabel lblUserAddr = new JLabel("주 소");
 		lblUserAddr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserAddr.setBounds(12, 41, 44, 15);
+		lblUserAddr.setBounds(0, 39, 44, 15);
 		pUserAddr.add(lblUserAddr);
 
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
 		cmbCity = new JComboBox<String>();
 
 		cmbCity.setModel(sidoModel);
-		cmbCity.setBounds(170, 11, 135, 21);
+		cmbCity.setBounds(97, 11, 135, 21);
 		pUserAddr.add(cmbCity);
 
 		tfDoro = new JTextField();
@@ -151,12 +152,12 @@ public class UserInfoView extends JPanel {
 		tfDoro.setHorizontalAlignment(SwingConstants.CENTER);
 		tfDoro.setForeground(new Color(230, 230, 250));
 		tfDoro.setText("도로명");
-		tfDoro.setBounds(317, 11, 110, 21);
+		tfDoro.setBounds(244, 11, 151, 21);
 		pUserAddr.add(tfDoro);
 		tfDoro.setColumns(10);
 
 		JButton btnSearch = new JButton("검색");
-		btnSearch.setBounds(439, 10, 97, 23);
+		btnSearch.setBounds(408, 10, 97, 23);
 		pUserAddr.add(btnSearch);
 
 		tfAddr = new JTextField(u.getUserAddr());
@@ -165,37 +166,37 @@ public class UserInfoView extends JPanel {
 		tfAddr.setColumns(10);
 
 		JPanel pUserEamil = new JPanel();
-		pUserEamil.setBounds(276, 10, 308, 31);
+		pUserEamil.setBounds(273, 10, 310, 31);
 		pUserInfo.add(pUserEamil);
 		pUserEamil.setLayout(null);
 
 		JLabel lblUserEamil = new JLabel("이메일");
-		lblUserEamil.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserEamil.setBounds(12, 8, 57, 15);
+		lblUserEamil.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUserEamil.setBounds(4, 8, 57, 15);
 		pUserEamil.add(lblUserEamil);
 
 		tfUserEamil = new JTextField(u.getUserEmail());
-		tfUserEamil.setBounds(81, 5, 215, 21);
+		tfUserEamil.setBounds(87, 5, 215, 21);
 		tfUserEamil.setColumns(10);
 		pUserEamil.add(tfUserEamil);
 
 		JPanel pUserPw = new JPanel();
-		pUserPw.setBounds(276, 51, 308, 31);
+		pUserPw.setBounds(273, 51, 310, 31);
 		pUserInfo.add(pUserPw);
 		pUserPw.setLayout(null);
 
 		JLabel lblUserPw = new JLabel("비밀번호");
-		lblUserPw.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserPw.setBounds(12, 8, 57, 15);
+		lblUserPw.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUserPw.setBounds(4, 8, 57, 15);
 		pUserPw.add(lblUserPw);
 
 		tfUserPw = new JPasswordField();
-		tfUserPw.setBounds(81, 5, 215, 21);
+		tfUserPw.setBounds(87, 5, 215, 21);
 		tfUserPw.setColumns(10);
 		pUserPw.add(tfUserPw);
 
 		JPanel pUserPwCh = new JPanel();
-		pUserPwCh.setBounds(269, 92, 315, 31);
+		pUserPwCh.setBounds(273, 92, 310, 31);
 		pUserInfo.add(pUserPwCh);
 		pUserPwCh.setLayout(null);
 
@@ -208,9 +209,93 @@ public class UserInfoView extends JPanel {
 		tfUserPwCh.setBounds(88, 5, 215, 21);
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
+		
+				JButton btnLeave = new JButton("회원탈퇴");
+				btnLeave.setFont(new Font("굴림", Font.PLAIN, 13));
+				btnLeave.setBounds(610, 139, 90, 34);
+				pUserInfo.add(btnLeave);
+				
+						JButton btnUpdate = new JButton("수 정");
+						btnUpdate.setFont(new Font("굴림", Font.PLAIN, 13));
+						btnUpdate.setBounds(610, 42, 90, 34);
+						pUserInfo.add(btnUpdate);
+						
+								JButton btnCancel = new JButton("취 소");
+								btnCancel.setFont(new Font("굴림", Font.PLAIN, 13));
+								btnCancel.setBounds(610, 89, 90, 34);
+								pUserInfo.add(btnCancel);
+								
+								JLabel label = new JLabel("");
+								label.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label.setBounds(42, 16, 4, 17);
+								pUserInfo.add(label);
+								
+								JLabel label_1 = new JLabel("");
+								label_1.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_1.setBounds(42, 57, 4, 17);
+								pUserInfo.add(label_1);
+								
+								JLabel label_2 = new JLabel("");
+								label_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_2.setBounds(42, 98, 4, 17);
+								pUserInfo.add(label_2);
+								
+								JLabel label_3 = new JLabel("");
+								label_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_3.setBounds(269, 17, 4, 17);
+								pUserInfo.add(label_3);
+								
+								JLabel label_4 = new JLabel("");
+								label_4.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_4.setBounds(269, 58, 4, 17);
+								pUserInfo.add(label_4);
+								
+								JLabel label_5 = new JLabel("");
+								label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_5.setBounds(269, 99, 4, 17);
+								pUserInfo.add(label_5);
+								
+								JLabel label_6 = new JLabel("");
+								label_6.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+								label_6.setBounds(42, 170, 4, 17);
+								pUserInfo.add(label_6);
+								btnCancel.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										clearTf();
+									}
+								});
+						btnUpdate.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								if (tfUserPw.getText().length() <= 7) {
+									JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
+									return;
+								}
+								if (!checkTf()) {
+									JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
+								}
+								if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
+									userUpdatae();
+									JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+								} else {
+									JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+								}
+							}
+						});
+				btnLeave.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+						if (i == 0) {
+							u.setUserLeave("N");
+							JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+							UsersService.getInstance().findupdateUsers(u);
+							setVisible(false);
+						}
+					}
+				});
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(6, 291, 801, 246);
+		scrollPane_1.setBounds(4, 264, 801, 235);
 		add(scrollPane_1);
 
 		historyTable = new JTable();
@@ -227,59 +312,8 @@ public class UserInfoView extends JPanel {
 		settingTableView();
 
 		JButton btnNewButton_2 = new JButton("히스토리");
-		btnNewButton_2.setBounds(12, 258, 115, 23);
+		btnNewButton_2.setBounds(10, 233, 115, 23);
 		add(btnNewButton_2);
-
-		JButton btnUpdate = new JButton("수 정");
-		btnUpdate.setBounds(717, 258, 90, 23);
-		add(btnUpdate);
-
-		JButton btnCancel = new JButton("취 소");
-		btnCancel.setBounds(615, 258, 90, 23);
-		add(btnCancel);
-
-		JButton btnLeave = new JButton("회원탈퇴");
-		btnLeave.setBounds(509, 258, 90, 23);
-		add(btnLeave);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DGIT3-7\\Desktop\\userimg1.jpeg"));
-		lblNewLabel.setBounds(20, 21, 190, 221);
-		add(lblNewLabel);
-		btnLeave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-				if (i == 0) {
-					u.setUserLeave("N");
-					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
-					UsersService.getInstance().findupdateUsers(u);
-					setVisible(false);
-				}
-			}
-		});
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clearTf();
-			}
-		});
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tfUserPw.getText().length() <= 7) {
-					JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
-					return;
-				}
-				if (!checkTf()) {
-					JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
-				}
-				if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
-					userUpdatae();
-					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
-				} else {
-					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
-				}
-			}
-		});
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

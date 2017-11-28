@@ -17,6 +17,7 @@ import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.RentalBookService;
 import kr.or.dgit.library_project.ui.MainUi;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class UserpresentView extends JPanel {
 	private static final UserpresentView instance = new UserpresentView();
@@ -51,12 +52,13 @@ public class UserpresentView extends JPanel {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		panel.setBounds(12, 10, 416, 474);
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("현황 보기");
+		JLabel lblNewLabel = new JLabel("대여현황");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 21));
 		lblNewLabel.setBounds(12, 10, 101, 43);
 		panel.add(lblNewLabel);

@@ -62,7 +62,7 @@ public class RentalBookPanel extends JPanel {
 
 		JPanel pSearch = new JPanel();
 		pSearch.setLayout(null);
-		pSearch.setBounds(220, 10, 466, 54);
+		pSearch.setBounds(205, 10, 466, 54);
 		add(pSearch);
 
 		comboBox = new JComboBox();
@@ -97,7 +97,7 @@ public class RentalBookPanel extends JPanel {
 		pSearch.add(btnSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 74, 793, 418);
+		scrollPane.setBounds(6, 74, 793, 418);
 		add(scrollPane);
 
 		table = new JTable();
@@ -121,7 +121,7 @@ public class RentalBookPanel extends JPanel {
 
 		pUserRentInfo = new JPanel();
 		pUserRentInfo.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pUserRentInfo.setBounds(12, 10, 181, 54);
+		pUserRentInfo.setBounds(5, 10, 181, 54);
 		add(pUserRentInfo);
 		pUserRentInfo.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -140,7 +140,7 @@ public class RentalBookPanel extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		btnReading.setBounds(708, 10, 97, 23);
+		btnReading.setBounds(696, 10, 97, 23);
 		add(btnReading);
 
 		JButton btnBestBook = new JButton("인기도서");
@@ -150,7 +150,7 @@ public class RentalBookPanel extends JPanel {
 				frame.setVisible(true);
 			}
 		});
-		btnBestBook.setBounds(708, 43, 97, 23);
+		btnBestBook.setBounds(696, 43, 97, 23);
 		add(btnBestBook);
 	}
 

@@ -37,12 +37,6 @@ public class Manager extends JFrame {
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 281, 94, 30);
-		// panel_18.add(lblNewLabel);
-
-//		BookInsertDelete insertDeletePanel = BookInsertDelete.getInstance();
-//
-//		tabbedPane.addTab("도서추가삭제", null, insertDeletePanel, null);
-//		insertDeletePanel.setLayout(null);
 
 		ManegerUserInfo panel = new ManegerUserInfo();
 		tabbedPane.addTab("회원정보", null, panel, null);

@@ -68,7 +68,7 @@ public class ManegerUserInfo extends JPanel {
 		JPanel panel_9 = new JPanel();
 		panel_9.setLayout(null);
 		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_9.setBounds(39, 82, 732, 153);
+		panel_9.setBounds(26, 82, 732, 153);
 		add(panel_9);
 
 		JPanel pId = new JPanel();
@@ -127,7 +127,7 @@ public class ManegerUserInfo extends JPanel {
 
 		JLabel lblAddr = new JLabel("주 소");
 		lblAddr.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAddr.setBounds(12, 26, 44, 15);
+		lblAddr.setBounds(5, 27, 44, 15);
 		pAddr.add(lblAddr);
 
 		sidoModel = new DefaultComboBoxModel<String>(getDate());
@@ -199,6 +199,36 @@ public class ManegerUserInfo extends JPanel {
 		JButton btnDel = new JButton("회원탈퇴");
 		btnDel.setBounds(584, 102, 97, 23);
 		panel_9.add(btnDel);
+		
+		JLabel label = new JLabel("");
+		label.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label.setBounds(25, 17, 3, 18);
+		panel_9.add(label);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_1.setBounds(25, 47, 3, 18);
+		panel_9.add(label_1);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_2.setBounds(24, 100, 3, 18);
+		panel_9.add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_3.setBounds(219, 17, 3, 18);
+		panel_9.add(label_3);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_4.setBounds(219, 48, 3, 18);
+		panel_9.add(label_4);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_5.setBounds(368, 17, 3, 18);
+		panel_9.add(label_5);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
@@ -222,7 +252,7 @@ public class ManegerUserInfo extends JPanel {
 		});
 
 		JPanel pSerach = new JPanel();
-		pSerach.setBounds(37, 36, 499, 25);
+		pSerach.setBounds(85, 35, 499, 25);
 		add(pSerach);
 		pSerach.setLayout(new BoxLayout(pSerach, BoxLayout.X_AXIS));
 		cmbSearch = new JComboBox<String>();
@@ -252,7 +282,7 @@ public class ManegerUserInfo extends JPanel {
 		pSerach.add(btnsearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(9, 278, 777, 282);
+		scrollPane.setBounds(3, 278, 766, 282);
 		add(scrollPane);
 		tableModel = new DefaultTableModel(getData(), getColumnNames()) {
 			public boolean isCellEditable(int i, int c) {
@@ -474,7 +504,7 @@ public class ManegerUserInfo extends JPanel {
 	public void setAlignWidth() {
 
 		setAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
-		setCellWidth(70, 70, 100, 300, 150, 70, 50);
+		setCellWidth(70, 70, 100, 280, 150, 70, 50);
 
 	}
 
