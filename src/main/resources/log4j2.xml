@@ -8,6 +8,7 @@
          <PatternLayout pattern="%5p [%t] - %m%n" />
       </File>
    </Appenders>
+   
 
    <Loggers>
       <Logger name="kr.or.dgit.library_project" level="trace" additivity="false">

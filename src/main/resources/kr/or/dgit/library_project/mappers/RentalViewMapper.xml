@@ -25,6 +25,51 @@
 		</where>
 	</sql>
 	
+	<sql id="whereBookCode">
+		<where>
+			book_code = #{bookCode}
+		</where>
+	</sql>
+	
+	<resultMap type="RentalView" id="RentalViewMap">
+		<result property="bookCode" column="book_Code"/>
+		<result property="bookName" column="book_name"/>
+		<result property="userId" column="user_id"/>
+		<result property="userName" column="user_name"/>
+		<result property="author" column="author"/>
+		<result property="publicName" column="public_name"/>
+		<result property="price" column="price"/>
+		<result property="rentalDay" column="rentalDay"/>
+		<result property="returnDay" column="returnDay"/>
+	</resultMap>
+	
+	<sql id="allRentalViewMap">
+		select book_code, book_name, user_id, user_name, author, p.public_name, price, rentalDay, returnDay from rental_live r, publisher p
+	</sql>
+	
+	<sql id="whereRentalDataMap">
+		<where>
+			<if test="bookCode != null">
+				and r.public_name=p.public_code and book_code like #{bookCode}
+			</if>
+			<if test="bookName != null">
+				and r.public_name=p.public_code and book_name like #{bookName}
+			</if>
+			<if test="userId != null">
+				and r.public_name=p.public_code and user_id like #{userId}
+			</if>
+			<if test="userName != null">
+				and r.public_name=p.public_code and user_name like #{userName}
+			</if>
+			<if test="rentalDay != null">
+				and r.public_name=p.public_code and rentalDay like #{rentalDay}
+			</if>
+			<if test="returnDay != null">
+				and r.public_name=p.public_code and author like #{returnDay}
+			</if>
+		</where>
+	</sql>
+	
 	<select id="selectAllRentalView" resultType="RentalView">
 		<include refid="allRentalView"/>
 	</select>
@@ -32,6 +77,21 @@
 	<select id="selectByWhereRentalView" parameterType="RentalView" resultType="RentalView">
 		<include refid="allRentalView"/>
 		<include refid="whereRentalData"/>
+	</select>
+
+	<select id="selectAllRentalViewMap" resultType="RentalView">
+		<include refid="allRentalViewMap"/>
+		where r.public_name=p.public_code
+	</select>
+
+	<select id="selectByWhereRentalViewMap" parameterType="map" resultMap="RentalViewMap">
+		<include refid="allRentalViewMap"/>
+		<include refid="whereRentalDataMap"/>
+	</select>
+	
+	<select id="selectByBookDataRentalView" parameterType = "Book" resultType="RentalView">
+		<include refid="allRentalView"/>
+		<include refid="whereBookCode"/>
 	</select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package kr.or.dgit.library_project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,10 +28,31 @@ public class BookService {
 		}
 	}
 	
-	public List<Book> selectBookBySomething(Book book) {
+	public Book selectBookByCode(Book book){
 		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
 			BookDao dao=new BookDaoImpl(sqlSession);
-			return dao.selectBookBySomething(book);
+			return dao.selectBookByCode(book);
+		}
+	}
+	
+	public List<Book> selectBookBySomething(Map<String, Object> map) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookBySomething(map);
+		}
+	}
+	
+	public Book selectBookForChart(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookForChart(book);
+		}
+	}
+	
+	public Book selectBookGroupRow(Book book) {
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectBookGroupRow(book);
 		}
 	}
 	
@@ -48,6 +70,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("updateBook Ser:" + book.toString());
 			int res=dao.updateBook(book);
 			sqlSession.commit();
 			return res;
@@ -64,6 +87,7 @@ public class BookService {
 		SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		try {
 			BookDao dao=new BookDaoImpl(sqlSession);
+			System.out.println("service book : " + book.getBookCode());
 			int res=dao.deleteBook(book);
 			sqlSession.commit();
 			return res;
@@ -73,6 +97,26 @@ public class BookService {
 			throw new RuntimeException(e.getCause());
 		}finally {
 			sqlSession.close();
+		}
+	}
+	public List<Book> findselectByRank(){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByRank();
+		}
+	}
+	
+	public List<Book> findselectByWhereBookData(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByWhereBookData(book);
+		}
+	}
+	
+	public List<Book> findselectByBigMiddleGroupCode(Book book){
+		try(SqlSession sqlSession=MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();){
+			BookDao dao=new BookDaoImpl(sqlSession);
+			return dao.selectByBigMiddleGroupCode(book);
 		}
 	}
 }

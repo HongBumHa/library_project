@@ -9,4 +9,5 @@ public interface BookGroupDao {
 	public List<BookGroup> selectAllMiddleGroup(BookGroup bookGroup);
 	public BookGroup selectByNoBigGroup(BookGroup bookGroup);
 	public BookGroup selectByNoMiddleGroup(BookGroup bookGroup);
+	
 }

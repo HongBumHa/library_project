@@ -135,12 +135,19 @@ public class Book {
 
 	@Override
 	public String toString() {
+		String reslut_price = String.format("%, d",price);
 		return String.format(
 				"Book [bookCode=%s, bookName=%s, author=%s, publicName=%s, price=%s, amount=%s, allRentalCount=%s]",
-				bookCode, bookName, author, publicName, price, amount, allRentalCount);
+				bookCode, bookName, author, publicName, reslut_price, amount, allRentalCount);
 	}
 	
 	public Object[] toArray() {
-		return new Object[] {bookCode, bookName, author, publicName, price, amount, allRentalCount};
+		String reslut_price = String.format("%, d",price);
+		return new Object[] {bookCode, bookName, author, publicName, reslut_price, amount, allRentalCount};
+	}
+	
+	public Object[] toArray2() {
+
+		return new Object[] {price,bookName,author,publicName,amount,allRentalCount};
 	}
 }

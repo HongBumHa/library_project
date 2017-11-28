@@ -11,6 +11,7 @@
 		select * from userrank
 	</sql>
 
+
 	<select id="selectUserRankByAll" resultMap="UserRankResult">
 		<include refid="userrankSql" />
 	</select>

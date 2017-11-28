@@ -43,4 +43,5 @@ public class BookGroupDaoImpl implements  BookGroupDao{
 		return sqlSession.selectOne(namespace+".selectByNoMiddleGroup", bookGroup);
 	}
 	
+	
 }
