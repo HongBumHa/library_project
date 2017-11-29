@@ -30,6 +30,7 @@ import kr.or.dgit.library_project.service.BookGroupService;
 import kr.or.dgit.library_project.service.BookService;
 import kr.or.dgit.library_project.service.ReadingService;
 import kr.or.dgit.library_project.service.RentalViewService;
+import javax.swing.ImageIcon;
 
 public class BookInsertDelete extends JPanel {
 	private JTable searchTable;
@@ -200,6 +201,13 @@ public class BookInsertDelete extends JPanel {
 		});
 
 		add(btnAddNewBook);
+		
+		JLabel lblNewLabel = new JLabel("DGIT Library");
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 43));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(null);
+		lblNewLabel.setBounds(494, 436, 272, 113);
+		add(lblNewLabel);
 		upDatePopup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
