@@ -179,7 +179,6 @@ public class ReturnTabPanel extends JPanel {
 
 		tfFields = new JTextField[] { tfBookCode, tfBookName, tfAuthor, tfPublisher, tfPrice, tfDelayDay };
 
-		RentalDataTable.setModel(createTableModel(rentalView));
 		settingTableView();
 		RentalDataTable.addMouseListener(new MouseAdapter() {
 

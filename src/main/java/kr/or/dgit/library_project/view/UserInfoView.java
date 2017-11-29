@@ -284,7 +284,7 @@ public class UserInfoView extends JPanel {
 				btnLeave.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+						int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?","회원탈퇴", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 						if (i == 0) {
 							u.setUserLeave("N");
 							JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
