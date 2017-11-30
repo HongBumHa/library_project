@@ -299,6 +299,7 @@ public class MemberApp extends JFrame {
 		label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
 		label_5.setBounds(26, 95, 4, 15);
 		contentPane.add(label_5);
+	
 		
 		JLabel label_6 = new JLabel("");
 		label_6.setBorder(new LineBorder(new Color(0, 128, 128), 2));
