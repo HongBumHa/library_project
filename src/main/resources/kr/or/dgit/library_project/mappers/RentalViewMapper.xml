@@ -65,7 +65,7 @@
 				and r.public_name=p.public_code and rentalDay like #{rentalDay}
 			</if>
 			<if test="returnDay != null">
-				and r.public_name=p.public_code and author like #{returnDay}
+				and r.public_name=p.public_code and returnDay like #{returnDay}
 			</if>
 		</where>
 	</sql>
