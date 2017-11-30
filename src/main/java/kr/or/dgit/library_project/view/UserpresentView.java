@@ -27,6 +27,7 @@ public class UserpresentView extends JPanel {
 	private JFreeChart jChart;
 	private ChartPanel cPanel;
 	private UserChart pChart;
+	
 	public UserChart getpChart() {
 		return pChart;
 	}
