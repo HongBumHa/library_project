@@ -209,90 +209,90 @@ public class UserInfoView extends JPanel {
 		tfUserPwCh.setBounds(88, 5, 215, 21);
 		tfUserPwCh.setColumns(10);
 		pUserPwCh.add(tfUserPwCh);
-		
-				JButton btnLeave = new JButton("회원탈퇴");
-				btnLeave.setFont(new Font("굴림", Font.PLAIN, 13));
-				btnLeave.setBounds(610, 139, 90, 34);
-				pUserInfo.add(btnLeave);
-				
-						JButton btnUpdate = new JButton("수 정");
-						btnUpdate.setFont(new Font("굴림", Font.PLAIN, 13));
-						btnUpdate.setBounds(610, 42, 90, 34);
-						pUserInfo.add(btnUpdate);
-						
-								JButton btnCancel = new JButton("취 소");
-								btnCancel.setFont(new Font("굴림", Font.PLAIN, 13));
-								btnCancel.setBounds(610, 89, 90, 34);
-								pUserInfo.add(btnCancel);
-								
-								JLabel label = new JLabel("");
-								label.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label.setBounds(42, 16, 4, 17);
-								pUserInfo.add(label);
-								
-								JLabel label_1 = new JLabel("");
-								label_1.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_1.setBounds(42, 57, 4, 17);
-								pUserInfo.add(label_1);
-								
-								JLabel label_2 = new JLabel("");
-								label_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_2.setBounds(42, 98, 4, 17);
-								pUserInfo.add(label_2);
-								
-								JLabel label_3 = new JLabel("");
-								label_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_3.setBounds(269, 17, 4, 17);
-								pUserInfo.add(label_3);
-								
-								JLabel label_4 = new JLabel("");
-								label_4.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_4.setBounds(269, 58, 4, 17);
-								pUserInfo.add(label_4);
-								
-								JLabel label_5 = new JLabel("");
-								label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_5.setBounds(269, 99, 4, 17);
-								pUserInfo.add(label_5);
-								
-								JLabel label_6 = new JLabel("");
-								label_6.setBorder(new LineBorder(new Color(0, 128, 128), 2));
-								label_6.setBounds(42, 170, 4, 17);
-								pUserInfo.add(label_6);
-								btnCancel.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										clearTf();
-									}
-								});
-						btnUpdate.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								if (tfUserPw.getText().length() <= 7) {
-									JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
-									return;
-								}
-								if (!checkTf()) {
-									JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
-								}
-								if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
-									userUpdatae();
-									JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
-								} else {
-									JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
-								}
-							}
-						});
-				btnLeave.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
 
-						int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
-						if (i == 0) {
-							u.setUserLeave("N");
-							JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
-							UsersService.getInstance().findupdateUsers(u);
-							setVisible(false);
-						}
-					}
-				});
+		JButton btnLeave = new JButton("회원탈퇴");
+		btnLeave.setFont(new Font("굴림", Font.PLAIN, 13));
+		btnLeave.setBounds(610, 139, 90, 34);
+		pUserInfo.add(btnLeave);
+
+		JButton btnUpdate = new JButton("수 정");
+		btnUpdate.setFont(new Font("굴림", Font.PLAIN, 13));
+		btnUpdate.setBounds(610, 42, 90, 34);
+		pUserInfo.add(btnUpdate);
+
+		JButton btnCancel = new JButton("취 소");
+		btnCancel.setFont(new Font("굴림", Font.PLAIN, 13));
+		btnCancel.setBounds(610, 89, 90, 34);
+		pUserInfo.add(btnCancel);
+
+		JLabel label = new JLabel("");
+		label.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label.setBounds(42, 16, 4, 17);
+		pUserInfo.add(label);
+
+		JLabel label_1 = new JLabel("");
+		label_1.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_1.setBounds(42, 57, 4, 17);
+		pUserInfo.add(label_1);
+
+		JLabel label_2 = new JLabel("");
+		label_2.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_2.setBounds(42, 98, 4, 17);
+		pUserInfo.add(label_2);
+
+		JLabel label_3 = new JLabel("");
+		label_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_3.setBounds(269, 17, 4, 17);
+		pUserInfo.add(label_3);
+
+		JLabel label_4 = new JLabel("");
+		label_4.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_4.setBounds(269, 58, 4, 17);
+		pUserInfo.add(label_4);
+
+		JLabel label_5 = new JLabel("");
+		label_5.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_5.setBounds(269, 99, 4, 17);
+		pUserInfo.add(label_5);
+
+		JLabel label_6 = new JLabel("");
+		label_6.setBorder(new LineBorder(new Color(0, 128, 128), 2));
+		label_6.setBounds(42, 170, 4, 17);
+		pUserInfo.add(label_6);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearTf();
+			}
+		});
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tfUserPw.getText().length() <= 7) {
+					JOptionPane.showMessageDialog(null, "비밀번호 8자 이상입력해주세요");
+					return;
+				}
+				if (!checkTf()) {
+					JOptionPane.showMessageDialog(null, "빈 칸을 입력해주세요");
+				}
+				if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
+					userUpdatae();
+					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+				} else {
+					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+				}
+			}
+		});
+		btnLeave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				if (i == 0) {
+					u.setUserLeave("N");
+					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
+					UsersService.getInstance().findupdateUsers(u);
+					setVisible(false);
+				}
+			}
+		});
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(4, 264, 801, 235);
