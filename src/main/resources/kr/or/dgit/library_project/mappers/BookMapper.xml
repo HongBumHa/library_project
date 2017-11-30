@@ -136,7 +136,8 @@
 	</delete>
 	
 	<sql id="selectByRankcountSql">
-		select price,book_name,author,p.public_name,amount,all_rentel_count from book,publisher p order by all_rentel_count desc;
+		select price,book_name,author,p.public_name,amount,all_rentel_count from book b, publisher p where all_rentel_count > 0 and p.public_name = (select public_name from publisher where public_code = b.public_name)
+order by all_rentel_count desc;
 	</sql>
 	<select id="selectByRank" resultMap="BookResult">
 		<include refid="selectByRankcountSql"/>
