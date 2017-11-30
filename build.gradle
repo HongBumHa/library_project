@@ -33,8 +33,7 @@ dependencies {
    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.5'
    
    //Use 룩앤필
-    compile files('libs_src/liquidlnf.jar')
-
+    compile files('libs/liquidlnf.jar')
 
     //jcommon-1.0.17
     compile files('libs_src/jcommon-1.0.17.jar')
@@ -58,5 +57,8 @@ jar{
     }
     //실행가능한 jar파일 설정
     dependsOn configurations.runtime
+        from {
+           configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+       }
 
 }

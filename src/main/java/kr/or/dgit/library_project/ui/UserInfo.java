@@ -19,8 +19,7 @@ import kr.or.dgit.library_project.view.UserReadingBook;
 import kr.or.dgit.library_project.view.UserpresentView;
 
 public class UserInfo extends JFrame {
-
-
+	
 	private JPanel contentPane;
 	public UserInfo() {
 		setResizable(false);
@@ -51,6 +50,7 @@ public class UserInfo extends JFrame {
 		UserInfoView testing = UserInfoView.getInstance();
 		testing.setLayout(null);
 		tabbedPane.addTab("회원정보", null, testing, null);
+		
 		
 		UserpresentView 유저현황 = UserpresentView.getInstance();
 		tabbedPane.addTab("현황 보기", null, 유저현황, null);

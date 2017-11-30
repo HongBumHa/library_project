@@ -99,6 +99,12 @@ public class MainUi extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("취소");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passwordField.setText("");
+				passwordField.setText("");
+			}
+		});
 		btnNewButton_1.setFont(new Font("돋움", Font.PLAIN, 15));
 		btnNewButton_1.setBounds(164, 261, 97, 23);
 		contentPane.add(btnNewButton_1);

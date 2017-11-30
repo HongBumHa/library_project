@@ -229,7 +229,7 @@ public class ManegerUserInfo extends JPanel {
 		panel_9.add(label_5);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?");
+				int i = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 하겠습니까?","회원탈퇴",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (i == 0) {
 					deleteU();
 				} else {

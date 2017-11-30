@@ -286,7 +286,7 @@ public class MemberApp extends JFrame {
 		panel_1.add(tfEmail2);
 
 		lblIdCh = new JLabel("4자리이상입력해주세요");
-		lblIdCh.setForeground(new Color(0, 255, 0));
+		lblIdCh.setForeground(Color.RED);
 		lblIdCh.setBounds(184, 28, 146, 15);
 		contentPane.add(lblIdCh);
 		

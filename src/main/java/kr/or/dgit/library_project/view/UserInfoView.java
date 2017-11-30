@@ -1,16 +1,20 @@
 package kr.or.dgit.library_project.view;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,13 +35,7 @@ import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.PostService;
 import kr.or.dgit.library_project.service.UsersService;
 import kr.or.dgit.library_project.ui.MainUi;
-import javax.swing.ImageIcon;
-import java.awt.SystemColor;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Font;
+import kr.or.dgit.library_project.ui.UserInfo;
 
 public class UserInfoView extends JPanel {
 	private JTable table;
@@ -49,6 +47,7 @@ public class UserInfoView extends JPanel {
 	private JPasswordField tfUserPw;
 	private JPasswordField tfUserPwCh;
 	private JTextField tfDoro;
+	
 
 	public JTable getHistoryTable() {
 		return historyTable;
@@ -276,8 +275,12 @@ public class UserInfoView extends JPanel {
 				if (tfUserPw.getText().equals(tfUserPwCh.getText())) {
 					userUpdatae();
 					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다");
+					tfUserPw.setText("");
+					tfUserPwCh.setText("");
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "비밀번호가 맞지않습니다.");
+					
 				}
 			}
 		});
@@ -289,7 +292,7 @@ public class UserInfoView extends JPanel {
 					u.setUserLeave("N");
 					JOptionPane.showMessageDialog(null, "그 동안 이용해주셔서 감사합니다.");
 					UsersService.getInstance().findupdateUsers(u);
-					setVisible(false);
+					System.exit(0);
 				}
 			}
 		});
@@ -470,4 +473,6 @@ public class UserInfoView extends JPanel {
 		}
 		return true;
 	}
+
+	
 }

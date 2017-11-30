@@ -17,6 +17,7 @@ public class ManagerChart extends JFrame {
 	private JPanel contentPane;
 
 	public ManagerChart() {
+		setTitle("도서현황차트");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 723, 914);
 		contentPane = new JPanel();
