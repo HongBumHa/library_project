@@ -71,6 +71,7 @@ public class MemberApp extends JFrame {
 	}
 
 	private MemberApp() {
+		setTitle("회원가입");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 492, 512);
 		contentPane = new JPanel();

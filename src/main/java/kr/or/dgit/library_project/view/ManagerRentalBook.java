@@ -29,6 +29,8 @@ import kr.or.dgit.library_project.dto.HistoryView;
 import kr.or.dgit.library_project.dto.RentalView;
 import kr.or.dgit.library_project.service.HistoryViewService;
 import kr.or.dgit.library_project.service.RentalViewService;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManagerRentalBook extends JPanel {
 	public static JTable table;
@@ -102,6 +104,15 @@ public class ManagerRentalBook extends JPanel {
 		panel_6.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2) {
+					ManagerBookDetailInfo mbdi=new ManagerBookDetailInfo();
+					mbdi.setVisible(true);
+				}
+			}
+		});
 		addPopupMenu();
 		scrollPane.setViewportView(table);
 		
