@@ -163,13 +163,15 @@ public class ManagerInserDeletePopUp extends JPanel {
 						return;
 					}
 
+					if(emptyCheck() == false)
+						return;
+
 					Publisher pb = new Publisher();
 
 					pb.setPublicName(publisherCombo.getSelectedItem().toString());
 
 					book.setBookName(tfBookName.getText());
 					book.setAuthor(tfAuthor.getText());
-
 					book.setPublicName(PublisherService.getInstance().selectPublisherByCodeName(pb).getPublicCode());
 					book.setPrice(Integer.parseInt(tfPrice.getText().replaceAll(" ", "")));
 					book.setAmount(Integer.parseInt(tfBookCount.getText()));
@@ -203,6 +205,10 @@ public class ManagerInserDeletePopUp extends JPanel {
 							}
 						}
 					}
+					
+					if(emptyCheck() == false)
+						return;
+					
 
 					String makeLastCode = createLastCode();
 
@@ -226,20 +232,8 @@ public class ManagerInserDeletePopUp extends JPanel {
 				if (btnClickEvent.getText() == "신청 도서 추가") {
 					Book book = new Book();
 
-					for (int n = 0; n < tfArrays.length; n++) {
-						if (n == 2) {
-							if (((JTextField) publisherCombo.getEditor().getEditorComponent()).getText()
-									.equals("") == true) {
-								JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
-								return;
-							}
-							continue;
-						}
-						if (tfArrays[n].getText().equals("")) {
-							JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
-							return;
-						}
-					}
+					if(emptyCheck() == false)
+						return;
 
 					Publisher pb = new Publisher();
 					pb.setPublicName(((JTextField) publisherCombo.getEditor().getEditorComponent()).getText()
@@ -290,6 +284,24 @@ public class ManagerInserDeletePopUp extends JPanel {
 		});
 		btnCancel.setBounds(181, 267, 97, 23);
 		add(btnCancel);
+	}
+	
+	public boolean emptyCheck() {
+		for (int n = 0; n < tfArrays.length; n++) {
+			if (n == 2) {
+				if (((JTextField) publisherCombo.getEditor().getEditorComponent()).getText().replaceAll(" ", "")
+						.equals("") == true) {
+					JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고", JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				continue;
+			}
+			if (tfArrays[n].getText().replaceAll(" ", "").equals("")) {
+				JOptionPane.showMessageDialog(null, "공백이 존재합니다.", "경고",JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void refreshPublicComboItem() {

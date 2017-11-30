@@ -35,6 +35,7 @@ public class PostView extends JFrame {
 	private UserInfoView uiv;
 	private MemberApp mba;
 	public PostView(int ioi) {
+		setTitle("도로명 주소 검색");
 		if(ioi == 0) {
 			mba = MemberApp.getInstance();
 		}else if(ioi == 1) {

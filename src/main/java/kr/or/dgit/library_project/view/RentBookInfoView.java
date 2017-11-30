@@ -35,6 +35,7 @@ public class RentBookInfoView extends JFrame {
 	public RentBookInfoView() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 606, 226);
+		setTitle("대여하기");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

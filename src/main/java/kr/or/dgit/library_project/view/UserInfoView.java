@@ -294,6 +294,7 @@ public class UserInfoView extends JPanel {
 			}
 		});
 
+
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(4, 264, 801, 235);
 		add(scrollPane_1);
